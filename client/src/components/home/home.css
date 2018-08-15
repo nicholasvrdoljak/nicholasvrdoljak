@@ -1,0 +1,73 @@
+
+.homeContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.homeBar {
+    width: 25%;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+}
+.homeBar>div {
+    top: 50%;
+    width: 25%;
+    text-align: center;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+}
+
+.homeBarGrown {
+    width: 100%;   
+    flex-grow: 10; 
+}
+.homeBarGrown>div {
+    top: 50%;
+    width: 100%;
+    text-align: center;
+}
+.homeBarShrunk {
+    width: 3%;   
+}
+.homeBarShrunk>div {
+    top: 50%;
+    width: 3%;
+    text-align: center;
+    transform: rotate(-90deg);
+}
+
+.homeBar1 {
+    background-color: #c9beaa;
+}
+.homeBar1:hover {
+    background-color: #ecfcbf
+}
+.homeBar2 {
+    background-color: #787987;
+}
+.homeBar2:hover {
+    background-color: #8b8b8b;
+}
+.homeBar3 {
+    background-color: #3c5a75;
+}
+.homeBar3:hover {
+    background-color: #627e99;
+}
+.homeBar4 {
+    background-color: #fa6060;
+}
+.homeBar4:hover {
+    background-color: #ffb0b0;
+}
