@@ -7,7 +7,9 @@ import Main from '../routers/secondary.jsx';
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            titleHover: false,
+        };
     }
 
     componentWillReceiveProps(nextProps) {
@@ -29,7 +31,6 @@ export default class Home extends Component {
             })
         }
     }
-
     componentDidMount() {
         setTimeout(() => {
             if (this.props.prop) {
@@ -52,7 +53,6 @@ export default class Home extends Component {
         }, 200);
         
     }
-
     goToPage(e) {
         e.preventDefault();
         const x = e.target.title;
@@ -67,21 +67,27 @@ export default class Home extends Component {
             this.props.history.push(`/${id}`)
         });
     }
+    mouseoverTitle() {
+        this.setState({titleHover: !this.state.titleHover});
+    }
+    removeTitleBox() {
+        this.setState({titleHover: false});
+    }
 
     render() {
         return (
             <div>
                 <div>
-                    <div className='header'>
-                        <Link to='/'>Nick Vrdoljak</Link>
+                    <div className='header'  >
+                        <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
                     </div>
                     <div className='footer'>&#169; Nick Vr. 2018</div>
-                    <div className='footerImg1'><a target='blank' href='https://github.com/nicholasvrdoljak'><img src='/../../assets/GitHub-Mark-32px.png'></img></a></div>
-                    <div className='footerImg2'><a target='blank' href='https://www.linkedin.com/in/nicholas-vrdoljak-52111453'><img src='/../../assets/linkedin-logo-2.png'></img></a></div>
+                    <div className='footerImg1'><a target='blank' href='https://www.linkedin.com/in/nicholas-vrdoljak-52111453'><img src='/../../assets/linkedin-logo-2.png'></img></a></div>
+                    <div className='footerImg2'><a target='blank' href='https://github.com/nicholasvrdoljak'><img src='/../../assets/GitHub-Mark-32px.png'></img></a></div>
                 </div>
 
 
-                <div className='homeContainer'>
+                <div className='homeContainer' onMouseOver={this.removeTitleBox.bind(this)}>
                     <div className={`homeBar homeBar1 ${this.state.shrink ? (this.state.one ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                         {this.state.shrink && this.state.one ? <Main/> : <a href='#' title='one' id='projects' onClick={this.goToPage.bind(this)}>projects</a>}
