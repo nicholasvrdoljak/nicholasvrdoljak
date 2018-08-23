@@ -9,6 +9,7 @@ import Reacteroids from '../asteroids/Reacteroids.js';
             </div>
 
             <Reacteroids/>
+            <div>Ok</div>
 
             <div className='contactItem'>
             </div>
