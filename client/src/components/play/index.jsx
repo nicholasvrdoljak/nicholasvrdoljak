@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Reacteroids from '../asteroids/Reacteroids.js';
+import Reacteroids from './games/asteroids/Reacteroids.js';
 
  const Play =() => {
     return (
@@ -9,7 +9,6 @@ import Reacteroids from '../asteroids/Reacteroids.js';
             </div>
 
             <Reacteroids/>
-            <div>Ok</div>
 
             <div className='contactItem'>
             </div>

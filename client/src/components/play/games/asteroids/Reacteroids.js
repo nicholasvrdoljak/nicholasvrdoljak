@@ -254,8 +254,8 @@ export default class Reacteroids extends Component {
           Use [SPACE] to SHOOT
         </span>
         <canvas ref="canvas"
-          width={this.state.screen.width * this.state.screen.ratio}
-          height={this.state.screen.height * this.state.screen.ratio}
+          width={this.state.screen.width * this.state.screen.ratio * 0.5}
+          height={this.state.screen.height * this.state.screen.ratio * 0.5}
         />
       </div>
     );
