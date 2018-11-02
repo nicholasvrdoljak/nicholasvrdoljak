@@ -4,6 +4,11 @@ import './home.css';
 import Main from '../routers/secondary.jsx';
 // import SecondaryRouter from '../routers/secondary.jsx';
 
+const KEY = {
+    LEFT:  37,
+    RIGHT: 39,
+};
+
 export default class Home extends Component {
     constructor(props) {
         super(props);
@@ -51,17 +56,48 @@ export default class Home extends Component {
                 })
             }
         }, 200);
-        
+        document.body.addEventListener('keydown', this.handleKeyDown.bind(this, false));
     }
-    goToPage(e) {
-        e.preventDefault();
-        const x = e.target.title;
-        const id = e.target.id;
+
+    componentWillUnmount(){
+        console.log('unmounting');
+    }
+
+    handleKeyDown(x, e){
+        console.log(e, this);
+
+        if(e.keyCode === KEY.LEFT){
+            if(this.props.prop === 'one'){
+                return;
+            } else if(this.props.prop === 'two'){
+                this.goToPage(null, 'one', 'projects')
+            } else if(this.props.prop === 'three'){
+                this.goToPage(null, 'two', 'blog')
+            } else if(this.props.prop === 'four'){
+                this.goToPage(null, 'three', 'play')
+            }
+        }
+        if(e.keyCode === KEY.RIGHT){
+            if(this.props.prop === 'one'){
+                this.goToPage(null, 'two', 'blog')
+            } else if(this.props.prop === 'two'){
+                this.goToPage(null, 'three', 'play')
+            } else if(this.props.prop === 'three'){
+                this.goToPage(null, 'four', 'contact')
+            } else if(this.props.prop === 'four'){
+                return;
+            }
+        }
+    }
+
+    goToPage(e, x, z) {
+        const title = x || e.target.title;
+        const id = z || e.target.id;
         this.setState({
-            one: (x === 'one'),
-            two: (x === 'two'),
-            three: (x === 'three'), 
-            four: (x === 'four'), 
+            one: (title === 'one'),
+            two: (title === 'two'),
+            three: (title === 'three'), 
+            four: (title === 'four'), 
             shrink: true
         }, () => {
             this.props.history.push(`/${id}`)

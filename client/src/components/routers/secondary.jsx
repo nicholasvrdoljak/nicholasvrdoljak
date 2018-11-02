@@ -6,8 +6,6 @@ import Play from '../play/index.jsx';
 import Blog from '../blog/index.jsx';
 import Projects from '../projects/index.jsx';
 
-
-
 const Main = () => (
     <main>
         <Switch>
