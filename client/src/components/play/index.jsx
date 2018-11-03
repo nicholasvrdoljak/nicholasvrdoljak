@@ -18,7 +18,7 @@ export default class Play extends Component{
                     <h1>Play Games here </h1>
                 </div>
 
-                <Reacteroids/>
+                {/* <Reacteroids/> */}
 
                 <div className='contactItem'>
                 </div>

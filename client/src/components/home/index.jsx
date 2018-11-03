@@ -7,6 +7,8 @@ import Main from '../routers/secondary.jsx';
 const KEY = {
     LEFT:  37,
     RIGHT: 39,
+    UP: 38,
+    DOWN: 40,
 };
 
 export default class Home extends Component {
@@ -64,12 +66,10 @@ export default class Home extends Component {
     }
 
     handleKeyDown(x, e){
-        console.log(e, this);
-
         if(e.keyCode === KEY.LEFT){
             if(this.props.prop === 'one'){
                 return;
-            } else if(this.props.prop === 'two'){
+            } else if(this.props.prop === 'two' || this.props.location.pathname === "/"){
                 this.goToPage(null, 'one', 'projects')
             } else if(this.props.prop === 'three'){
                 this.goToPage(null, 'two', 'blog')
@@ -82,15 +82,25 @@ export default class Home extends Component {
                 this.goToPage(null, 'two', 'blog')
             } else if(this.props.prop === 'two'){
                 this.goToPage(null, 'three', 'play')
-            } else if(this.props.prop === 'three'){
+            } else if(this.props.prop === 'three' || this.props.location.pathname === "/"){
                 this.goToPage(null, 'four', 'contact')
             } else if(this.props.prop === 'four'){
                 return;
             }
         }
+        if(e.keyCode === KEY.UP){
+            this.setState({
+                one: false, 
+                two: false, 
+                three: false, 
+                four: false, 
+                shrink: false
+            }, () => this.props.history.push('/'));
+        }
     }
 
     goToPage(e, x, z) {
+        if(e) e.preventDefault();
         const title = x || e.target.title;
         const id = z || e.target.id;
         this.setState({
