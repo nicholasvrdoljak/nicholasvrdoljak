@@ -16,6 +16,7 @@ export default class Home extends Component {
         super(props);
         this.state = {
             titleHover: false,
+            slideOutOverlay: false
         };
     }
 
@@ -59,6 +60,8 @@ export default class Home extends Component {
             }
         }, 200);
         document.body.addEventListener('keydown', this.handleKeyDown.bind(this, false));
+
+        setTimeout(()=>{this.setState({slideOutOverlay: true})}, 2000);
     }
 
     componentWillUnmount(){
@@ -124,6 +127,13 @@ export default class Home extends Component {
         return (
             <div>
                 <div>
+                    <div className={((this.state.slideOutOverlay) ? ('intro-overlay slide-out-overlay') : ('intro-overlay'))}>
+                        {(!this.state.slideOutOverlay) ? (<div className='inner-overlay-wrapper'>
+                            <div className='inner-overlay'>
+                                Try using your &#8593; &#8592; &#8595; &#8594; keyboard keys.
+                            </div>
+                        </div>) : ('')}
+                    </div>
                     <div className='header'  >
                         <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
                     </div>
@@ -153,7 +163,8 @@ export default class Home extends Component {
                         <div>
                             {this.state.shrink && this.state.four ? <Main/> : <a href='#' title='four' id='contact' onClick={this.goToPage.bind(this)}>contact</a>}
                         </div>
-                        </div>
+                    </div>
+
                 </div>
             </div>
         )
