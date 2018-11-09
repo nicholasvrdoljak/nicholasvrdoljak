@@ -75,14 +75,14 @@ export default class Home extends Component {
             } else if(this.props.prop === 'two' || this.props.location.pathname === "/"){
                 this.goToPage(null, 'one', 'projects')
             } else if(this.props.prop === 'three'){
-                this.goToPage(null, 'two', 'blog')
+                this.goToPage(null, 'two', 'photography')
             } else if(this.props.prop === 'four'){
                 this.goToPage(null, 'three', 'play')
             }
         }
         if(e.keyCode === KEY.RIGHT){
             if(this.props.prop === 'one'){
-                this.goToPage(null, 'two', 'blog')
+                this.goToPage(null, 'two', 'photography')
             } else if(this.props.prop === 'two'){
                 this.goToPage(null, 'three', 'play')
             } else if(this.props.prop === 'three' || this.props.location.pathname === "/"){
@@ -151,7 +151,7 @@ export default class Home extends Component {
                     </div>
                     <div className={`homeBar homeBar2 ${this.state.shrink ? (this.state.two ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
-                        {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='blog' onClick={this.goToPage.bind(this)}>blog</a>}
+                        {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='blog' onClick={this.goToPage.bind(this)}>photos</a>}
                         </div>
                     </div>
                     <div className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>

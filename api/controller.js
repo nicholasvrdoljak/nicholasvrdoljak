@@ -6,6 +6,10 @@ const Promise = require('bluebird');
 //     res.send('cool game brah');
 // }
 
+module.exports.getImages = (req, res) => {
+    console.log('getting images')
+}
+
 // module.exports.getTrends = (req, res) => {
 //     console.log(req.params);
 //     res.send('sweet trends bruh');

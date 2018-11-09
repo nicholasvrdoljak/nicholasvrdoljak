@@ -5,5 +5,6 @@ const controller = require('./controller.js');
 // router.get('/trends', controller.getTrends);
 // router.get('/signInToken', account.signInToken);
 // router.post('/newAccount', account.newAccount);
+router.get('/images', controller.getImages);
 
 module.exports = router;
