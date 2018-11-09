@@ -44,7 +44,6 @@
     "postcss-loader": "^2.1.5",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-images": "^0.5.19",
     "react-motion": "^0.5.2",
     "react-photo-gallery": "^6.2.1",
     "react-router-dom": "^4.3.1",
