@@ -41,3 +41,5 @@ bundle.js.map
 npm-debug.log*
 
 build/
+
+images/
