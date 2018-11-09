@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Lightbox from 'react-images';
+// import Lightbox from 'react-images';
 import Gallery from 'react-photo-gallery';
 
 
@@ -9,6 +9,11 @@ const PHOTO_SET = [
         width: 4,
         height: 3
       },
+      {
+        src: 'http://localhost:3456/images/DSC00071.jpg',
+        width: 4,
+        height: 3
+    },
   ];
 
 export default class Photography extends Component {

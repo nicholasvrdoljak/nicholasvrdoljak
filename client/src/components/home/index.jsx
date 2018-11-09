@@ -40,6 +40,7 @@ export default class Home extends Component {
         }
     }
     componentDidMount() {
+        console.log(this.props)
         setTimeout(() => {
             if (this.props.prop) {
                 this.setState({
@@ -127,13 +128,13 @@ export default class Home extends Component {
         return (
             <div>
                 <div>
-                    <div className={((this.state.slideOutOverlay) ? ('intro-overlay slide-out-overlay') : ('intro-overlay'))}>
+                    {(this.props.prop) ? ('') : (<div className={((this.state.slideOutOverlay) ? ('intro-overlay slide-out-overlay') : ('intro-overlay'))}>
                         {(!this.state.slideOutOverlay) ? (<div className='inner-overlay-wrapper'>
                             <div className='inner-overlay'>
                                 Try using your &#8593; &#8592; &#8595; &#8594; keyboard keys.
                             </div>
                         </div>) : ('')}
-                    </div>
+                    </div>)}
                     <div className='header'  >
                         <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
                     </div>
@@ -151,7 +152,7 @@ export default class Home extends Component {
                     </div>
                     <div className={`homeBar homeBar2 ${this.state.shrink ? (this.state.two ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
-                        {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='blog' onClick={this.goToPage.bind(this)}>photos</a>}
+                        {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='photography' onClick={this.goToPage.bind(this)}>photos</a>}
                         </div>
                     </div>
                     <div className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
