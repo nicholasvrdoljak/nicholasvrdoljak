@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
 import Main from '../routers/secondary.jsx';
-// import SecondaryRouter from '../routers/secondary.jsx';
+import { connect } from "react-redux";
 
 const KEY = {
     LEFT:  37,
@@ -11,7 +11,13 @@ const KEY = {
     DOWN: 40,
 };
 
-export default class Home extends Component {
+const mapStateToProps = state => {
+    return {
+        lightboxIsOpen: state.lightboxIsOpen,
+    };
+};  
+
+class ConnectedHome extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,7 +46,6 @@ export default class Home extends Component {
         }
     }
     componentDidMount() {
-        console.log(this.props)
         setTimeout(() => {
             if (this.props.prop) {
                 this.setState({
@@ -60,6 +65,7 @@ export default class Home extends Component {
                 })
             }
         }, 200);
+
         document.body.addEventListener('keydown', this.handleKeyDown.bind(this, false));
 
         setTimeout(()=>{this.setState({slideOutOverlay: true})}, 2000);
@@ -70,36 +76,38 @@ export default class Home extends Component {
     }
 
     handleKeyDown(x, e){
-        if(e.keyCode === KEY.LEFT){
-            if(this.props.prop === 'one'){
-                return;
-            } else if(this.props.prop === 'two' || this.props.location.pathname === "/"){
-                this.goToPage(null, 'one', 'projects')
-            } else if(this.props.prop === 'three'){
-                this.goToPage(null, 'two', 'photography')
-            } else if(this.props.prop === 'four'){
-                this.goToPage(null, 'three', 'play')
+        if(!this.props.lightboxIsOpen){
+            if(e.keyCode === KEY.LEFT){
+                if(this.props.prop === 'one'){
+                    return;
+                } else if(this.props.prop === 'two' || this.props.location.pathname === "/"){
+                    this.goToPage(null, 'one', 'projects')
+                } else if(this.props.prop === 'three'){
+                    this.goToPage(null, 'two', 'photography')
+                } else if(this.props.prop === 'four'){
+                    this.goToPage(null, 'three', 'play')
+                }
             }
-        }
-        if(e.keyCode === KEY.RIGHT){
-            if(this.props.prop === 'one'){
-                this.goToPage(null, 'two', 'photography')
-            } else if(this.props.prop === 'two'){
-                this.goToPage(null, 'three', 'play')
-            } else if(this.props.prop === 'three' || this.props.location.pathname === "/"){
-                this.goToPage(null, 'four', 'contact')
-            } else if(this.props.prop === 'four'){
-                return;
+            if(e.keyCode === KEY.RIGHT){
+                if(this.props.prop === 'one'){
+                    this.goToPage(null, 'two', 'photography')
+                } else if(this.props.prop === 'two'){
+                    this.goToPage(null, 'three', 'play')
+                } else if(this.props.prop === 'three' || this.props.location.pathname === "/"){
+                    this.goToPage(null, 'four', 'contact')
+                } else if(this.props.prop === 'four'){
+                    return;
+                }
             }
-        }
-        if(e.keyCode === KEY.UP){
-            this.setState({
-                one: false, 
-                two: false, 
-                three: false, 
-                four: false, 
-                shrink: false
-            }, () => this.props.history.push('/'));
+            if(e.keyCode === KEY.UP){
+                this.setState({
+                    one: false, 
+                    two: false, 
+                    three: false, 
+                    four: false, 
+                    shrink: false
+                }, () => this.props.history.push('/'));
+            }
         }
     }
 
@@ -171,3 +179,7 @@ export default class Home extends Component {
         )
     }
 }
+
+const Home = connect(mapStateToProps)(ConnectedHome);
+
+export default Home;
