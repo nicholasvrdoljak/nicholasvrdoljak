@@ -8,7 +8,7 @@ import {
     AccordionItemBody,
 } from 'react-accessible-accordion';
 
-import 'react-accessible-accordion/dist/fancy-example.css';
+import './styles.css';
 
 
 export default class Projects extends Component{
@@ -27,10 +27,31 @@ export default class Projects extends Component{
 
                         <AccordionItem>
                             <AccordionItemTitle>
-                                <h3>BlockPlanes</h3>
+                                <h3>BlockPlanes.net</h3>
                             </AccordionItemTitle>
                             <AccordionItemBody>
                                 <p>Multiplayer space shooter</p>
+
+
+                                <Accordion>
+                                    <AccordionItem className='submenu'>
+                                        <AccordionItemTitle>
+                                            <h3>Technology</h3>
+                                        </AccordionItemTitle>
+                                        <AccordionItemBody>
+                                            <p>React, Redux, MySQL, Node, Socket.io, HTML5 Canvas</p>
+                                        </AccordionItemBody>
+                                    </AccordionItem>
+                                    <AccordionItem className='submenu'>
+                                        <AccordionItemTitle>
+                                            <h3>Challenges</h3>
+                                        </AccordionItemTitle>
+                                        <AccordionItemBody>
+                                            <p>Input challenges and anecdotes about the project.</p>
+                                        </AccordionItemBody>
+                                    </AccordionItem>
+                                </Accordion>
+
                             </AccordionItemBody>
                         </AccordionItem>
 
@@ -40,6 +61,26 @@ export default class Projects extends Component{
                             </AccordionItemTitle>
                             <AccordionItemBody>
                                 <p>Reddit Clone</p>
+
+                                <Accordion>
+                                    <AccordionItem className='submenu'>
+                                        <AccordionItemTitle>
+                                            <h3>Technology</h3>
+                                        </AccordionItemTitle>
+                                        <AccordionItemBody>
+                                            <p>React, Redux, MySQL, Node, Socket.io, HTML5 Canvas</p>
+                                        </AccordionItemBody>
+                                    </AccordionItem>
+                                    <AccordionItem className='submenu'>
+                                        <AccordionItemTitle>
+                                            <h3>Challenges</h3>
+                                        </AccordionItemTitle>
+                                        <AccordionItemBody>
+                                            <p>Input challenges and anecdotes about the project.</p>
+                                        </AccordionItemBody>
+                                    </AccordionItem>
+                                </Accordion>
+
                             </AccordionItemBody>
                         </AccordionItem>
 
@@ -49,6 +90,26 @@ export default class Projects extends Component{
                             </AccordionItemTitle>
                             <AccordionItemBody>
                                 <p>Personal Portfolio site</p>
+
+                                <Accordion>
+                                    <AccordionItem className='submenu'>
+                                        <AccordionItemTitle>
+                                            <h3>Technology</h3>
+                                        </AccordionItemTitle>
+                                        <AccordionItemBody>
+                                            <p>React, Redux, MySQL, Node, Socket.io, HTML5 Canvas</p>
+                                        </AccordionItemBody>
+                                    </AccordionItem>
+                                    <AccordionItem className='submenu'>
+                                        <AccordionItemTitle>
+                                            <h3>Challenges</h3>
+                                        </AccordionItemTitle>
+                                        <AccordionItemBody>
+                                            <p>Input challenges and anecdotes about the project.</p>
+                                        </AccordionItemBody>
+                                    </AccordionItem>
+                                </Accordion>
+
                             </AccordionItemBody>
                         </AccordionItem>
 
