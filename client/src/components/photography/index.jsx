@@ -6,12 +6,14 @@ import { openLightbox, closeLightbox } from "../../actions/index"
 
 const PHOTO_SET = [
     {
-        src: 'http://localhost:3456/images/DSC00834.jpg',
+        src: 'https://nicholasvrdoljak.com/images/DSC00834.jpg',
+        // src: 'http://localhost:3456/images/DSC00834.jpg',
         width: 4,
         height: 3
       },
       {
-        src: 'http://localhost:3456/images/DSC00071.jpg',
+        src: 'https://nicholasvrdoljak.com/images/DSC00071.jpg',
+        // src: 'http://localhost:3456/images/DSC00071.jpg',
         width: 4,
         height: 3
     },
