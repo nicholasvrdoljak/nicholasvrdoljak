@@ -14,11 +14,11 @@ export default class Contact extends Component{
                 <div className='contactTitle'>
                     <h1>Contact Me</h1>
                     <p>Share your ideas with me and let's create something.</p>
+                    <p>My LinkedIn and GitHub profiles are linked in the lower left and right corners.</p>
                 </div>
     
                 <div className='contactItem'>
-                    <h3>Email: </h3><a href='mailto:vrdoljaknicholas@gmail.com'>vrdoljaknicholas@gmail.com</a>
-                    <h3>LinkedIn: </h3><a target='blank' href='https://www.linkedin.com/in/nicholas-vrdoljak-52111453/'>https://www.linkedin.com/in/nicholas-vrdoljak-52111453/</a>
+                    <h3>Email/Hangouts: </h3><a href='mailto:vrdoljaknicholas@gmail.com'>vrdoljaknicholas@gmail.com</a>
                 </div>
             </div>
     
