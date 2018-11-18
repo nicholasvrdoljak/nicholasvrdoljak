@@ -18,6 +18,10 @@ export default class Projects extends Component{
         };
     }
 
+    handleClick(){
+        ReactDOM.findDOMNode(this).scrollTop = 0;
+    }
+
     render(){
         return (
             <div className='contact'>
