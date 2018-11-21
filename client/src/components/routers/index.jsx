@@ -6,6 +6,8 @@ import Contact from '../contact/index.jsx';
 import Play from '../play/index.jsx';
 import Photography from '../photography/index.jsx';
 import Projects from '../projects/index.jsx';
+import Secure from '../secure/index.jsx';
+import One from '../secure/components/one.jsx';
 
 
 const Main = () => (
@@ -17,6 +19,8 @@ const Main = () => (
             <Route exact path='/photography' render={(props) => <Home {...props} prop={'two'}/>}/>
             <Route exact path='/play' render={(props) => <Home {...props} prop={'three'}/>}/>
             <Route exact path='/contact' render={(props) => <Home {...props} prop={'four'}/>}/>
+            <Route exact path='/secure' render={() => <Secure/>}/>
+            <Route exact path='/secure/one' render={() => <One/>}/>
         </Switch>
     </main>
 );
