@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 
 export default class One extends Component{
     constructor(props) {
@@ -13,6 +14,8 @@ export default class One extends Component{
                 <div className='contactTitle'>
                     <h1>Secure Area One</h1>
                 </div>
+
+                <Link to='/secure'>dashbaord</Link>
 
 
                 <div className='contactItem'>

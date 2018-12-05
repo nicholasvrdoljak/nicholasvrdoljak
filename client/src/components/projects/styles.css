@@ -37,7 +37,7 @@
 
 .accordion[role='tablist']{
     width: 75%;
-    margin-left: calc(100vh - 60%);
+    margin-left: calc(100vh - 50%);
     cursor: pointer;
 }
 

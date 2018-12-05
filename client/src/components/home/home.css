@@ -74,8 +74,11 @@
 .contactTitle{
     height: auto;
     overflow-y: scroll;
-    margin-top: calc(100vh - 60%);
+    margin-top: 10%;
     padding-bottom: 50px;
+
+    text-align: center;
+    width: 100%;
 }
 
 .contact{
