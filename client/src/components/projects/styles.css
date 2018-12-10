@@ -35,9 +35,11 @@
     color: rgb(0, 39, 148);
 }
 
+.accordion-wrap{
+    width: 100%;
+}
 .accordion[role='tablist']{
-    width: 75%;
-    margin-left: calc(100vh - 50%);
+    text-align:center;
     cursor: pointer;
 }
 
@@ -45,6 +47,11 @@
     width: 100%;
     margin: 0;
     cursor: pointer;
+}
+
+.accordion-text{
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 

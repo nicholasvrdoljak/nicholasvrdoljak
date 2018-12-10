@@ -6,18 +6,28 @@ import { openLightbox, closeLightbox } from "../../actions/index"
 
 const PHOTO_SET = [
     {
-        src: 'https://nicholasvrdoljak.com/images/DSC00834.jpg',
-        // src: 'http://localhost:3456/images/DSC00834.jpg',
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC00071.jpg',
         width: 4,
         height: 3
       },
       {
-        src: 'https://nicholasvrdoljak.com/images/DSC00071.jpg',
-        // src: 'http://localhost:3456/images/DSC00071.jpg',
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC00834.jpg',
         width: 4,
         height: 3
     },
-  ];
+];
+
+const PHOTO_SET_BIG = PHOTO_SET.reduce(function(a, i){
+    var item = {
+        width: i.width, 
+        height: i.height,
+        src: i.src.split('small/').join('')
+    };
+    a.push(item);
+
+    return a;
+}, []);
+
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -67,7 +77,7 @@ class ConnectedPhotography extends Component {
         return (
             <div className='contact'>
                 <div className='contactTitle'></div>
-                <Lightbox images={PHOTO_SET}
+                <Lightbox images={PHOTO_SET_BIG}
                     onClose={this.closeLightbox}
                     onClickPrev={this.gotoPrevious}
                     onClickNext={this.gotoNext}
