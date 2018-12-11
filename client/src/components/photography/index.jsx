@@ -15,6 +15,31 @@ const PHOTO_SET = [
         width: 4,
         height: 3
     },
+    {
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC00872_Fotor.jpg',
+        width: 4,
+        height: 3
+    },
+    {
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC00906_Fotor.jpg',
+        width: 4,
+        height: 3
+    },
+    {
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC01039_Fotor.jpg',
+        width: 4,
+        height: 3
+    },
+    {
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC01061_Fotor.jpg',
+        width: 4,
+        height: 3
+    },
+    {
+        src: 'https://s3-us-west-1.amazonaws.com/nicholas-vrdoljak/small/DSC01095_Fotor.jpg',
+        width: 4,
+        height: 3
+    },
 ];
 
 const PHOTO_SET_BIG = PHOTO_SET.reduce(function(a, i){

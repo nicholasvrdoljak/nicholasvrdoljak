@@ -1,19 +1,54 @@
 const db = require('./db/index.js');
 const Promise = require('bluebird');
+const https = require('https');
 
-// module.exports.getGame = (req, res) => {
-//     console.log(req.params);
-//     res.send('cool game brah');
-// }
+module.exports.searchMovie = (req, res) => {
+    console.log('searching movie', req.params);
 
-module.exports.getImages = (req, res) => {
-    console.log('getting images')
+    https.get('https://www.omdbapi.com/?apikey=fdff2a8f&type=movie&s='+req.params.title, (resp) => {
+        let data = '';
+
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        resp.on('end', () => {
+            console.log(JSON.parse(data));
+            res.send(data);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
 }
 
-// module.exports.getTrends = (req, res) => {
-//     console.log(req.params);
-//     res.send('sweet trends bruh');
-// }
+module.exports.getMovie = (req, res) => {
+    console.log('getting movie', req.params.imdbID);
+
+    https.get('https://www.omdbapi.com/?apikey=fdff2a8f&type=movie&i='+req.params.imdbID, (resp) => {
+        let data = '';
+
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        resp.on('end', () => {
+            console.log(JSON.parse(data));
+            res.send(data);
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+}
+
+module.exports.suggestMovie = (req, res) => {
+    console.log('suggesting: ', req.params.imdbID);
+}
+
+module.exports.vote = (req, res) => {
+    console.log('voting on: ', req.params.id);
+}
 
 // module.exports.signIn = (req, res) => {
     // console.log('signIn', req.params);

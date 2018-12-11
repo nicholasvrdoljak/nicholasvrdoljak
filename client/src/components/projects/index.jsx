@@ -63,7 +63,7 @@ export default class Projects extends Component{
                                             <h3>More info</h3>
                                         </AccordionItemTitle>
                                         <AccordionItemBody>
-                                            <p className='.accordion-text'>This project involved learning programming language and dev environmnt of Solidity. 
+                                            <p className='accordion-text'>This project involved learning programming language and dev environmnt of Solidity. 
                                                 We used Ganache to test our smart contracts and eventually deployed them on the Ropsten test network. 
                                                 Solidity is a lot like Javascript, with contracts being similar structures to JS Classes.  
                                                 It was helpful to think of it like a very slow but very secure Node.js server with a poorly optimized database. Therefore, 
@@ -100,7 +100,7 @@ export default class Projects extends Component{
                                 <h3>Reddit</h3>
                             </AccordionItemTitle>
                             <AccordionItemBody>
-                                <p className='.accordion-text'>Reddit Clone</p>
+                                <p className='accordion-text'>Reddit Clone</p>
 
                                 <Accordion>
                                     <AccordionItem className='submenu'>
@@ -145,7 +145,7 @@ export default class Projects extends Component{
                                 <h3>NicholasVrdoljak.com</h3>
                             </AccordionItemTitle>
                             <AccordionItemBody>
-                                <p className='.accordion-text'>Personal Portfolio site (you're loking at it!)</p>
+                                <p className='accordion-text'>Personal Portfolio site (you're loking at it!)</p>
 
                                 <Accordion>
                                     <AccordionItem className='submenu'>

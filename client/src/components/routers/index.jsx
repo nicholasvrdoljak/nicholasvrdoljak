@@ -8,6 +8,7 @@ import Photography from '../photography/index.jsx';
 import Projects from '../projects/index.jsx';
 import Secure from '../secure/index.jsx';
 import One from '../secure/components/one.jsx';
+import MovieNight from '../movienight/index.jsx';
 
 
 const Main = () => (
@@ -19,8 +20,9 @@ const Main = () => (
             <Route exact path='/photography' render={(props) => <Home {...props} prop={'two'}/>}/>
             <Route exact path='/play' render={(props) => <Home {...props} prop={'three'}/>}/>
             <Route exact path='/contact' render={(props) => <Home {...props} prop={'four'}/>}/>
-            <Route exact path='/secure' render={() => <Secure/>}/>
-            <Route exact path='/secure/one' render={() => <One/>}/>
+            <Route exact path='/signIn' render={() => <Secure/>}/>
+            <Route exact path='/signIn/one' render={() => <One/>}/>
+            <Route exact path='/movienight' render={() => <MovieNight/>}/>
         </Switch>
     </main>
 );

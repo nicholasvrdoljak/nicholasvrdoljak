@@ -1,30 +1,34 @@
-DROP DATABASE IF EXISTS power_to_play;
+DROP DATABASE IF EXISTS movienight;
 
-CREATE DATABASE power_to_play;
+CREATE DATABASE movienight;
 
-USE power_to_play;
+USE movienight;
 
-CREATE TABLE games (
+CREATE TABLE users (
   `id` INT AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `username` (`username`)
+);
+
+CREATE TABLE movies (
+  `id` INT AUTO_INCREMENT,
+  `imdbID` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `platform` VARCHAR(255) NOT NULL,
-  `image` VARCHAR(255),
+  `created` TIMESTAMP NOT NULL,
+  `created_by` INT(11),
   PRIMARY KEY (`id`),
-  INDEX `name` (`name`), 
-  INDEX `platform` (`platform`)
+  INDEX `imdbID` (`imdbID`),
+  INDEX `name` (`name`)
 );
 
-CREATE TABLE times_for_games (
+CREATE TABLE votes (
   `id` INT AUTO_INCREMENT,
-  `power_to_play_time_minutes` INT(255),
-  `votes` INT(255) DEFAULT 0, 
-  `description` VARCHAR(255),
+  `users_id` INT(255) NOT NULL REFERENCES users(`id`),
+  `movies_id` INT(255) NOT NULL REFERENCES movies(`id`), 
+  `created` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
-  `game` INT(255) NOT NULL REFERENCES games(`id`)
+  INDEX `users_id` (`users_id`), 
+  INDEX `movies_id` (`movies_id`)
 );
-
-INSERT INTO games (`name`, `platform`, `image`)
-VALUES ('gta5', 'ps4', 'https://images.g2a.com/newlayout/323x433/1x1x0/387a113709aa/59e5efeb5bafe304c4426c47');
-
-INSERT INTO times_for_games (`power_to_play_time_minutes`, `description`, `game`)
-VALUES (5, 'from press start to control of character', 1);
