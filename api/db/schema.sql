@@ -16,6 +16,7 @@ CREATE TABLE movies (
   `id` INT AUTO_INCREMENT,
   `imdbID` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
+  `description` TEXT NOT NULL,
   `created` TIMESTAMP NOT NULL,
   `created_by` INT(11),
   PRIMARY KEY (`id`),

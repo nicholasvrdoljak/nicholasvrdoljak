@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import configs from '../../configs.js';
 
 
 export default class MovieNight extends Component{
@@ -23,17 +24,17 @@ export default class MovieNight extends Component{
     }
 
     handleLogin(event){
-        var apiBaseUrl = "http://localhost:3456/";
         var self = this;
         var payload={
             "email": this.state.username,
             "password": this.state.password
         }
-        axios.post(apiBaseUrl+'login', payload)
+        axios.post(configs.domain+'movienight/login', payload)
         .then(function (response) {
             console.log(response);
             if(response.data.code == 200){
                 console.log("Login successfull");
+
                 // check if they are logging in for the first time
                     // if so - have them change their password
                     // if not - set state to logged in
