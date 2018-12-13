@@ -1,22 +1,51 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+
+import SwipeableViews from 'react-swipeable-views';
+
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+
 import axios from 'axios';
 import configs from '../../configs.js';
 
+import CurrentRankingsAndVote from './components/current_rankings.jsx';
+import LogInOut from './components/log_in_out.jsx';
+import PastEvents from './components/past_events.jsx';
+import SuggestMovies from './components/suggest_movie.jsx';
 
-export default class MovieNight extends Component{
+function TabContainer(props) {
+    return (
+        <Typography component="div" dir={props.dir} style={{ padding: 8 * 3, height: '100%'}}>
+            {props.children}
+        </Typography>
+    );
+}
+
+class MovieNight extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false,
-            username: '', 
-            password: '',
+            loggedIn: 0,
+            changePassword: 0,
+
+            loginPackage: {},
+            user: 'nick', 
+
+            value: 0,
         };
     }
+
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
+
+    handleChangeIndex = index => {
+        this.setState({ value: index });
+      };
 
     componentDidMount(){
         console.log('did mount');
@@ -24,70 +53,88 @@ export default class MovieNight extends Component{
     }
 
     handleLogin(event){
-        var self = this;
-        var payload={
-            "email": this.state.username,
-            "password": this.state.password
-        }
-        axios.post(configs.domain+'movienight/login', payload)
-        .then(function (response) {
-            console.log(response);
-            if(response.data.code == 200){
-                console.log("Login successfull");
+        this.setState({changePassword: 1, loggedIn: 1});
+        // var self = this;
+        // var payload={
+        //     "email": this.state.username,
+        //     "password": this.state.password
+        // }
+        // axios.post(configs.domain+'movies/login', payload)
+        // .then(function (response) {
+        //     console.log(response);
+        //     if(response.data.code == 200){
+        //         console.log("Login successfull");
 
-                // check if they are logging in for the first time
-                    // if so - have them change their password
-                    // if not - set state to logged in
+        //         // check if they are logging in for the first time
+        //             // if so - have them change their password
+        //             // if not - set state to logged in
 
 
 
-                // var uploadScreen=[];
-                // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-                // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+        //         // var uploadScreen=[];
+        //         // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
+        //         // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
 
-            }
-            else if(response.data.code == 204){
-                console.log("Username password do not match");
-                alert("username password do not match")
-            }
-            else{
-                console.log("Username does not exists");
-                alert("Username does not exist");
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        //     }
+        //     else if(response.data.code == 204){
+        //         console.log("Username password do not match");
+        //         alert("username password do not match")
+        //     }
+        //     else{
+        //         console.log("Username does not exists");
+        //         alert("Username does not exist");
+        //     }
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
     }
 
     render() {
+        const { classes, theme } = this.props;
+        const { value, loggedIn, user } = this.state;
+
         return (
-          <div>
-            <MuiThemeProvider>
-              <div>
-              <AppBar
-                 title="Movie Night"
-               />
-               <TextField
-                 hintText="Enter your Username"
-                 floatingLabelText="Username"
-                 onChange = {(event,newValue) => this.setState({username:newValue})}
-                 />
-               <br/>
-                 <TextField
-                   type="password"
-                   hintText="Enter your Password"
-                   floatingLabelText="Password"
-                   onChange = {(event,newValue) => this.setState({password:newValue})}
-                   />
-                 <br/>
-                 <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleLogin(event)}/>
-             </div>
-             </MuiThemeProvider>
-          </div>
+            <div className={classes.root}>
+                <AppBar position="static" color='default'>
+                    <Tabs 
+                        value={value}
+                        onChange={this.handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                        fullWidth
+                    >
+                        <Tab label="Current Rankings" />
+                        <Tab label="Suggest a Movie" />
+                        <Tab label="Past Events" />
+                        <Tab label={loggedIn ? "Log Out" : "Log In"} />
+                    </Tabs>
+                </AppBar>
+                <div className='loginNotification'>{loggedIn ? 'Welcome back, '+user+'.' : 'Please log in to participate.'}</div>
+                <SwipeableViews
+                    style={{height: '100vh', position: 'absolute', width: '100%'}}
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={this.state.value}
+                    onChangeIndex={this.handleChangeIndex}
+                >
+                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
+                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
+                    <TabContainer dir={theme.direction}><PastEvents loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
+                    <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
+                </SwipeableViews>
+            </div>
         );
     }
 }
-const style = {
-    margin: 15,
-};
+  
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+    },
+});
+  
+
+export default withStyles(styles, {withTheme: true})(MovieNight);

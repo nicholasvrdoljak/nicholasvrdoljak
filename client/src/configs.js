@@ -1,3 +1,3 @@
-export default configs = {
+export const configs = {
     domain: 'http://localhost:3456/'
 }

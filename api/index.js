@@ -12,7 +12,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(express.static(path.join(__dirname, '../client/public')));
 
-server.use('/movienight', movieRouter);
+server.use('/movies', movieRouter);
 server.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../client/public/index.html')));
 
 server.listen(PORT, () => console.log('serving static files on port', PORT));

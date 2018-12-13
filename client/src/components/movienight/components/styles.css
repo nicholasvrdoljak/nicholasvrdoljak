@@ -1,0 +1,25 @@
+.loginNotification{
+    position:absolute;
+    right:1em;
+    margin-top: 5px;
+}
+
+.example{
+    position: absolute;
+    width: 100%;
+}
+
+.example-enter {
+    transform: translate(200%);
+}
+.example-enter.example-enter-active {
+    transform: translate(0%);
+    transition: transform 500ms ease-in-out;
+}
+.example-leave {
+    transform: translate(0%);
+}
+.example-leave.example-leave-active {
+    transform: translate(-100%);
+    transition: transform 500ms ease-in-out;
+}
