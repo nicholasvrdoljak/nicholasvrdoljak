@@ -14,8 +14,11 @@ import './styles.css';
 export default class Projects extends Component{
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
+    }
+
+    componentDidMount(){
+        console.log(this.state);
     }
 
     handleClick(){

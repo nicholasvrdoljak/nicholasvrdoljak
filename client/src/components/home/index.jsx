@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Link } from 'react-router-dom';
-import './home.css';
-import Main from '../routers/secondary.jsx';
 import { connect } from "react-redux";
+
+import Main from '../routers/secondary.jsx';
+import './home.css';
 
 const KEY = {
     LEFT:  37,
@@ -72,7 +74,7 @@ class ConnectedHome extends Component {
     }
 
     componentWillUnmount(){
-        console.log('unmounting');
+        console.log('unmounting', this.state);
     }
 
     handleKeyDown(x, e){
@@ -143,9 +145,20 @@ class ConnectedHome extends Component {
                             </div>
                         </div>) : ('')}
                     </div>)}
-                    <div className='header'  >
-                        <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
-                    </div>
+                    <ReactCSSTransitionGroup
+                        transitionName="header"
+                        transitionEnterTimeout={200}
+                        transitionLeaveTimeout={200}>
+
+                        { !this.state.shrink
+                            ?  (
+                                <div className='header'  >
+                                    <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
+                                </div>
+                            )
+                            : ''
+                        }
+                    </ReactCSSTransitionGroup>
                     <div className='footer'>&#169; Nick Vr. 2018</div>
                     <div className='footerImg1'><a target='blank' href='https://www.linkedin.com/in/nicholas-vrdoljak-52111453'><img src='/../../assets/linkedin-logo-2.png'></img></a></div>
                     <div className='footerImg2'><a target='blank' href='https://github.com/nicholasvrdoljak'><img src='/../../assets/GitHub-Mark-32px.png'></img></a></div>

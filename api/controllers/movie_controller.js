@@ -6,15 +6,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 
 // Makes sure that the username and password given to it exist and are not falsy
-checkCredentials = (req, res, username, password) => {
+emptyCredentials = (req, res, username, password) => {
     if(!username || username.length < 1){
         res.json({message: 'No username sent', code: 'send_user'});
-        return false;
+        return true;
     }
 
     if(!password || password.length < 1){
         res.json({message: 'No password sent', code: 'send_pass'});
-        return false;
+        return true;
     }
 }
 
@@ -55,7 +55,7 @@ module.exports.login = (req, res) => {
     console.log(username, password);
 
     // Make sure that a username and password was sent
-    if(!checkCredentials(req, res, username, password)){return;}
+    if(emptyCredentials(req, res, username, password)){return;}
 
     db.query('SELECT * FROM `users` WHERE username = ?', [username], 
         (err, data) => {
@@ -73,6 +73,7 @@ module.exports.login = (req, res) => {
                     // if good, send a token
                     const user = { username: data[0].username };
                     jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
+                        console.log(token);
                         res.json(token);
                         return;
                     });
@@ -92,7 +93,7 @@ module.exports.changePassword = (req, res) => {
     const password = _.escape(req.params.password);
     const access = _.escape(req.params.access);
 
-    if(!checkCredentials(req, res, username, password)){return;}
+    if(emptyCredentials(req, res, username, password)){return;}
 
     let validAccess = bcrypt.compareSync(username+'vrdoljak'+new Date().getDate(), access);
 
@@ -169,6 +170,9 @@ module.exports.getMovie = (req, res) => {
 
 // Gets a list of the top voted movies 
 module.exports.getMovies = (req, res) => {
+    // if logged in, also include the votes of the user who is logged in,
+    // so the front end will be able to display voting icons
+
     db.query(
         "SELECT  "+
         "   `mv`.* "+

@@ -66,6 +66,7 @@ class CurrentRankingsAndVote extends Component{
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography className={classes.heading}>{item.title}</Typography>
                             <Typography className={classes.secondaryHeading}>{item.genre + ', ' + item.year}</Typography>
+                            <Typography className={classes.secondaryHeading}>Votes: XX</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                             <Typography>

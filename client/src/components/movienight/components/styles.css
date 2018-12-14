@@ -4,22 +4,22 @@
     margin-top: 5px;
 }
 
-.example{
+.login{
     position: absolute;
     width: 100%;
 }
 
-.example-enter {
+.login-enter {
     transform: translate(100%);
 }
-.example-enter.example-enter-active {
+.login-enter.login-enter-active {
     transform: translate(0%);
     transition: transform 500ms ease-in-out;
 }
-.example-leave {
+.login-leave {
     transform: translate(0%);
 }
-.example-leave.example-leave-active {
+.login-leave.login-leave-active {
     transform: translate(-100%);
     transition: transform 500ms ease-in-out;
 }

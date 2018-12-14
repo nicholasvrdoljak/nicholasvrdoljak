@@ -205,7 +205,7 @@ class LogInOut extends React.Component{
                 </VelocityTransitionGroup> */}
 
                 <ReactCSSTransitionGroup
-                    transitionName="example"
+                    transitionName="login"
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={500}>
 
