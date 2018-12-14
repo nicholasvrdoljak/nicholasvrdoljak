@@ -10,7 +10,7 @@
 }
 
 .example-enter {
-    transform: translate(200%);
+    transform: translate(100%);
 }
 .example-enter.example-enter-active {
     transform: translate(0%);

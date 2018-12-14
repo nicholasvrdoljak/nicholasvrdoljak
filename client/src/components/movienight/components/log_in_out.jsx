@@ -10,6 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
+import Security from '@material-ui/icons/Security';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -149,7 +150,7 @@ class LogInOut extends React.Component{
                     <CssBaseline />
                     <Paper className={classes.paper}>
                         <Avatar className={classes.avatar}>
-                        <LockIcon />
+                            <Security />
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Please Change Your Password

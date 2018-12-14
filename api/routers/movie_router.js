@@ -13,6 +13,11 @@ router.get('/searchmovie/:title', controller.searchMovie);
 // Get movie by imdb id
 router.get('/getmovie/:imdbID', controller.getMovie);
 
+// Get movies listing
+router.get('/getmovies', controller.getMovies);
+
+
+
 // Protected routes below!
 router.use(controller.checkLoggedIn);
 
@@ -21,8 +26,6 @@ router.post('/suggestmovie/:imdbID', controller.suggestMovie);
 
 // Vote on a movie
 router.post('/vote/:id', controller.vote);
-
-
 
 
 module.exports = router;

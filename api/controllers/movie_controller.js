@@ -125,23 +125,25 @@ module.exports.changePassword = (req, res) => {
 
 // Searches for a movie by the title
 module.exports.searchMovie = (req, res) => {
-    console.log('searching movie', req.params);
-
-    https.get('https://www.omdbapi.com/?apikey=fdff2a8f&type=movie&s='+req.params.title, (resp) => {
-        let data = '';
-
-        resp.on('data', (chunk) => {
-            data += chunk;
+    console.log('searching movie', req.params, req.body);
+    if(req.params){
+        const title = req.params.title;
+        https.get('https://www.omdbapi.com/?apikey=fdff2a8f&type=movie&s='+title, (resp) => {
+            let data = '';
+    
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+    
+            resp.on('end', () => {
+                console.log(JSON.parse(data));
+                res.send(data);
+            });
+    
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-
-        resp.on('end', () => {
-            console.log(JSON.parse(data));
-            res.send(data);
-        });
-
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    }
 }
 
 // Gets a particular movies details
@@ -163,6 +165,27 @@ module.exports.getMovie = (req, res) => {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
+}
+
+// Gets a list of the top voted movies 
+module.exports.getMovies = (req, res) => {
+    db.query(
+        "SELECT  "+
+        "   `mv`.* "+
+        "  , `ev`.`date` AS `event_date` "+
+        "  , `e2m`.`votes` AS `votes` "+
+        "FROM `events` AS `ev`  "+
+        "  INNER JOIN `events_movies` AS `e2m`  "+
+        "    ON `e2m`.`events_id` = `ev`.`id`  "+
+        "  INNER JOIN `movies` AS `mv`  "+
+        "    ON `mv`.`id` = `e2m`.`movies_id`  "+
+        "WHERE `ev`.`date` > CURRENT_TIMESTAMP "+
+        "ORDER BY `e2m`.`votes` DESC  "+
+        ";"
+    , [], (err, data) => {
+        console.log(data);
+        res.json(data);
+    })
 }
 
 // Saves the movie to the db and allows it to be voted on by a user

@@ -9,7 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import axios from 'axios';
+import Axios from 'axios';
 import configs from '../../configs.js';
 
 import CurrentRankingsAndVote from './components/current_rankings.jsx';
@@ -19,7 +19,7 @@ import SuggestMovies from './components/suggest_movie.jsx';
 
 function TabContainer(props) {
     return (
-        <Typography component="div" dir={props.dir} style={{ padding: 8 * 3, height: '100%'}}>
+        <Typography component="div" dir={props.dir} style={{ padding: '3em', height: '100%'}}>
             {props.children}
         </Typography>
     );
@@ -53,7 +53,7 @@ class MovieNight extends Component{
     }
 
     handleLogin(event){
-        this.setState({changePassword: 1, loggedIn: 1});
+        this.setState({changePassword: 1});
         // var self = this;
         // var payload={
         //     "email": this.state.username,
@@ -111,16 +111,16 @@ class MovieNight extends Component{
                         <Tab label={loggedIn ? "Log Out" : "Log In"} />
                     </Tabs>
                 </AppBar>
-                <div className='loginNotification'>{loggedIn ? 'Welcome back, '+user+'.' : 'Please log in to participate.'}</div>
+                <div className='loginNotification'>{loggedIn ? 'Welcome back, '+user+'.' : 'Please log in to vote or suggest movies.'}</div>
                 <SwipeableViews
                     style={{height: '100vh', position: 'absolute', width: '100%'}}
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={this.state.value}
                     onChangeIndex={this.handleChangeIndex}
                 >
-                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
-                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
-                    <TabContainer dir={theme.direction}><PastEvents loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
+                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn}/></TabContainer>
+                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn}/></TabContainer>
+                    <TabContainer dir={theme.direction}><PastEvents loggedIn={loggedIn}/></TabContainer>
                     <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
                 </SwipeableViews>
             </div>
