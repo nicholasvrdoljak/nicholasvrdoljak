@@ -101,7 +101,7 @@ class LogInOut extends React.Component{
 
     renderLogin = (classes, bool) => {
         return (
-            <div className='example' key='3'>
+            <div className='login' key='3'>
                 <main className={classes.main}>
                     <CssBaseline />
                     <Paper className={classes.paper}>
@@ -145,7 +145,7 @@ class LogInOut extends React.Component{
 
     renderChangePassword = (classes, bool) => {
         return (
-            <div className='example' key='1'>
+            <div className='login' key='1'>
                 <main className={classes.main}>
                     <CssBaseline />
                     <Paper className={classes.paper}>
@@ -185,7 +185,7 @@ class LogInOut extends React.Component{
         );
     }
     renderLoggedIn = () => {
-        <div className='example' key='2'>hi</div>
+        <div className='login' key='2'>hi</div>
     }
 
     render(){

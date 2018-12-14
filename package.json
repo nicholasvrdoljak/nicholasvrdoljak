@@ -55,7 +55,6 @@
     "react-photo-gallery": "^6.2.2",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
-    "react-router-transition": "^1.2.1",
     "react-swipeable-views": "^0.13.0",
     "redux": "^4.0.1",
     "semantic-ui-react": "^0.81.1",
