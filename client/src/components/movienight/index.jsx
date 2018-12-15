@@ -33,7 +33,8 @@ class MovieNight extends Component{
             changePassword: 0,
 
             loginPackage: {},
-            user: 'nick', 
+            user: '', 
+            access: '',
 
             value: 0,
         };
@@ -52,42 +53,51 @@ class MovieNight extends Component{
         // check for login cookie, if so, set the state
     }
 
-    handleLogin(event){
-        this.setState({changePassword: 1});
-        // var self = this;
-        // var payload={
-        //     "email": this.state.username,
-        //     "password": this.state.password
-        // }
-        // axios.post(configs.domain+'movies/login', payload)
-        // .then(function (response) {
-        //     console.log(response);
-        //     if(response.data.code == 200){
-        //         console.log("Login successfull");
+    handleLogin(username, password){
+        let self = this;
+        Axios.post('/movies/login/'+username+'/'+password)
+            .then(function (response) {
+                console.log(response);
+                if(response.data.code == 'success'){
+                    sessionStorage.setItem('jwtToken', response.data.token);
+                    self.setState({loggedIn: 1, user: username})
+                } else if(response.data.code == 204){
+                    alert("username password do not match")
+                } else{
+                    if(response.data.code === 'change_pass'){
+                        self.setState({changePassword: 1, access: response.data.access, user: username})
+                    }
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 
-        //         // check if they are logging in for the first time
-        //             // if so - have them change their password
-        //             // if not - set state to logged in
+    handleChangePassword = (pass1, pass2) => {
+        let self = this;
+
+        if(pass1 !== pass2){
+            alert("The passwords must match.");
+        } else{
+            let params = {username: this.state.user, password: pass1, access: this.state.access}
+
+            Axios.post('/movies/changepassword', params)
+                .then((response) => {
+                    console.log(response);
+                    if(response.data.code === 'success'){
+                        self.setState({
+                            changePassword: 0
+                        })
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
 
 
+        }
 
-        //         // var uploadScreen=[];
-        //         // uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-        //         // self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-
-        //     }
-        //     else if(response.data.code == 204){
-        //         console.log("Username password do not match");
-        //         alert("username password do not match")
-        //     }
-        //     else{
-        //         console.log("Username does not exists");
-        //         alert("Username does not exist");
-        //     }
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
     }
 
     render() {
@@ -111,7 +121,7 @@ class MovieNight extends Component{
                         <Tab label={loggedIn ? "Log Out" : "Log In"} />
                     </Tabs>
                 </AppBar>
-                <div className='loginNotification'>{loggedIn ? 'Welcome back, '+user+'.' : 'Please log in to vote or suggest movies.'}</div>
+                <div className='loginNotification'>{loggedIn ? 'Welcome back, '+this.state.user+'.' : 'Please log in to vote or suggest movies.'}</div>
                 <SwipeableViews
                     style={{height: '100vh', position: 'absolute', width: '100%'}}
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -121,7 +131,7 @@ class MovieNight extends Component{
                     <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn}/></TabContainer>
                     <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn}/></TabContainer>
                     <TabContainer dir={theme.direction}><PastEvents loggedIn={loggedIn}/></TabContainer>
-                    <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} handleLogin={this.handleLogin.bind(this)} loginPackage={this.state.loginPackage} username='nick' changePassword={this.state.changePassword}/></TabContainer>
+                    <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} changePassword={this.state.changePassword} handleLogin={this.handleLogin.bind(this)} username='nick' handleChangePassword={this.handleChangePassword.bind(this)}/></TabContainer>
                 </SwipeableViews>
             </div>
         );

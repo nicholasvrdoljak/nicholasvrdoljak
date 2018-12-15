@@ -20,27 +20,20 @@ emptyCredentials = (req, res, username, password) => {
 
 // Middleware to check if the user is logged in
 module.exports.checkLoggedIn = async (req, res, next) => {
-    console.log('checking the cookie');
+    console.log('checking the cookie', req.headers, req.headers.authentication);
 
-    if (typeof req.headers.cookie !== 'undefined') {
-        req.token = req.headers.cookie.split('; ')
-        if (req.token.length === 1) {
-            req.token = req.token[0].slice(1, -1);
-        } else {
-            req.token = req.token[2].slice(1, -1);
-        }
-        
-        jwt.verify(req.token, process.env.JWT_SECRET, (err, decoded) => {
+    if (typeof req.headers.authentication !== 'undefined') {
+        jwt.verify(req.headers.authentication, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 console.log('cookie failed authentication')
                 res.sendStatus(403);
             } else {
                 console.log('authenticated!');
                 req.username = decoded.user.username;
+                console.log(req.username);
                 next();
             }
         });
-
     } else {
         console.log('no cookie')
         res.sendStatus(403);
@@ -64,9 +57,10 @@ module.exports.login = (req, res) => {
                 // no data was found for the username
                 res.json({message: 'Username not found', code: 'user_not_found'})
             } else{
-                if(password === 'jansmovienight' && data[0].password === 'jansmovienight'){
+                if(password === 'movienight' && data[0].password === 'movienight'){
                     // if we are logging in for the first time, prompt to change the password
                     // include an access hash that will not be valid outside of the same day
+                    console.log(1);
                     res.json({message: 'Please change your password', code: 'change_pass', access: bcrypt.hashSync(username+'vrdoljak'+new Date().getDate())})
                     return;
                 } else if(bcrypt.compareSync(password, data[0].password)){
@@ -74,7 +68,7 @@ module.exports.login = (req, res) => {
                     const user = { username: data[0].username };
                     jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
                         console.log(token);
-                        res.json(token);
+                        res.json({token: token, code: 'success'});
                         return;
                     });
                 } else{
@@ -89,13 +83,16 @@ module.exports.login = (req, res) => {
 
 // Changes the password for a user
 module.exports.changePassword = (req, res) => {
-    const username = _.escape(req.params.username);
-    const password = _.escape(req.params.password);
-    const access = _.escape(req.params.access);
+    const username = _.escape(req.body.username);
+    const password = _.escape(req.body.password);
+    const access = _.escape(req.body.access);
 
+    console.log('changing password', req.body);
     if(emptyCredentials(req, res, username, password)){return;}
 
     let validAccess = bcrypt.compareSync(username+'vrdoljak'+new Date().getDate(), access);
+
+    console.log(validAccess);
 
     // the access code is granted when logging in for the first time and prompted to change your password
     // if not used within the same day, you can't change the password
@@ -114,7 +111,7 @@ module.exports.changePassword = (req, res) => {
             } else{
                 bcrypt.hash(password, null, null, function(err, hash) {
                     // change the password to the provided one
-                    db.query('UPDATE `users` SET `password` = ? WHERE `id` = ?', ['hash', data[0].id], (err, data) => {
+                    db.query('UPDATE `users` SET `password` = ? WHERE `id` = ?', [hash, data[0].id], (err, data) => {
                         console.log(data);
                         res.json({message: 'Successfully changed the password.', code: 'success'})
                     });

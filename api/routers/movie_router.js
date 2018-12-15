@@ -5,7 +5,7 @@ const controller = require('../controllers/movie_controller.js');
 router.post('/login/:username/:password', controller.login);
 
 // Change password
-router.post('/login/:username/:password/:access', controller.changePassword);
+router.post('/changepassword', controller.changePassword);
 
 // Search by title
 router.get('/searchmovie/:title', controller.searchMovie);

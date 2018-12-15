@@ -78,12 +78,13 @@ class LogInOut extends React.Component{
         console.log('signing in ', e.target)
         console.log(this.props);
         console.log(this.state);
-        this.props.handleLogin();
+        this.props.handleLogin(this.state.username, this.state.password, this.state.remember);
     }
 
     handleChangePassword = (e, v) => {
         e.preventDefault()
         console.log(this.state);
+        this.props.handleChangePassword(this.state.password1, this.state.password2);
     }
 
     handleChange = (e, v) => {
@@ -91,6 +92,8 @@ class LogInOut extends React.Component{
         if(e.target.value === 'remember'){
             state[e.target.value] = e.target.checked;
         } else{
+            console.log(e.target.id);
+            console.log(e.target.value);
             state[e.target.id] = e.target.value;
         }
 
@@ -184,26 +187,20 @@ class LogInOut extends React.Component{
             </div>
         );
     }
-    renderLoggedIn = () => {
-        <div className='login' key='2'>hi</div>
+    renderLoggedIn = (classes) => {
+        return(
+            <div className='login' key='2'>
+                <main className={classes.main}>
+                    <p>HIHIHIHIH</p>
+                </main>
+            </div>
+        )
     }
 
     render(){
         const { classes } = this.props;
         return(
             <div>
-            {/* {this.renderLogin(classes, this.props.loggedIn === 0 && this.props.changePassword === 0)}
-            {this.renderLoggedIn(classes, this.props.loggedIn === 1)}
-            {this.renderChangePassword(classes, this.props.changePassword === 1)} */}
-            {/* <VelocityTransitionGroup component="div" enter="slideDown" leave="slideUp">
-                    {   this.props.loggedIn === 1 ? 
-                        this.renderLoggedIn(classes, ) 
-                        : this.props.changePassword === 1 ? 
-                            this.renderChangePassword(classes)
-                            : this.renderLogin(classes)
-                }
-                </VelocityTransitionGroup> */}
-
                 <ReactCSSTransitionGroup
                     transitionName="login"
                     transitionEnterTimeout={500}
