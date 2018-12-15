@@ -191,7 +191,7 @@ class LogInOut extends React.Component{
         return(
             <div className='login' key='2'>
                 <main className={classes.main}>
-                    <p>HIHIHIHIH</p>
+                    <p>You've been logged in. Feel free to suggest or vote on movies.</p>
                 </main>
             </div>
         )

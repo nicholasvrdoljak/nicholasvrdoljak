@@ -21,6 +21,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 
 const styles = theme => ({
@@ -145,17 +147,28 @@ class SuggestMovies extends Component{
                                                             ? <CircularProgress/>
                                                             : this.state.fetchedMovie 
                                                                 ? (
-                                                                    this.state.fetchedMovie.Actors+
-                                                                    
-                                                                    this.state.fetchedMovie.Country+
-                                                                    
-                                                                    this.state.fetchedMovie.Director+
-                                                                    
-                                                                    this.state.fetchedMovie.Genre+
-                                                                    
-                                                                    this.state.fetchedMovie.Language+
-                                                                    
-                                                                    this.state.fetchedMovie.Plot+
+
+                                                                    <Grid container spacing={24}>
+                                                                        <Grid item xs={12}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Actors}</Paper>
+                                                                        </Grid>
+                                                                        <Grid item xs={6}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Country}</Paper>
+                                                                        </Grid>
+                                                                        <Grid item xs={6}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Director}</Paper>
+                                                                        </Grid>
+                                                                        <Grid item xs={3}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Director}</Paper>
+                                                                        </Grid>
+                                                                        <Grid item xs={3}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Genre}</Paper>
+                                                                        </Grid>
+                                                                        <Grid item xs={3}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Language}</Paper>
+                                                                        </Grid>
+                                                                        <Grid item xs={3}>
+                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Language+this.state.fetchedMovie.Plot+
                                                                     
                                                                     this.state.fetchedMovie.Poster+
                                                                     
@@ -167,7 +180,9 @@ class SuggestMovies extends Component{
                                                                     
                                                                     this.state.fetchedMovie.Year+
                                                                     
-                                                                    this.state.fetchedMovie.imdbVotes+'/100'
+                                                                    this.state.fetchedMovie.imdbVotes+'/100'}</Paper>
+                                                                        </Grid>
+                                                                    </Grid>
                                                                 )
                                                                 : <p></p>
                                                             }

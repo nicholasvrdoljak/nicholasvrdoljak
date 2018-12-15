@@ -14,7 +14,7 @@ import configs from '../../configs.js';
 
 import CurrentRankingsAndVote from './components/current_rankings.jsx';
 import LogInOut from './components/log_in_out.jsx';
-import PastEvents from './components/past_events.jsx';
+import Events from './components/events.jsx';
 import SuggestMovies from './components/suggest_movie.jsx';
 
 function TabContainer(props) {
@@ -130,8 +130,8 @@ class MovieNight extends Component{
                 >
                     <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn}/></TabContainer>
                     <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn}/></TabContainer>
-                    <TabContainer dir={theme.direction}><PastEvents loggedIn={loggedIn}/></TabContainer>
-                    <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} changePassword={this.state.changePassword} handleLogin={this.handleLogin.bind(this)} username='nick' handleChangePassword={this.handleChangePassword.bind(this)}/></TabContainer>
+                    <TabContainer dir={theme.direction}><Events loggedIn={loggedIn}/></TabContainer>
+                    <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} changePassword={this.state.changePassword} handleLogin={this.handleLogin.bind(this)} username={this.state.user} handleChangePassword={this.handleChangePassword.bind(this)}/></TabContainer>
                 </SwipeableViews>
             </div>
         );
