@@ -29,8 +29,8 @@ class MovieNight extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: 0,
-            changePassword: 0,
+            loggedIn: false,
+            changePassword: false,
 
             loginPackage: {},
             user: '', 
@@ -49,23 +49,36 @@ class MovieNight extends Component{
       };
 
     componentDidMount(){
-        console.log('did mount');
+        console.log('did mount, checking token', sessionStorage.getItem('jwtToken'));
         // check for login cookie, if so, set the state
+        if(sessionStorage.getItem('jwtToken')){
+            let params = {token: sessionStorage.getItem('jwtToken')}
+
+            Axios.post('/movies/signintoken', params)
+                .then((response) => {
+                    console.log('token login response: ', response);
+                    this.setState({user: response.data.user.username, loggedIn: true});
+                })
+                .catch((err) => {
+                    console.log('error: ', err);
+                })
+        } 
     }
 
     handleLogin(username, password){
         let self = this;
+        
         Axios.post('/movies/login/'+username+'/'+password)
             .then(function (response) {
                 console.log(response);
                 if(response.data.code == 'success'){
                     sessionStorage.setItem('jwtToken', response.data.token);
-                    self.setState({loggedIn: 1, user: username})
+                    self.setState({loggedIn: true, user: username})
                 } else if(response.data.code == 204){
                     alert("username password do not match")
                 } else{
                     if(response.data.code === 'change_pass'){
-                        self.setState({changePassword: 1, access: response.data.access, user: username})
+                        self.setState({changePassword: true, access: response.data.access, user: username})
                     }
                 }
             })
@@ -117,7 +130,7 @@ class MovieNight extends Component{
                     >
                         <Tab label="Current Rankings" />
                         <Tab label="Suggest a Movie" />
-                        <Tab label="Past Events" />
+                        <Tab label="Events" />
                         <Tab label={loggedIn ? "Log Out" : "Log In"} />
                     </Tabs>
                 </AppBar>

@@ -45,7 +45,20 @@ const styles = theme => ({
     },
     nextButton: {
         'margin-bottom': '15em',
+    },
+    imageColumn: {
+        'max-width': '100%',
+        'margin-top': '1em', 
+    },
+    imageColumnContainer: {
+        width: '50%'
+    },
+    infoContainer: {
+        width: '50%', 
+        'margin-top': '1em', 
+        'padding-left': '1em'
     }
+
 });
 
 class SuggestMovies extends Component{
@@ -57,11 +70,14 @@ class SuggestMovies extends Component{
             loading: false,
             error: false,
             errorMessage: 'Error...',
+            page: 1,
 
             popupOpened: false,
             loadingMovie: false,
             fetchedMovie: false,
             fetchedMovieTitle: '',
+
+            suggestingPopupOpened: false,
         }
     }
 
@@ -72,10 +88,11 @@ class SuggestMovies extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({results: [], loading: true});
+        console.log('searching: ', this.state.title);
 
-        Axios.get('/movies/searchmovie/'+this.state.title)
+        Axios.get('/movies/searchmovie/'+this.state.title+'/1')
             .then((response) => {
-                console.log(response.data);
+                console.log(response);
                 const results = response.data;
 
                 if(!results.Error){
@@ -93,20 +110,64 @@ class SuggestMovies extends Component{
 
     getMovie =(title, imdbID) => {
         this.setState({loadingMovie: true, popupOpened: true, fetchedMovieTitle: title});
-
+        console.log('getting: ', imdbID)
         Axios.get('/movies/getmovie/'+imdbID)
             .then((response) => {
                 console.log(response);
-                this.setState({loadingMovie: false, fetchedMovie: response.data})
+                this.setState({loadingMovie: false, fetchedMovie: response.data});
             })
             .catch((err) => {
                 console.log(error);
-                this.setState({loadingMovie: false})
+                this.setState({loadingMovie: false});
             });
     }
 
     handleClosePopup = (e) => {
-        this.setState({popupOpened: false, fetchedMovie: false, fetchedMovieTitle: ''})
+        this.setState({popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false});
+    }
+
+    handleSuggest = (e) => {
+        const movie = this.state.fetchedMovie;
+        this.setState({loadingMovie: true});
+
+        // get the events that are in the future, then, 
+        Axios.get('/movies/getevents')
+            .then((response) => {
+                console.log(response);
+                this.setState({popupOpened: false, suggestingPopupOpened: true});
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
+
+    handleCloseSuggest = (e) => {
+        this.setState({popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false})
+
+    }
+
+    nextPage = (e) => {
+        e.preventDefault();
+        this.setState({results: [], loading: true, page: this.state.page + 1});
+        console.log('next page');
+
+        Axios.get('/movies/searchmovie/'+this.state.title+'/'+this.state.page+1)
+            .then((response) => {
+                console.log(response);
+                const results = response.data;
+
+                if(!results.Error){
+                    this.setState({loading: false, results: results.Search})
+                } else{
+                    this.setState({loading: false, error: true, errorMessage: results.Error})
+                }
+
+            })
+            .catch((error) => {
+                console.log(error)
+                this.setState({error: true, loading: false})
+            });
     }
 
     render(){
@@ -147,40 +208,50 @@ class SuggestMovies extends Component{
                                                             ? <CircularProgress/>
                                                             : this.state.fetchedMovie 
                                                                 ? (
+                                                                    <Grid container spacing={16}>
+                                                                        <Grid container spacing={16} className={classes.imageColumnContainer}>
+                                                                            <Grid item md={12}>
+                                                                                <img className={classes.imageColumn} src={this.state.fetchedMovie.Poster}/>
+                                                                            </Grid>
+                                                                        </Grid>
 
-                                                                    <Grid container spacing={24}>
-                                                                        <Grid item xs={12}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Actors}</Paper>
-                                                                        </Grid>
-                                                                        <Grid item xs={6}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Country}</Paper>
-                                                                        </Grid>
-                                                                        <Grid item xs={6}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Director}</Paper>
-                                                                        </Grid>
-                                                                        <Grid item xs={3}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Director}</Paper>
-                                                                        </Grid>
-                                                                        <Grid item xs={3}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Genre}</Paper>
-                                                                        </Grid>
-                                                                        <Grid item xs={3}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Language}</Paper>
-                                                                        </Grid>
-                                                                        <Grid item xs={3}>
-                                                                            <Paper className={classes.paper}>{this.state.fetchedMovie.Language+this.state.fetchedMovie.Plot+
-                                                                    
-                                                                    this.state.fetchedMovie.Poster+
-                                                                    
-                                                                    this.state.fetchedMovie.Runtime+
-                                                                    
-                                                                    this.state.fetchedMovie.Released+
-                                                                    
-                                                                    this.state.fetchedMovie.Writer+
-                                                                    
-                                                                    this.state.fetchedMovie.Year+
-                                                                    
-                                                                    this.state.fetchedMovie.imdbVotes+'/100'}</Paper>
+                                                                        <Grid container spacing={16} className={classes.infoContainer}>
+                                                                            <Grid item md={6}>
+                                                                                Country: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Country}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Language: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Language}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Runtime: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Runtime}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Year: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Year}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Director: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Director}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Genre: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Genre}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Starring: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Actors}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={12}>
+                                                                                Plot: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.Plot}</Paper>
+                                                                            </Grid>
+                                                                            <Grid item md={6}>
+                                                                                Imdb Rating: 
+                                                                                <Paper className={classes.paper}>{this.state.fetchedMovie.imdbVotes}</Paper>
+                                                                            </Grid>
                                                                         </Grid>
                                                                     </Grid>
                                                                 )
@@ -191,13 +262,41 @@ class SuggestMovies extends Component{
                                                         <Button onClick={this.handleClosePopup} color="primary">
                                                         Close
                                                         </Button>
+                                                        {this.props.loggedIn 
+                                                            ? <Button onClick={this.handleSuggest} color="primary">
+                                                                Suggest
+                                                            </Button>
+                                                            : undefined
+                                                        }
                                                     </DialogActions>
                                                 </Dialog>
+
+                                                <Dialog
+                                                    open={this.state.suggestingPopupOpened}
+                                                    onClose={this.handleCloseSuggest}
+                                                    aria-labelledby="alert-dialog-title"
+                                                    aria-describedby="alert-dialog-description"
+                                                    >
+                                                    <DialogTitle id="alert-dialog-title">Suggest "{this.state.fetchedMovieTitle}" for a movie night!</DialogTitle>
+                                                    <DialogContent>
+                                                        <Grid container spacing={16}>
+                                                            <Grid item md={12}>
+                                                                <img src={this.state.fetchedMovie.Poster}/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                        <Button onClick={this.handleCloseSuggest} color="primary">
+                                                        Close
+                                                        </Button>
+                                                    </DialogActions>
+                                                </Dialog>
+
                                             </div>
                                         );
                                     })}
                                 </List>
-                                <Button variant="outlined" color="secondary" className={classes.nextButton}>Next</Button></div>
+                                <Button variant="outlined" color="secondary" className={classes.nextButton} onClick={this.nextPage}>Next</Button></div>
                             : this.state.error 
                                 ? (
                                     <p>{this.state.errorMessage}</p>

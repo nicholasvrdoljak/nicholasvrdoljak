@@ -13,19 +13,29 @@ body {
   margin-top: 1em;
 }
 
+.header-small{
+  position: absolute;
+  text-align: center;
+  width: 98%;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-size: 1em;
+  margin-top: 1em;
+}
+
 .header-enter {
   transform: translate(0%, -200%);
 }
 .header-enter.header-enter-active {
   transform: translate(0%, 0%);
-  transition: transform 200ms linear;
+  transition: transform 1500ms linear;
 }
 .header-leave {
   transform: translate(0%, 0%);
 }
 .header-leave.header-leave-active {
   transform: translate(0%, -200%);
-  transition: transform 200ms linear;
+  transition: transform 1500ms linear;
 }
 
 a {

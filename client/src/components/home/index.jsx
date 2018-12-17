@@ -117,15 +117,20 @@ class ConnectedHome extends Component {
         if(e) e.preventDefault();
         const title = x || e.target.title;
         const id = z || e.target.id;
-        this.setState({
-            one: (title === 'one'),
-            two: (title === 'two'),
-            three: (title === 'three'), 
-            four: (title === 'four'), 
-            shrink: true
-        }, () => {
-            this.props.history.push(`/${id}`)
-        });
+        // console.log('title: ', title, 'id: ', id);
+
+        if(!this.props.lightboxIsOpen){
+            this.setState({
+                one: (title === 'one'),
+                two: (title === 'two'),
+                three: (title === 'three'), 
+                four: (title === 'four'), 
+                shrink: true
+            }, () => {
+                this.props.history.push(`/${id}`)
+            });
+        }
+
     }
     mouseoverTitle() {
         this.setState({titleHover: !this.state.titleHover});
@@ -147,8 +152,8 @@ class ConnectedHome extends Component {
                     </div>)}
                     <ReactCSSTransitionGroup
                         transitionName="header"
-                        transitionEnterTimeout={200}
-                        transitionLeaveTimeout={200}>
+                        transitionEnterTimeout={1500}
+                        transitionLeaveTimeout={1500}>
 
                         { !this.state.shrink
                             ?  (
@@ -156,7 +161,11 @@ class ConnectedHome extends Component {
                                     <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
                                 </div>
                             )
-                            : ''
+                            : (
+                                <div className='header-small'  >
+                                    <Link to='/' onMouseOver={this.mouseoverTitle.bind(this)}>Nick Vrdoljak</Link>
+                                </div>
+                            )
                         }
                     </ReactCSSTransitionGroup>
                     <div className='footer'>&#169; Nick Vr. 2018</div>
@@ -166,22 +175,22 @@ class ConnectedHome extends Component {
 
 
                 <div className='homeContainer' onMouseOver={this.removeTitleBox.bind(this)}>
-                    <div className={`homeBar homeBar1 ${this.state.shrink ? (this.state.one ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.goToPage.bind(this)} title='one' id='projects' className={`homeBar homeBar1 ${this.state.shrink ? (this.state.one ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                         {this.state.shrink && this.state.one ? <Main/> : <a href='#' title='one' id='projects' onClick={this.goToPage.bind(this)}>projects</a>}
                         </div>
                     </div>
-                    <div className={`homeBar homeBar2 ${this.state.shrink ? (this.state.two ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.state.two ? () => {return;} : this.goToPage.bind(this)} title={this.state.two ? '' : 'two'} id={this.state.two ? '' : 'photography'} className={`homeBar homeBar2 ${this.state.shrink ? (this.state.two ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                         {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='photography' onClick={this.goToPage.bind(this)}>photos</a>}
                         </div>
                     </div>
-                    <div className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.goToPage.bind(this)} title='three' id='play' className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                         {this.state.shrink && this.state.three ? <Main/> : <a href='#' title='three' id='play' onClick={this.goToPage.bind(this)}>play</a>}
                         </div>
                     </div>
-                    <div className={`homeBar homeBar4 ${this.state.shrink ? (this.state.four ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.goToPage.bind(this)} title='four' id='contact' className={`homeBar homeBar4 ${this.state.shrink ? (this.state.four ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                             {this.state.shrink && this.state.four ? <Main/> : <a href='#' title='four' id='contact' onClick={this.goToPage.bind(this)}>contact</a>}
                         </div>

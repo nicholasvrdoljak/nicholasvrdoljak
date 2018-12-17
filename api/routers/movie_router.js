@@ -7,14 +7,20 @@ router.post('/login/:username/:password', controller.login);
 // Change password
 router.post('/changepassword', controller.changePassword);
 
+// Sign in with token
+router.post('/signintoken', controller.signinToken);
+
 // Search by title
-router.get('/searchmovie/:title', controller.searchMovie);
+router.get('/searchmovie/:title/:page', controller.searchMovie);
 
 // Get movie by imdb id
 router.get('/getmovie/:imdbID', controller.getMovie);
 
 // Get movies listing
 router.get('/getmovies', controller.getMovies);
+
+// Get events list
+router.get('/getevents', controller.getEvents);
 
 
 

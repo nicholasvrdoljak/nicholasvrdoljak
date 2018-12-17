@@ -72,7 +72,8 @@ class ConnectedPhotography extends Component {
         this.gotoPrevious = this.gotoPrevious.bind(this);
     }
 
-    openLightbox(event, obj) {
+    openLightbox(e, obj) {
+        e.preventDefault();
         this.props.openLightbox();
         this.setState({
             currentImage: obj.index,

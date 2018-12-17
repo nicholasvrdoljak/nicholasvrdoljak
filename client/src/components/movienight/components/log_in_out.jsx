@@ -206,9 +206,9 @@ class LogInOut extends React.Component{
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={500}>
 
-                    {   this.props.loggedIn === 1 ? 
+                    {   this.props.loggedIn ? 
                             this.renderLoggedIn(classes) 
-                            : this.props.changePassword === 1 ? 
+                            : this.props.changePassword ? 
                                 this.renderChangePassword(classes)
                                 : this.renderLogin(classes)
                     }

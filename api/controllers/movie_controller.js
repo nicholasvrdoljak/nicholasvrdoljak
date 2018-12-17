@@ -40,6 +40,12 @@ module.exports.checkLoggedIn = async (req, res, next) => {
     }
 }
 
+module.exports.signinToken = (req, res) => {
+    let { token } = req.body;
+    console.log('signing in with: ', token);
+    res.send(jwt.decode(token));
+}
+
 // Logs in the user to allow access to protected routes
 module.exports.login = (req, res) => {
     // check for a username
@@ -126,7 +132,7 @@ module.exports.searchMovie = (req, res) => {
     console.log('searching movie', req.params, req.body);
     if(req.params){
         const title = req.params.title;
-        https.get('https://www.omdbapi.com/?apikey=fdff2a8f&type=movie&s='+title, (resp) => {
+        https.get('https://www.omdbapi.com/?apikey=fdff2a8f&type=movie&s='+title+'&page='+(req.params.page ? req.params.page : 1), (resp) => {
             let data = '';
     
             resp.on('data', (chunk) => {
@@ -171,22 +177,33 @@ module.exports.getMovies = (req, res) => {
     // so the front end will be able to display voting icons
 
     db.query(
-        "SELECT  "+
-        "   `mv`.* "+
-        "  , `ev`.`date` AS `event_date` "+
-        "  , `e2m`.`votes` AS `votes` "+
-        "FROM `events` AS `ev`  "+
+        "SELECT `mv`.*, `ev2`.`id` AS `event_id`, `ev2`.`date` AS `event_date`, `e2m`.`votes` AS `votes` "+
+        "FROM `events` AS `ev2` "+
         "  INNER JOIN `events_movies` AS `e2m`  "+
-        "    ON `e2m`.`events_id` = `ev`.`id`  "+
+        "    ON `e2m`.`events_id` = `ev2`.`id`  "+
         "  INNER JOIN `movies` AS `mv`  "+
         "    ON `mv`.`id` = `e2m`.`movies_id`  "+
-        "WHERE `ev`.`date` > CURRENT_TIMESTAMP "+
-        "ORDER BY `e2m`.`votes` DESC  "+
-        ";"
+        "WHERE `ev2`.`date` IN ( "+
+        "  SELECT "+
+        "    MIN(`ev`.`date`) AS `date` "+
+        "  FROM `events` AS `ev`  "+
+        "  WHERE `ev`.`date` > CURRENT_TIMESTAMP "+
+        ");"
+    , [], (err, data) => {
+        console.log(err, data);
+        res.send(data);
+    })
+}
+
+module.exports.getEvents = (req, res) => {
+    console.log('getting events');
+    db.query(
+        "SELECT * FROM `events` WHERE `date` > CURRENT_TIMESTAMP;"
     , [], (err, data) => {
         console.log(data);
-        res.json(data);
+        res.send(data);
     })
+
 }
 
 // Saves the movie to the db and allows it to be voted on by a user

@@ -40,6 +40,7 @@ class CurrentRankingsAndVote extends Component{
         Axios.get('/movies/getmovies')
             .then((response) => {
                 console.log(response);
+                this.setState({movies: response.data})
             })
             .catch((err) => {
                 console.log(err);
@@ -66,7 +67,7 @@ class CurrentRankingsAndVote extends Component{
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography className={classes.heading}>{item.title}</Typography>
                             <Typography className={classes.secondaryHeading}>{item.genre + ', ' + item.year}</Typography>
-                            <Typography className={classes.secondaryHeading}>Votes: XX</Typography>
+                            <Typography className={classes.secondaryHeading}><br/>Votes: {item.votes}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                             <Typography>

@@ -7,7 +7,7 @@ export default class Events extends Component{
     }
     render(){
         return(
-            <div>past events</div>
+            <div>Events</div>
         )
     }
 }
