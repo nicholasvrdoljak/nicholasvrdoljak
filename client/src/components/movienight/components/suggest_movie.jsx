@@ -30,6 +30,10 @@ const styles = theme => ({
         width: '75%',
         backgroundColor: theme.palette.background.paper,
     },
+    paper: {
+        alignItems: 'center',
+        padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px`,
+    },
     avatar: {
         width: '200px', 
         height: '200px',
@@ -40,6 +44,9 @@ const styles = theme => ({
             background: theme.palette.secondary.light
         }
     }, 
+    highlight: {
+        background: theme.palette.primary.light
+    },
     progress: {
         'align-self': 'center',
     },
@@ -72,6 +79,9 @@ class SuggestMovies extends Component{
             errorMessage: 'Error...',
             page: 1,
 
+            events: [],
+            selectedEvent: null,
+
             popupOpened: false,
             loadingMovie: false,
             fetchedMovie: false,
@@ -79,6 +89,14 @@ class SuggestMovies extends Component{
 
             suggestingPopupOpened: false,
         }
+    }
+
+    date_format = (date) => {
+        let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], 
+            string = '',
+            date_obj = new Date(date);
+        
+        return days[date_obj.getDay() - 1] + ', ' + date_obj.getMonth() + '/' + date_obj.getDate() + '/' + date_obj.getYear();
     }
 
     handleChange = (e) => {
@@ -123,18 +141,31 @@ class SuggestMovies extends Component{
     }
 
     handleClosePopup = (e) => {
-        this.setState({popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false});
+        this.setState({selectedEvent: null, popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false});
     }
 
-    handleSuggest = (e) => {
+    handleOpenSuggest = (e) => {
         const movie = this.state.fetchedMovie;
-        this.setState({loadingMovie: true});
+        this.setState({loadingMovie: true, suggestingPopupOpened: true});
 
         // get the events that are in the future, then, 
         Axios.get('/movies/getevents')
             .then((response) => {
                 console.log(response);
-                this.setState({popupOpened: false, suggestingPopupOpened: true});
+                if(response.data){
+                    let events_by_id = response.data.reduce((a, i) => {
+                        a[i.id] = i;
+                        return a;
+                    }, {});
+                    this.setState({
+                        loadingMovie: false, 
+                        popupOpened: false, 
+                        events: response.data,
+                        events_by_id: events_by_id
+                    });
+                } else{
+                    this.setState({loadingMovie: false, popupOpened: false})
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -143,8 +174,34 @@ class SuggestMovies extends Component{
     }
 
     handleCloseSuggest = (e) => {
-        this.setState({popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false})
+        this.setState({selectedEvent: null, popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false})
+    }
 
+    handleSuggest = (e) => {
+        console.log(this.state);
+        if(this.state.selectedEvent){
+            let params = {
+                token: sessionStorage.getItem('jwtToken'), 
+                event: this.state.events_by_id[this.state.selectedEvent],
+                movie: this.state.fetchedMovie
+            }
+            Axios.post('/movies/suggestmovie', params)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(response => {
+                    console.log('error: ', response);
+                });
+        } else{
+            alert('Please select an event.');
+        }
+
+    }
+
+    handleClickEvent = (e) => {
+        console.log('clicked event: ', e, e.target, e.target.id);
+        
+        this.setState({selectedEvent: e.target.id})
     }
 
     nextPage = (e) => {
@@ -255,7 +312,9 @@ class SuggestMovies extends Component{
                                                                         </Grid>
                                                                     </Grid>
                                                                 )
-                                                                : <p></p>
+                                                                : <p>
+                                                                    {/* INSERT A PAGE FOR A FAILED MOVIE FETCH */}
+                                                                </p>
                                                             }
                                                     </DialogContent>
                                                     <DialogActions>
@@ -263,7 +322,7 @@ class SuggestMovies extends Component{
                                                         Close
                                                         </Button>
                                                         {this.props.loggedIn 
-                                                            ? <Button onClick={this.handleSuggest} color="primary">
+                                                            ? <Button onClick={this.handleOpenSuggest} color="primary">
                                                                 Suggest
                                                             </Button>
                                                             : undefined
@@ -278,16 +337,44 @@ class SuggestMovies extends Component{
                                                     aria-describedby="alert-dialog-description"
                                                     >
                                                     <DialogTitle id="alert-dialog-title">Suggest "{this.state.fetchedMovieTitle}" for a movie night!</DialogTitle>
-                                                    <DialogContent>
-                                                        <Grid container spacing={16}>
-                                                            <Grid item md={12}>
-                                                                <img src={this.state.fetchedMovie.Poster}/>
-                                                            </Grid>
-                                                        </Grid>
+                                                    <DialogContent className={classes.progress}>
+                                                        {this.state.loadingMovie 
+                                                            ? <CircularProgress/>
+                                                            : (
+                                                                <Grid container spacing={16}>
+                                                                    <Grid container spacing={16} className={classes.imageColumnContainer}>
+                                                                        <Grid item md={12}>
+                                                                            <img className={classes.imageColumn} src={this.state.fetchedMovie.Poster}/>
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                    <Grid container spacing={16} className={classes.infoContainer}>
+                                                                        {this.state.events.length > 0 
+                                                                            ? this.state.events.map(event => {
+                                                                                return (
+                                                                                    <Grid item md={12} key={event.id} id={event.id} onClick={this.handleClickEvent}>
+                                                                                        <Paper id={event.id} className={this.state.selectedEvent == event.id ? classes.highlight + ' ' + classes.paper : classes.paper + ' ' + classes.movieRow}>
+                                                                                            Event: {event.id}, on {this.date_format(event.date)}
+                                                                                        </Paper>
+                                                                                    </Grid>
+                                                                                )
+                                                                            })
+                                                                            : (
+                                                                                <Grid key={event.id} item md={12}>
+                                                                                    <Paper className={classes.paper}>No events available. Go to the events page and create one.</Paper>
+                                                                                </Grid>
+                                                                            )
+                                                                        }
+                                                                    </Grid>
+                                                                </Grid>
+                                                                )
+                                                            } 
                                                     </DialogContent>
                                                     <DialogActions>
                                                         <Button onClick={this.handleCloseSuggest} color="primary">
                                                         Close
+                                                        </Button>
+                                                        <Button onClick={this.handleSuggest} color="primary">
+                                                        Go
                                                         </Button>
                                                     </DialogActions>
                                                 </Dialog>

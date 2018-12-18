@@ -7,6 +7,8 @@ USE movienight;
 CREATE TABLE events (
   `id` INT(11) AUTO_INCREMENT,
   `date` DATETIME NOT NULL, 
+  `name` VARCHAR(255) NOT NULL, 
+  `location` VARCHAR(255) NOT NULL,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`), 
   INDEX `date` (`date`)

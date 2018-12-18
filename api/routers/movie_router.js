@@ -28,7 +28,7 @@ router.get('/getevents', controller.getEvents);
 router.use(controller.checkLoggedIn);
 
 // Suggest movie for voting
-router.post('/suggestmovie/:imdbID', controller.suggestMovie);
+router.post('/suggestmovie', controller.suggestMovie);
 
 // Vote on a movie
 router.post('/vote/:id', controller.vote);

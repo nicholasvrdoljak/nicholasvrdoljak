@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 
 // Makes sure that the username and password given to it exist and are not falsy
-emptyCredentials = (req, res, username, password) => {
+const emptyCredentials = (req, res, username, password) => {
     if(!username || username.length < 1){
         res.json({message: 'No username sent', code: 'send_user'});
         return true;
@@ -18,18 +18,26 @@ emptyCredentials = (req, res, username, password) => {
     }
 }
 
+const empty = (value) => {
+    if(value == []){return true;}
+    if(value == undefined){return true;}
+    if(value.length == undefined){return true;}
+    if(!value){return true;}
+}
+
 // Middleware to check if the user is logged in
 module.exports.checkLoggedIn = async (req, res, next) => {
     console.log('checking the cookie', req.headers, req.headers.authentication);
 
-    if (typeof req.headers.authentication !== 'undefined') {
-        jwt.verify(req.headers.authentication, process.env.JWT_SECRET, (err, decoded) => {
+    if (typeof req.body.token !== 'undefined') {
+        jwt.verify(req.body.token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 console.log('cookie failed authentication')
                 res.sendStatus(403);
             } else {
                 console.log('authenticated!');
                 req.username = decoded.user.username;
+                req.id = decoded.user.id;
                 console.log(req.username);
                 next();
             }
@@ -71,7 +79,7 @@ module.exports.login = (req, res) => {
                     return;
                 } else if(bcrypt.compareSync(password, data[0].password)){
                     // if good, send a token
-                    const user = { username: data[0].username };
+                    const user = { username: data[0].username, id: data[0].id };
                     jwt.sign({ user }, process.env.JWT_SECRET, (err, token) => {
                         console.log(token);
                         res.json({token: token, code: 'success'});
@@ -198,7 +206,7 @@ module.exports.getMovies = (req, res) => {
 module.exports.getEvents = (req, res) => {
     console.log('getting events');
     db.query(
-        "SELECT * FROM `events` WHERE `date` > CURRENT_TIMESTAMP;"
+        "SELECT * FROM `events` WHERE `date` > CURRENT_TIMESTAMP ORDER BY `date` ASC;"
     , [], (err, data) => {
         console.log(data);
         res.send(data);
@@ -207,8 +215,119 @@ module.exports.getEvents = (req, res) => {
 }
 
 // Saves the movie to the db and allows it to be voted on by a user
-module.exports.suggestMovie = (req, res) => {
-    console.log('suggesting: ', req.params.imdbID);
+module.exports.suggestMovie = async (req, res) => {
+    console.log('suggesting: ', req.body);
+    db.query = Promise.promisify(db.query);
+
+    let movie = req.body.movie, 
+        event = req.body.event;
+
+    // Check if the movie is already in the db
+    db.query("SELECT * FROM `movies` WHERE `imdbID` = ?", [movie.imdbID])
+        .then(response => {
+            if(response.length > 1){
+                return res.send({code: 'movies_error'});
+            } else if(response.length == 1){
+                // Movie does exist
+                movie = response[0];
+                
+                // Check that the event exists
+                db.query("SELECT * FROM `events` WHERE `id` = ?", [event.id])
+                    .then((response) => {
+                        if(response.length > 1){
+                            return res.send({code: 'event_error'});
+                        } else if(response.length == 1){
+                            event = response[0];
+
+                            // check to see if the movie has already been suggested
+                            db.query("SELECT * FROM `events_movies` WHERE `events_id` = ? AND `movies_id` = ?", [event.id, movie.id])
+                                .then((response) => {
+                                    if(response.length > 0){
+                                        return res.send({code: 'already_suggested'});
+                                    }
+
+                                    db.query("INSERT INTO `events_movies` (`movies_id`, `events_id`) VALUES (?, ?)", [movie.id, event.id])
+                                        .then((response) => {
+                                            res.send('Success');
+                                        })
+                                        .catch((err) => {
+                                            res.status(403).send('Error: '+ err);
+                                        })
+
+
+                                
+                                })
+                                .catch((err) => {
+                                    res.status(403).send('Error: '+ err);
+                                })
+
+                        } else{
+                            return res.send({code: 'no_event'});
+                        }
+                    })
+                    .catch((err) => {
+                        res.status(403).send('Error: '+ err);
+                    })
+            } else{
+                // Movie does not exist, save it and then suggest it
+                db.query("SELECT * FROM `events` WHERE `id` = ?", [event.id])
+                    .then((response) => {
+                        console.log('events', response);
+                        if(response.length > 1){
+                            return res.send({code: 'event_error'});
+                        } else if(response.length == 1){
+                            event = response[0];
+
+                            // insert into our movies table
+                            db.query("INSERT INTO `movies` (`imdbID`, `title`, `image_url`, `year`, `genre`, `description`, `created`, `created_by`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [
+                                movie.imdbID, 
+                                movie.Title, 
+                                movie.Poster,
+                                movie.Year, 
+                                movie.Genre,
+                                movie.Plot,
+                                new Date(), 
+                                req.id
+                            ])
+                                .then((response) => {
+                                    console.log('after insert', response);
+
+
+                                    db.query(
+                                        "INSERT INTO `events_movies` (`events_id`, `movies_id`) "+
+                                        "SELECT "+
+                                        "    ? AS `events_id` "+
+                                        "  , `m`.`id` AS `movies_id` "+
+                                        "FROM `movies` AS `m` "+
+                                        "WHERE `m`.`imdbID` = ? ", [event.id, movie.imdbID])
+                                        
+                                        .then((response) => {
+                                            console.log(response);
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
+                                            return res.status(403).send('Error: '+ err);
+                                        })
+
+                                
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    return res.status(403).send('Error: '+ err);
+                                })
+
+                        } else{
+                            return res.send({code: 'no_event'});
+                        }
+                    })
+                    .catch((err) => {
+                        return res.status(403).send('Error: '+ err);
+                    })
+            }
+        })
+        .catch((err) => {
+            return res.status(403).send('Error: '+ err);
+        });
 }
 
 // Allows a user to vote for a move to watch
