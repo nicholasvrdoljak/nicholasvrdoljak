@@ -26,7 +26,7 @@ const empty = (value) => {
 }
 
 // Middleware to check if the user is logged in
-module.exports.checkLoggedIn = async (req, res, next) => {
+module.exports.checkLoggedIn = (req, res, next) => {
     console.log('checking the cookie', req.headers, req.headers.authentication);
 
     if (typeof req.body.token !== 'undefined') {
@@ -205,6 +205,7 @@ module.exports.getMovies = (req, res) => {
 
 module.exports.getEvents = (req, res) => {
     console.log('getting events');
+
     db.query(
         "SELECT * FROM `events` WHERE `date` > CURRENT_TIMESTAMP ORDER BY `date` ASC;"
     , [], (err, data) => {
@@ -215,7 +216,7 @@ module.exports.getEvents = (req, res) => {
 }
 
 // Saves the movie to the db and allows it to be voted on by a user
-module.exports.suggestMovie = async (req, res) => {
+module.exports.suggestMovie = (req, res) => {
     console.log('suggesting: ', req.body);
     db.query = Promise.promisify(db.query);
 
@@ -300,9 +301,10 @@ module.exports.suggestMovie = async (req, res) => {
                                         "  , `m`.`id` AS `movies_id` "+
                                         "FROM `movies` AS `m` "+
                                         "WHERE `m`.`imdbID` = ? ", [event.id, movie.imdbID])
-                                        
+
                                         .then((response) => {
                                             console.log(response);
+                                            return res.send('Success');
                                         })
                                         .catch((err) => {
                                             console.log(err);

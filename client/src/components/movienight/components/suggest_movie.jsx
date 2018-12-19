@@ -76,7 +76,7 @@ class SuggestMovies extends Component{
             title: '',
             loading: false,
             error: false,
-            errorMessage: 'Error...',
+            errorMessage: '',
             page: 1,
 
             events: [],
@@ -96,7 +96,7 @@ class SuggestMovies extends Component{
             string = '',
             date_obj = new Date(date);
         
-        return days[date_obj.getDay() - 1] + ', ' + date_obj.getMonth() + '/' + date_obj.getDate() + '/' + date_obj.getYear();
+        return days[date_obj.getDay() - 1] + ', ' + date_obj.getMonth() + '/' + date_obj.getDate() + '/' + date_obj.getFullYear();
     }
 
     handleChange = (e) => {
@@ -146,48 +146,61 @@ class SuggestMovies extends Component{
 
     handleOpenSuggest = (e) => {
         const movie = this.state.fetchedMovie;
-        this.setState({loadingMovie: true, suggestingPopupOpened: true});
+        // this.setState({loadingMovie: true, suggestingPopupOpened: true});
+
+        this.setState({loadingMovie: false, suggestingPopupOpened: true, popupOpened: false});
+
 
         // get the events that are in the future, then, 
-        Axios.get('/movies/getevents')
-            .then((response) => {
-                console.log(response);
-                if(response.data){
-                    let events_by_id = response.data.reduce((a, i) => {
-                        a[i.id] = i;
-                        return a;
-                    }, {});
-                    this.setState({
-                        loadingMovie: false, 
-                        popupOpened: false, 
-                        events: response.data,
-                        events_by_id: events_by_id
-                    });
-                } else{
-                    this.setState({loadingMovie: false, popupOpened: false})
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        // Axios.get('/movies/getevents')
+        //     .then((response) => {
+        //         console.log(response);
+        //         if(response.data){
+        //             let events_by_id = response.data.reduce((a, i) => {
+        //                 a[i.id] = i;
+        //                 return a;
+        //             }, {});
+        //             this.setState({
+        //                 loadingMovie: false, 
+        //                 popupOpened: false, 
+        //                 events: response.data,
+        //                 events_by_id: events_by_id
+        //             });
+        //         } else{
+        //             this.setState({loadingMovie: false, popupOpened: false})
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     })
 
     }
 
     handleCloseSuggest = (e) => {
-        this.setState({selectedEvent: null, popupOpened: false, fetchedMovie: false, fetchedMovieTitle: '', suggestingPopupOpened: false})
+        this.setState({
+            selectedEvent: null, 
+            popupOpened: false, 
+            fetchedMovie: false, 
+            fetchedMovieTitle: '', 
+            suggestingPopupOpened: false
+        });
     }
 
     handleSuggest = (e) => {
         console.log(this.state);
+
         if(this.state.selectedEvent){
+            const self = this;
             let params = {
                 token: sessionStorage.getItem('jwtToken'), 
-                event: this.state.events_by_id[this.state.selectedEvent],
+                event: this.props.events_by_id[this.state.selectedEvent],
                 movie: this.state.fetchedMovie
             }
             Axios.post('/movies/suggestmovie', params)
                 .then(response => {
                     console.log(response);
+                    self.props.getMovies();
+                    self.handleCloseSuggest();
                 })
                 .catch(response => {
                     console.log('error: ', response);
@@ -348,8 +361,9 @@ class SuggestMovies extends Component{
                                                                         </Grid>
                                                                     </Grid>
                                                                     <Grid container spacing={16} className={classes.infoContainer}>
-                                                                        {this.state.events.length > 0 
-                                                                            ? this.state.events.map(event => {
+                                                                        {/* {this.state.events.length > 0  */}
+                                                                        {this.props.events.length > 0 
+                                                                            ? this.props.events.map(event => {
                                                                                 return (
                                                                                     <Grid item md={12} key={event.id} id={event.id} onClick={this.handleClickEvent}>
                                                                                         <Paper id={event.id} className={this.state.selectedEvent == event.id ? classes.highlight + ' ' + classes.paper : classes.paper + ' ' + classes.movieRow}>

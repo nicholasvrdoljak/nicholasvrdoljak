@@ -10,7 +10,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import Axios from 'axios';
-import configs from '../../configs.js';
 
 import CurrentRankingsAndVote from './components/current_rankings.jsx';
 import LogInOut from './components/log_in_out.jsx';
@@ -31,6 +30,9 @@ class MovieNight extends Component{
         this.state = {
             loggedIn: false,
             changePassword: false,
+            movies: [],
+            events: [],
+            events_by_id: {},
 
             loginPackage: {},
             user: '', 
@@ -38,6 +40,22 @@ class MovieNight extends Component{
 
             value: 0,
         };
+    }
+    getMovies = () => {
+        // fetch current rankings
+        console.log('getting movies');
+        var self = this;
+
+        Axios.get('/movies/getmovies')
+        .then((response) => {
+            if(Array.isArray(response.data)){
+                console.log(response);
+                self.setState({movies: response.data})
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 
     handleChange = (event, value) => {
@@ -62,7 +80,25 @@ class MovieNight extends Component{
                 .catch((err) => {
                     console.log('error: ', err);
                 });
-        } 
+        }
+
+        Axios.get('/movies/getevents')
+            .then((response) => {
+                console.log(response);
+                if(response.data && Array.isArray(response.data)){
+                    let events_by_id = response.data.reduce((a, i) => {
+                        a[i.id] = i;
+                        return a;
+                    }, {});
+                    this.setState({
+                        events: response.data,
+                        events_by_id: events_by_id
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log('error: ', err);
+            })
     }
 
     handleLogin(username, password){
@@ -141,8 +177,8 @@ class MovieNight extends Component{
                     index={this.state.value}
                     onChangeIndex={this.handleChangeIndex}
                 >
-                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn}/></TabContainer>
-                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn}/></TabContainer>
+                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn} movies={this.state.movies} getMovies={this.getMovies.bind(this)}/></TabContainer>
+                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn} getMovies={this.getMovies.bind(this)} events={this.state.events} events_by_id={this.state.events_by_id} /></TabContainer>
                     <TabContainer dir={theme.direction}><Events loggedIn={loggedIn}/></TabContainer>
                     <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} changePassword={this.state.changePassword} handleLogin={this.handleLogin.bind(this)} username={this.state.user} handleChangePassword={this.handleChangePassword.bind(this)}/></TabContainer>
                 </SwipeableViews>

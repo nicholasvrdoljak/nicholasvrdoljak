@@ -26,7 +26,7 @@ CREATE TABLE users (
 CREATE TABLE movies (
   `id` INT(11) AUTO_INCREMENT,
   `imdbID` VARCHAR(255) NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
   `image_url` VARCHAR(255) NOT NULL,
   `year` INT(11) NOT NULL,
   `genre` VARCHAR(255) NOT NULL,
