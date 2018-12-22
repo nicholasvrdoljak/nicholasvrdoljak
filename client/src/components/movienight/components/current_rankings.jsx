@@ -9,6 +9,17 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from '@material-ui/core/Grid';
 
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+});
 
 const styles = theme => ({
     root: {
@@ -67,26 +78,28 @@ class CurrentRankingsAndVote extends Component{
                 ? this.props.movies.map((item) => {
                     return (
                         <ExpansionPanel expanded={expanded === item.id} key={item.id} onChange={this.handleChange(item.id)}>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography className={classes.heading}>{item.title}</Typography>
-                                <Typography className={classes.secondaryHeading}>Votes: {item.votes}</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Grid container spacing={16}>
-                                    <Grid container spacing={16} className={classes.imageColumnContainer}>
-                                        <Grid item md={12}>
-                                            <img className={classes.imageColumn} src={item.image_url} />
+                            <ExpansionPanel expanded={expanded === item.id} key={item.id} onChange={this.handleChange(item.id)}>
+                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                    <Typography className={classes.heading}>{item.title}</Typography>
+                                    <Typography className={classes.secondaryHeading}>Votes: {item.votes}</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <Grid container spacing={16}>
+                                        <Grid container spacing={16} className={classes.imageColumnContainer}>
+                                            <Grid item md={12}>
+                                                <img className={classes.imageColumn} src={item.image_url} />
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container spacing={16} className={classes.infoContainer}>
+                                            <Grid item md={12}>
+                                                <Typography className={classes.secondaryHeading}>{item.description}</Typography>
+                                                <Typography className={classes.secondaryHeading}><br/>{item.genre}</Typography>
+                                                <Typography className={classes.secondaryHeading}><br/>{item.year}</Typography>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Grid container spacing={16} className={classes.infoContainer}>
-                                        <Grid item md={12}>
-                                            <Typography className={classes.secondaryHeading}>{item.description}</Typography>
-                                            <Typography className={classes.secondaryHeading}><br/>{item.genre}</Typography>
-                                            <Typography className={classes.secondaryHeading}><br/>{item.year}</Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </ExpansionPanelDetails>
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
                         </ExpansionPanel>
                     );
 
