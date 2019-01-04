@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import { SingleDatePicker } from 'react-dates';
 
 const styles = theme => ({
     container: {
@@ -17,29 +19,24 @@ const styles = theme => ({
 class Events extends Component{
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {
+            date: null, 
+            focused: true, 
+        }
     }
     render(){
 
-        const { classes } = props;
-
-        
         return(
             <div>
             <div>Events</div>
 
-            <form className={classes.container} noValidate>
-                <TextField
-                    id="date"
-                    label="Birthday"
-                    type="date"
-                    defaultValue="2017-05-24"
-                    className={classes.textField}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}
-                />
-            </form>
+            <SingleDatePicker
+                date={this.state.date} // momentPropTypes.momentObj or null
+                onDateChange={date => this.setState({ date })} // PropTypes.func.isRequired
+                focused={this.state.focused} // PropTypes.bool
+                onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+                id="your_unique_id" // PropTypes.string.isRequired,
+            />
             </div>
         )
     }
