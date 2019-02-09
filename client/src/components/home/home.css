@@ -29,7 +29,8 @@
 }
 
 .homeBarGrown {
-    width: 100%;   
+    width: 100%;
+    transition: all 0.1s linear;
 }
 .homeBarGrown>div {
     top: 50%;
@@ -38,12 +39,14 @@
 }
 .homeBarShrunk {
     width: 3%;   
+    transition: all 0.1s linear;
 }
 .homeBarShrunk>div {
     top: 50%;
     width: 3%;
     text-align: center;
     transform: rotate(-90deg);
+    transition: all 0.1s linear;
 }
 
 .homeBar1 {

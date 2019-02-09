@@ -78,6 +78,12 @@ class ConnectedHome extends Component {
     }
 
     handleKeyDown(x, e){
+        if(e.keyCode === KEY.UP 
+            || e.keyCode === KEY.LEFT
+            || e.keyCode === KEY.RIGHT
+        ){
+            e.preventDefault();
+        }
         if(!this.props.lightboxIsOpen){
             if(e.keyCode === KEY.LEFT){
                 if(this.props.prop === 'one'){
@@ -115,9 +121,9 @@ class ConnectedHome extends Component {
 
     goToPage(e, x, z) {
         if(e) e.preventDefault();
+
         const title = x || e.target.title;
         const id = z || e.target.id;
-        // console.log('title: ', title, 'id: ', id);
 
         if(!this.props.lightboxIsOpen){
             this.setState({
@@ -130,7 +136,6 @@ class ConnectedHome extends Component {
                 this.props.history.push(`/${id}`)
             });
         }
-
     }
     mouseoverTitle() {
         this.setState({titleHover: !this.state.titleHover});
