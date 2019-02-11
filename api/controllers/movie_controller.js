@@ -48,6 +48,7 @@ module.exports.checkLoggedIn = (req, res, next) => {
     }
 }
 
+// Signs the user in with the token
 module.exports.signinToken = (req, res) => {
     let { token } = req.body;
     console.log('signing in with: ', token);
@@ -203,6 +204,7 @@ module.exports.getMovies = (req, res) => {
     })
 }
 
+// Gets a list of future events
 module.exports.getEvents = (req, res) => {
     console.log('getting events');
 
@@ -254,9 +256,6 @@ module.exports.suggestMovie = (req, res) => {
                                         .catch((err) => {
                                             res.status(403).send('Error: '+ err);
                                         })
-
-
-                                
                                 })
                                 .catch((err) => {
                                     res.status(403).send('Error: '+ err);
@@ -335,4 +334,9 @@ module.exports.suggestMovie = (req, res) => {
 // Allows a user to vote for a move to watch
 module.exports.vote = (req, res) => {
     console.log('voting on: ', req.params.id);
+}
+
+// Creates a new event
+module.exports.createEvent = (req, res) => {
+    console.log('creating event: ', req.body);
 }

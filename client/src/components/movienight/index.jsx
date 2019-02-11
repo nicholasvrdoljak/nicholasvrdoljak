@@ -172,7 +172,7 @@ class MovieNight extends Component{
                 </AppBar>
                 <div className='loginNotification'>{loggedIn ? 'Welcome back, '+this.state.user+'.' : 'Please log in to vote or suggest movies.'}</div>
                 <SwipeableViews
-                    style={{height: '100vh', position: 'absolute', width: '100%'}}
+                    style={{height: '100%', position: 'absolute', width: '100%'}}
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={this.state.value}
                     onChangeIndex={this.handleChangeIndex}
@@ -193,6 +193,9 @@ const styles = theme => ({
         width: '100%',
         backgroundColor: theme.palette.background.paper,
     },
+    fullHeight: {
+        height: '100vh'
+    }
 });
   
 

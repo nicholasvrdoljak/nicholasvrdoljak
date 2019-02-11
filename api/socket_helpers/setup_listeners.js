@@ -3,4 +3,6 @@ module.exports = (socket) => {
         console.log('The user disconnected', socket.id);
     });
 
+    socket.emit('hi');
+
 }

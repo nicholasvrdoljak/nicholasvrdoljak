@@ -33,5 +33,8 @@ router.post('/suggestmovie', controller.suggestMovie);
 // Vote on a movie
 router.post('/vote/:id', controller.vote);
 
+// Create an event
+router.post('/createevent', controller.createEvent);
+
 
 module.exports = router;

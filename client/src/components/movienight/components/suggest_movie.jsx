@@ -126,7 +126,7 @@ class SuggestMovies extends Component{
             });
     }
 
-    getMovie =(title, imdbID) => {
+    getMovie = (title, imdbID) => {
         this.setState({loadingMovie: true, popupOpened: true, fetchedMovieTitle: title});
         console.log('getting: ', imdbID)
         Axios.get('/movies/getmovie/'+imdbID)
