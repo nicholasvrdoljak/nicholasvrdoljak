@@ -31,7 +31,7 @@ router.use(controller.checkLoggedIn);
 router.post('/suggestmovie', controller.suggestMovie);
 
 // Vote on a movie
-router.post('/vote/:id', controller.vote);
+router.post('/vote/:movieid/:eventid', controller.vote);
 
 // Create an event
 router.post('/createevent', controller.createEvent);

@@ -18,10 +18,11 @@ CREATE TABLE users (
   `id` INT(11) AUTO_INCREMENT,
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `votes` INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `username` (`username`)
 );
+
+INSERT INTO `users` (`id`, `username`, `password`) VALUES [NULL, 'nick', 'movienight'];
 
 CREATE TABLE movies (
   `id` INT(11) AUTO_INCREMENT,
@@ -52,8 +53,11 @@ CREATE TABLE votes (
   `id` INT(11) AUTO_INCREMENT,
   `users_id` INT(255) NOT NULL REFERENCES users(`id`),
   `movies_id` INT(255) NOT NULL REFERENCES movies(`id`), 
+  `events_id` INT(255) NOT NULL REFERENCES events(`id`),
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `users_id` (`users_id`), 
-  INDEX `movies_id` (`movies_id`)
+  INDEX `movies_id` (`movies_id`),
+  INDEX `events_id` (`events_id`),
+  INDEX `event_movie_user` (`events_id`, `movies_id`, `users_id`)
 );

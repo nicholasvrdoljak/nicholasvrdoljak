@@ -40,9 +40,9 @@ module.exports.checkLoggedIn = (req, res, next) => {
                 res.sendStatus(403);
             } else {
                 console.log('authenticated!');
-                req.username = decoded.user.username;
-                req.id = decoded.user.id;
-                console.log(req.username);
+                req.body.username = decoded.user.username;
+                req.body.user_id = decoded.user.id;
+                console.log(req.body.username);
                 next();
             }
         });
@@ -186,10 +186,10 @@ module.exports.getMovie = (req, res) => {
 
 // Gets a list of the top voted movies 
 module.exports.getMovies = (req, res) => {
-    // if logged in, also include the votes of the user who is logged in,
+    // TODO: if logged in, also include the votes of the user who is logged in,
     // so the front end will be able to display voting icons
     console.log('getting movies');
-    
+
     db.query(
         "SELECT `mv`.*, `ev2`.`id` AS `event_id`, `ev2`.`date` AS `event_date`, `e2m`.`votes` AS `votes` "+
         "FROM `events` AS `ev2` "+
@@ -202,7 +202,8 @@ module.exports.getMovies = (req, res) => {
         "    MIN(`ev`.`date`) AS `date` "+
         "  FROM `events` AS `ev`  "+
         "  WHERE `ev`.`date` > CURRENT_TIMESTAMP "+
-        ");"
+        ")"+
+        "LIMIT 1;"
     , [], (err, data) => {
         console.log(err, data);
         res.send(data);
@@ -292,7 +293,7 @@ module.exports.suggestMovie = (req, res) => {
                                 movie.Genre,
                                 movie.Plot,
                                 new Date(), 
-                                req.id
+                                req.body.user_id
                             ])
                                 .then((response) => {
                                     console.log('after insert', response);
@@ -338,7 +339,84 @@ module.exports.suggestMovie = (req, res) => {
 
 // Allows a user to vote for a move to watch
 module.exports.vote = (req, res) => {
-    console.log('voting on: ', req.params.id);
+
+    console.log('voting on: ', req.params, 'by', req.body.username, req.body.user_id);
+
+    let { user_id, username } = req;
+    let { movieid, eventid } = req.params;
+    let valid = true;
+
+    if(Number(movieid) == movieid){
+        valid = false;
+    }
+
+    if(Number(eventid) == eventid){
+        valid = false;
+    }
+
+    if(valid){
+        db.query = Promise.promisify(db.query);
+        db.query(
+            "SELECT "+
+            "* "+
+            "FROM `votes` AS `v` "+
+            "WHERE `v`.`events_id` = ? "+
+            "  AND `v`.`movies_id` = ? "+
+            "  AND `v`.`users_id` = ? "+
+            ";"
+            , 
+            [eventid, movieid, req.body.user_id]
+        )
+        .then(response => {
+            console.log('RESPONSE TO VOTE: ', response, req.body.user_id);
+            if(response.length === 0){
+                return db.query(
+                    "INSERT INTO `votes` "+
+                    "(`id`, `users_id`, `movies_id`, `events_id`, `created`) "+
+                    "VALUES "+
+                    "(?, ?, ?, ?, ?) "+
+                    ";", 
+                    [null, req.body.user_id, movieid, eventid, new Date()])
+            } else{
+                return {error: 'You have already voted for this movie.'};
+            }
+        })
+        .then(response => {
+            console.log('RESPONSE TO INSERT: ', response);
+            if(response.error){
+                return {error: response.error};
+            } else{
+                return db.query(
+                    "UPDATE `events_movies` AS `em`, "+
+                    "  ("+
+                    "  SELECT "+
+                    "    COUNT(*) AS `count` "+
+                    "    , `v`.`movies_id` AS `movies_id` "+
+                    "    , `v`.`events_id` AS `events_id` "+
+                    "  FROM `votes` AS `v` "+
+                    "  WHERE `v`.`movies_id` = ? "+
+                    "    AND `v`.`events_id` = ? "+
+                    "  GROUP BY `v`.`movies_id`, `v`.`events_id` "+
+                    ") AS `vcount` "+
+                    "SET `em`.`votes` = `vcount`.`count` "+
+                    "WHERE `em`.`movies_id` = `vcount`.`movies_id` "+
+                    "  AND `em`.`events_id` = `vcount`.`events_id` "+
+                    ";", [movieid, eventid]);
+            }
+        })
+        .then(response => {
+            console.log('RESPONSE TO UPDATE: ', response);
+            if(response.error){
+                res.send({error: response.error});
+            } else{
+                res.send({success: 1});
+            }
+        })
+        .catch(error => {
+            console.log('error voting: ', error);
+            res.send({error: error})
+        })
+    }
 }
 
 // Creates a new event

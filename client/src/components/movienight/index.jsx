@@ -49,7 +49,7 @@ class MovieNight extends Component{
         Axios.get('/movies/getmovies')
         .then((response) => {
             if(Array.isArray(response.data)){
-                console.log(response);
+                console.log('MOVIES: ', response);
                 self.setState({movies: response.data})
             }
         })
@@ -179,7 +179,7 @@ class MovieNight extends Component{
                 >
                     <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn} movies={this.state.movies} getMovies={this.getMovies.bind(this)}/></TabContainer>
                     <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn} getMovies={this.getMovies.bind(this)} events={this.state.events} events_by_id={this.state.events_by_id} /></TabContainer>
-                    <TabContainer dir={theme.direction}><Events loggedIn={loggedIn}/></TabContainer>
+                    <TabContainer dir={theme.direction}><Events loggedIn={loggedIn} events={this.state.events}/></TabContainer>
                     <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} changePassword={this.state.changePassword} handleLogin={this.handleLogin.bind(this)} username={this.state.user} handleChangePassword={this.handleChangePassword.bind(this)}/></TabContainer>
                 </SwipeableViews>
             </div>
@@ -193,9 +193,9 @@ const styles = theme => ({
         width: '100%',
         backgroundColor: theme.palette.background.paper,
     },
-    fullHeight: {
-        height: '100vh'
-    }
+    // fullHeight: {
+    //     height: '100vh'
+    // }
 });
   
 

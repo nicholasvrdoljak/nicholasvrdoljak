@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
 
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from '@material-ui/core/Grid';
+import Axios from 'axios';
 
 const styles = theme => ({
     root: {
@@ -55,6 +56,18 @@ class CurrentRankingsAndVote extends Component{
         });
     };
 
+    vote = (movieId, eventId) => {
+        console.log('voting for: ', movieId);
+        Axios.post('/movies/vote/'+movieId+'/'+eventId, {token: sessionStorage.getItem('jwtToken')})
+            .then(response => {
+                if(response.data.success){
+                    this.props.getMovies();
+                } else{
+                    alert(response.data.error);
+                }
+            })
+    }
+
     render(){
         const {classes} = this.props;
         const {expanded} = this.state;
@@ -64,8 +77,9 @@ class CurrentRankingsAndVote extends Component{
             
             {this.props.movies.length > 0
                 ? this.props.movies.map((item) => {
+                    console.log('movie: ', item);
                     return (
-                        <ExpansionPanel expanded={expanded === item.id} key={item.id} onChange={this.handleChange(item.id)}>
+                        // <ExpansionPanel expanded={expanded === item.id} key={item.id} onChange={this.handleChange(item.id)}>
                             <ExpansionPanel expanded={expanded === item.id} key={item.id} onChange={this.handleChange(item.id)}>
                                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                     <Typography className={classes.heading}>{item.title}</Typography>
@@ -83,12 +97,20 @@ class CurrentRankingsAndVote extends Component{
                                                 <Typography className={classes.secondaryHeading}>{item.description}</Typography>
                                                 <Typography className={classes.secondaryHeading}><br/>{item.genre}</Typography>
                                                 <Typography className={classes.secondaryHeading}><br/>{item.year}</Typography>
+                                                <Typography className={classes.secondaryHeading}><br/></Typography>
+                                                <Button 
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={this.vote.bind(this, item.id, item.event_id)}
+                                                >
+                                                    Vote
+                                                </Button>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
-                        </ExpansionPanel>
+                        // </ExpansionPanel>
                     );
 
                 })

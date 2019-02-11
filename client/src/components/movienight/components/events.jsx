@@ -22,7 +22,7 @@ const styles = theme => ({
         width: 200,
     },
     page: {
-        height: '100vh!important'
+        // height: '100vh!important'
     },
 });
 
@@ -107,7 +107,9 @@ class Events extends Component{
         const classes = this.props;
         return(
             <div>
-                <div style={{height: '100vh'}}>
+                <div 
+                    // style={{height: '100vh'}}
+                >
                     <button onClick={this.showCalendar.bind(this)}>Create a new Event</button>
                     <br/>
                     <br/>
@@ -150,11 +152,11 @@ class Events extends Component{
                     : undefined}
                     
                     <div>
-                        {this.state.eventsList.length === 0 
+                        {this.props.events.length === 0 
                         
                         ? <div><p>No events could be found.</p></div>
                         
-                        : this.state.eventsList.map((event, i) => {
+                        : this.props.events.map((event, i) => {
                             return <p key={i}>{event.name}, {event.location}, {event.date}</p>;
                         })}
                     </div>
