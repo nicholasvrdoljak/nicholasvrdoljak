@@ -115,30 +115,30 @@ class LogInOut extends React.Component{
                             Sign in
                         </Typography>
                         <form className={classes.form}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="username">Your Name</InputLabel>
-                            <Input onChange={this.handleChange} id="username" name="username" autoComplete="username"/>
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input onChange={this.handleChange} name="password" type="password" id="password" autoComplete="current-password" />
-                        </FormControl>
-                        <FormControlLabel
-                            id='rememberme'
-                            onChange={this.handleChange}
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={this.handleSignIn}
-                        >
-                            Sign in
-                        </Button>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="username">Your Name</InputLabel>
+                                <Input onChange={this.handleChange.bind(this)} id="username" name="username" autoComplete="username"/>
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input onChange={this.handleChange.bind(this)} name="password" type="password" id="password" autoComplete="current-password" />
+                            </FormControl>
+                            <FormControlLabel
+                                id='rememberme'
+                                onChange={this.handleChange.bind(this)}
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={this.handleSignIn}
+                            >
+                                Sign in
+                            </Button>
                         </form>
                     </Paper>
                 </main>
@@ -165,11 +165,11 @@ class LogInOut extends React.Component{
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="password_change_1">Password</InputLabel>
-                            <Input onChange={this.handleChange} name="password_change_1" type="password" id="password1" />
+                            <Input onChange={this.handleChange.bind(this)} name="password_change_1" type="password" id="password1" />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="password_change_2">Type password again</InputLabel>
-                            <Input onChange={this.handleChange} name="password_change_2" type="password" id="password2" />
+                            <Input onChange={this.handleChange.bind(this)} name="password_change_2" type="password" id="password2" />
                         </FormControl>
                         <Button
                             type="submit"

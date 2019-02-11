@@ -18,6 +18,10 @@ const emptyCredentials = (req, res, username, password) => {
     }
 }
 
+const validateEvent = (name, location, date) => {
+    return true;
+}
+
 const empty = (value) => {
     if(value == []){return true;}
     if(value == undefined){return true;}
@@ -184,7 +188,8 @@ module.exports.getMovie = (req, res) => {
 module.exports.getMovies = (req, res) => {
     // if logged in, also include the votes of the user who is logged in,
     // so the front end will be able to display voting icons
-
+    console.log('getting movies');
+    
     db.query(
         "SELECT `mv`.*, `ev2`.`id` AS `event_id`, `ev2`.`date` AS `event_date`, `e2m`.`votes` AS `votes` "+
         "FROM `events` AS `ev2` "+
@@ -339,4 +344,19 @@ module.exports.vote = (req, res) => {
 // Creates a new event
 module.exports.createEvent = (req, res) => {
     console.log('creating event: ', req.body);
+    let { event_name, event_location, event_date } = req.body;
+    let valid = validateEvent(event_name, event_location, event_date);
+
+    if(valid){
+        db.query = Promise.promisify(db.query);
+        db.query("INSERT INTO `events` (`id`, `date`, `name`, `location`, `created`) VALUES (?, ?, ?, ?, ?)", [null, event_date, event_name, event_location, new Date()])
+        .then(response => {
+            console.log(response);
+            res.send({success: 1});
+        })
+        .catch(err => {
+            console.log(error);
+            res.send({error: 1})
+        })
+    }
 }

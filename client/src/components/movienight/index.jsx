@@ -83,7 +83,7 @@ class MovieNight extends Component{
         }
 
         Axios.get('/movies/getevents')
-            .then((response) => {
+            .then(response => {
                 console.log(response);
                 if(response.data && Array.isArray(response.data)){
                     let events_by_id = response.data.reduce((a, i) => {
@@ -105,7 +105,7 @@ class MovieNight extends Component{
         let self = this;
         
         Axios.post('/movies/login/'+username+'/'+password)
-            .then(function (response) {
+            .then(response => {
                 console.log(response);
                 if(response.data.code == 'success'){
                     sessionStorage.setItem('jwtToken', response.data.token);
@@ -132,7 +132,7 @@ class MovieNight extends Component{
             let params = {username: this.state.user, password: pass1, access: this.state.access}
 
             Axios.post('/movies/changepassword', params)
-                .then((response) => {
+                .then(response => {
                     console.log(response);
                     if(response.data.code === 'success'){
                         self.setState({
