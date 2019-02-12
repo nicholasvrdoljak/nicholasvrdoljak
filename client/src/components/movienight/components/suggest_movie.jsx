@@ -200,6 +200,7 @@ class SuggestMovies extends Component{
                 .then(response => {
                     console.log(response);
                     self.props.getMovies();
+                    self.props.getEvents();
                     self.handleCloseSuggest();
                 })
                 .catch(response => {

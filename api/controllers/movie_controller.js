@@ -191,7 +191,11 @@ module.exports.getMovies = (req, res) => {
     console.log('getting movies');
 
     db.query(
-        "SELECT `mv`.*, `ev2`.`id` AS `event_id`, `ev2`.`date` AS `event_date`, `e2m`.`votes` AS `votes` "+
+        "SELECT "+
+        "    `mv`.*"+
+        "  , `ev2`.`id` AS `event_id`"+
+        "  , `ev2`.`date` AS `event_date`"+
+        "  , `e2m`.`votes` AS `votes` "+
         "FROM `events` AS `ev2` "+
         "  INNER JOIN `events_movies` AS `e2m`  "+
         "    ON `e2m`.`events_id` = `ev2`.`id`  "+
@@ -202,10 +206,8 @@ module.exports.getMovies = (req, res) => {
         "    MIN(`ev`.`date`) AS `date` "+
         "  FROM `events` AS `ev`  "+
         "  WHERE `ev`.`date` > CURRENT_TIMESTAMP "+
-        ")"+
-        "LIMIT 1;"
+        ");"
     , [], (err, data) => {
-        console.log(err, data);
         res.send(data);
     })
 }
@@ -217,7 +219,6 @@ module.exports.getEvents = (req, res) => {
     db.query(
         "SELECT * FROM `events` WHERE `date` > CURRENT_TIMESTAMP ORDER BY `date` ASC;"
     , [], (err, data) => {
-        console.log(data);
         res.send(data);
     })
 
@@ -298,7 +299,6 @@ module.exports.suggestMovie = (req, res) => {
                                 .then((response) => {
                                     console.log('after insert', response);
 
-
                                     db.query(
                                         "INSERT INTO `events_movies` (`events_id`, `movies_id`) "+
                                         "SELECT "+
@@ -346,11 +346,11 @@ module.exports.vote = (req, res) => {
     let { movieid, eventid } = req.params;
     let valid = true;
 
-    if(Number(movieid) == movieid){
+    if(Number(movieid) != movieid && Number(movieid) < 0){
         valid = false;
     }
 
-    if(Number(eventid) == eventid){
+    if(Number(eventid) != eventid && Number(eventid) < 0){
         valid = false;
     }
 
@@ -416,6 +416,8 @@ module.exports.vote = (req, res) => {
             console.log('error voting: ', error);
             res.send({error: error})
         })
+    } else{
+        res.send({error: 'Invalid movie or event id.'})
     }
 }
 

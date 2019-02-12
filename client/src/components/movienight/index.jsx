@@ -50,7 +50,14 @@ class MovieNight extends Component{
         .then((response) => {
             if(Array.isArray(response.data)){
                 console.log('MOVIES: ', response);
-                self.setState({movies: response.data})
+                let data = {};
+                response.data.forEach(movie => {
+                    if(!data[movie.event_id]){
+                        data[movie.event_id] = [];
+                    }
+                    data[movie.event_id].push(movie);
+                })
+                self.setState({movies: data})
             }
         })
         .catch((err) => {
@@ -59,12 +66,13 @@ class MovieNight extends Component{
     }
 
     handleChange = (event, value) => {
+        console.log('TOP BAR', value);
         this.setState({ value });
     };
 
     handleChangeIndex = index => {
         this.setState({ value: index });
-      };
+    };
 
     componentDidMount(){
         console.log('did mount, checking token', sessionStorage.getItem('jwtToken'));
@@ -82,6 +90,11 @@ class MovieNight extends Component{
                 });
         }
 
+        this.getMovies();
+        this.getEvents();
+    }
+
+    getEvents(){
         Axios.get('/movies/getevents')
             .then(response => {
                 console.log(response);
@@ -137,7 +150,7 @@ class MovieNight extends Component{
                     if(response.data.code === 'success'){
                         self.setState({
                             changePassword: 0
-                        })
+                        });
                     }
                 })
                 .catch((err) => {
@@ -177,9 +190,9 @@ class MovieNight extends Component{
                     index={this.state.value}
                     onChangeIndex={this.handleChangeIndex}
                 >
-                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn} movies={this.state.movies} getMovies={this.getMovies.bind(this)}/></TabContainer>
-                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn} getMovies={this.getMovies.bind(this)} events={this.state.events} events_by_id={this.state.events_by_id} /></TabContainer>
-                    <TabContainer dir={theme.direction}><Events loggedIn={loggedIn} events={this.state.events}/></TabContainer>
+                    <TabContainer dir={theme.direction}><CurrentRankingsAndVote loggedIn={loggedIn} movies={this.state.movies} getMovies={this.getMovies.bind(this)} events={this.state.events} getEvents={this.getEvents.bind(this)}/></TabContainer>
+                    <TabContainer dir={theme.direction}><SuggestMovies loggedIn={loggedIn} getMovies={this.getMovies.bind(this)} events={this.state.events} events_by_id={this.state.events_by_id} getEvents={this.getEvents.bind(this)}/></TabContainer>
+                    <TabContainer dir={theme.direction}><Events loggedIn={loggedIn} events={this.state.events} getEvents={this.getEvents.bind(this)}/></TabContainer>
                     <TabContainer dir={theme.direction}><LogInOut loggedIn={loggedIn} changePassword={this.state.changePassword} handleLogin={this.handleLogin.bind(this)} username={this.state.user} handleChangePassword={this.handleChangePassword.bind(this)}/></TabContainer>
                 </SwipeableViews>
             </div>
