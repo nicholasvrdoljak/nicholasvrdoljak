@@ -201,12 +201,8 @@ module.exports.getMovies = (req, res) => {
         "    ON `e2m`.`events_id` = `ev2`.`id`  "+
         "  INNER JOIN `movies` AS `mv`  "+
         "    ON `mv`.`id` = `e2m`.`movies_id`  "+
-        "WHERE `ev2`.`date` IN ( "+
-        "  SELECT "+
-        "    MIN(`ev`.`date`) AS `date` "+
-        "  FROM `events` AS `ev`  "+
-        "  WHERE `ev`.`date` > CURRENT_TIMESTAMP "+
-        ");"
+        "WHERE `ev2`.`date` > CURRENT_TIMESTAMP "+
+        ";"
     , [], (err, data) => {
         res.send(data);
     })
@@ -230,111 +226,124 @@ module.exports.suggestMovie = (req, res) => {
     db.query = Promise.promisify(db.query);
 
     let movie = req.body.movie, 
-        event = req.body.event;
+        event = req.body.event,
+        valid = true;
 
-    // Check if the movie is already in the db
-    db.query("SELECT * FROM `movies` WHERE `imdbID` = ?", [movie.imdbID])
-        .then(response => {
-            if(response.length > 1){
-                return res.send({code: 'movies_error'});
-            } else if(response.length == 1){
-                // Movie does exist
-                movie = response[0];
-                
-                // Check that the event exists
-                db.query("SELECT * FROM `events` WHERE `id` = ?", [event.id])
-                    .then((response) => {
-                        if(response.length > 1){
-                            return res.send({code: 'event_error'});
-                        } else if(response.length == 1){
-                            event = response[0];
+    if(Number(movie) != movie && Number(movie) < 0){
+        valid = false;
+    }
 
-                            // check to see if the movie has already been suggested
-                            db.query("SELECT * FROM `events_movies` WHERE `events_id` = ? AND `movies_id` = ?", [event.id, movie.id])
-                                .then((response) => {
-                                    if(response.length > 0){
-                                        return res.send({code: 'already_suggested'});
-                                    }
+    if(Number(event) != event && Number(event) < 0){
+        valid = false;
+    }
 
-                                    db.query("INSERT INTO `events_movies` (`movies_id`, `events_id`) VALUES (?, ?)", [movie.id, event.id])
-                                        .then((response) => {
-                                            res.send('Success');
-                                        })
-                                        .catch((err) => {
-                                            res.status(403).send('Error: '+ err);
-                                        })
-                                })
-                                .catch((err) => {
-                                    res.status(403).send('Error: '+ err);
-                                })
-
-                        } else{
-                            return res.send({code: 'no_event'});
-                        }
-                    })
-                    .catch((err) => {
-                        res.status(403).send('Error: '+ err);
-                    })
-            } else{
-                // Movie does not exist, save it and then suggest it
-                db.query("SELECT * FROM `events` WHERE `id` = ?", [event.id])
-                    .then((response) => {
-                        console.log('events', response);
-                        if(response.length > 1){
-                            return res.send({code: 'event_error'});
-                        } else if(response.length == 1){
-                            event = response[0];
-
-                            // insert into our movies table
-                            db.query("INSERT INTO `movies` (`imdbID`, `title`, `image_url`, `year`, `genre`, `description`, `created`, `created_by`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [
-                                movie.imdbID, 
-                                movie.Title, 
-                                movie.Poster,
-                                movie.Year, 
-                                movie.Genre,
-                                movie.Plot,
-                                new Date(), 
-                                req.body.user_id
-                            ])
-                                .then((response) => {
-                                    console.log('after insert', response);
-
-                                    db.query(
-                                        "INSERT INTO `events_movies` (`events_id`, `movies_id`) "+
-                                        "SELECT "+
-                                        "    ? AS `events_id` "+
-                                        "  , `m`.`id` AS `movies_id` "+
-                                        "FROM `movies` AS `m` "+
-                                        "WHERE `m`.`imdbID` = ? ", [event.id, movie.imdbID])
-
-                                        .then((response) => {
-                                            console.log(response);
-                                            return res.send('Success');
-                                        })
-                                        .catch((err) => {
-                                            console.log(err);
-                                            return res.status(403).send('Error: '+ err);
-                                        })
-
-                                
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                    return res.status(403).send('Error: '+ err);
-                                })
-
-                        } else{
-                            return res.send({code: 'no_event'});
-                        }
-                    })
-                    .catch((err) => {
-                        return res.status(403).send('Error: '+ err);
-                    })
-            }
-        })
-        .catch((err) => {
-            return res.status(403).send('Error: '+ err);
-        });
+    if(valid){
+        // Check if the movie is already in the db
+        db.query("SELECT * FROM `movies` WHERE `imdbID` = ?", [movie.imdbID])
+            .then(response => {
+                if(response.length > 1){
+                    return res.send({code: 'movies_error'});
+                } else if(response.length == 1){
+                    // Movie does exist
+                    movie = response[0];
+                    
+                    // Check that the event exists
+                    db.query("SELECT * FROM `events` WHERE `id` = ?", [event.id])
+                        .then((response) => {
+                            if(response.length > 1){
+                                return res.send({code: 'event_error'});
+                            } else if(response.length == 1){
+                                event = response[0];
+    
+                                // check to see if the movie has already been suggested
+                                db.query("SELECT * FROM `events_movies` WHERE `events_id` = ? AND `movies_id` = ?", [event.id, movie.id])
+                                    .then((response) => {
+                                        if(response.length > 0){
+                                            return res.send({code: 'already_suggested'});
+                                        }
+    
+                                        db.query("INSERT INTO `events_movies` (`movies_id`, `events_id`) VALUES (?, ?)", [movie.id, event.id])
+                                            .then((response) => {
+                                                res.send('Success');
+                                            })
+                                            .catch((err) => {
+                                                res.status(403).send('Error: '+ err);
+                                            })
+                                    })
+                                    .catch((err) => {
+                                        res.status(403).send('Error: '+ err);
+                                    })
+    
+                            } else{
+                                return res.send({code: 'no_event'});
+                            }
+                        })
+                        .catch((err) => {
+                            res.status(403).send('Error: '+ err);
+                        })
+                } else{
+                    // Movie does not exist, save it and then suggest it
+                    db.query("SELECT * FROM `events` WHERE `id` = ?", [event.id])
+                        .then((response) => {
+                            console.log('events', response);
+                            if(response.length > 1){
+                                return res.send({code: 'event_error'});
+                            } else if(response.length == 1){
+                                event = response[0];
+    
+                                // insert into our movies table
+                                db.query("INSERT INTO `movies` (`imdbID`, `title`, `image_url`, `year`, `genre`, `description`, `created`, `created_by`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [
+                                    movie.imdbID, 
+                                    movie.Title, 
+                                    movie.Poster,
+                                    movie.Year, 
+                                    movie.Genre,
+                                    movie.Plot,
+                                    new Date(), 
+                                    req.body.user_id
+                                ])
+                                    .then((response) => {
+                                        console.log('after insert', response);
+    
+                                        db.query(
+                                            "INSERT INTO `events_movies` (`events_id`, `movies_id`) "+
+                                            "SELECT "+
+                                            "    ? AS `events_id` "+
+                                            "  , `m`.`id` AS `movies_id` "+
+                                            "FROM `movies` AS `m` "+
+                                            "WHERE `m`.`imdbID` = ? ", [event.id, movie.imdbID])
+    
+                                            .then((response) => {
+                                                console.log(response);
+                                                return res.send('Success');
+                                            })
+                                            .catch((err) => {
+                                                console.log(err);
+                                                return res.status(403).send('Error: '+ err);
+                                            })
+    
+                                    
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                        return res.status(403).send('Error: '+ err);
+                                    })
+    
+                            } else{
+                                return res.send({code: 'no_event'});
+                            }
+                        })
+                        .catch((err) => {
+                            return res.status(403).send('Error: '+ err);
+                        })
+                }
+            })
+            .catch((err) => {
+                return res.status(403).send('Error: '+ err);
+            });
+    } else{
+        res.status(403).send('Error: invalid movie or event.');
+    }
 }
 
 // Allows a user to vote for a move to watch
@@ -426,6 +435,10 @@ module.exports.createEvent = (req, res) => {
     console.log('creating event: ', req.body);
     let { event_name, event_location, event_date } = req.body;
     let valid = validateEvent(event_name, event_location, event_date);
+
+    event_name = escape(event_name);
+    event_location = escape(event_location);
+    event_date = new Date(event_date);
 
     if(valid){
         db.query = Promise.promisify(db.query);

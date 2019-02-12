@@ -88,7 +88,7 @@ class Events extends Component{
             Axios.post('/movies/createevent', params)
                 .then((response) => {
                     console.log('event response: ', response);
-                    // this.setState({user: response.data.user.username, loggedIn: true});
+                    this.props.getEvents();
                     if(response.data.success){
                         this.setState({date: null, showForm: false, showCalendar: false});
                         Axios.get('/movies/getevents').then(response => {
@@ -100,6 +100,7 @@ class Events extends Component{
                 .catch((err) => {
                     console.log('error: ', err);
                 });
+
         }
     }
 

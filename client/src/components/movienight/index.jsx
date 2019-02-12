@@ -43,7 +43,6 @@ class MovieNight extends Component{
     }
     getMovies = () => {
         // fetch current rankings
-        console.log('getting movies');
         var self = this;
 
         Axios.get('/movies/getmovies')
@@ -66,7 +65,6 @@ class MovieNight extends Component{
     }
 
     handleChange = (event, value) => {
-        console.log('TOP BAR', value);
         this.setState({ value });
     };
 
@@ -75,14 +73,12 @@ class MovieNight extends Component{
     };
 
     componentDidMount(){
-        console.log('did mount, checking token', sessionStorage.getItem('jwtToken'));
         // check for login cookie, if so, set the state
         if(sessionStorage.getItem('jwtToken')){
             let params = {token: sessionStorage.getItem('jwtToken')}
 
             Axios.post('/movies/signintoken', params)
                 .then((response) => {
-                    console.log('token login response: ', response);
                     this.setState({user: response.data.user.username, loggedIn: true});
                 })
                 .catch((err) => {
@@ -97,14 +93,17 @@ class MovieNight extends Component{
     getEvents(){
         Axios.get('/movies/getevents')
             .then(response => {
-                console.log(response);
                 if(response.data && Array.isArray(response.data)){
                     let events_by_id = response.data.reduce((a, i) => {
                         a[i.id] = i;
                         return a;
                     }, {});
+                    let events = response.data.sort((a, b) => {
+                        return (a.id > b.id ? 1 : -1)
+                    })
+                    console.log('events received', events);
                     this.setState({
-                        events: response.data,
+                        events: events,
                         events_by_id: events_by_id
                     });
                 }
@@ -156,10 +155,7 @@ class MovieNight extends Component{
                 .catch((err) => {
                     console.log(err);
                 })
-
-
         }
-
     }
 
     render() {

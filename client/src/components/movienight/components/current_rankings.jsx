@@ -58,12 +58,13 @@ class CurrentRankingsAndVote extends Component{
         }
     }
 
-    shouldComponentUpdate(){
-        console.log("JUDGING UPDATE");
+    shouldComponentUpdate(nextProps){
+        console.log('JUDGING');
         return true;
     }
 
     handleChange = panel => (event, expanded) => {
+        console.log('handle change')
         this.setState({
             expanded: expanded ? panel : false,
         });
@@ -82,6 +83,7 @@ class CurrentRankingsAndVote extends Component{
     }
 
     handleEventChange = (event, value) => {
+        console.log('event change')        
         this.setState({displayedEventsMovies: value, value: value})
     }
 
@@ -92,6 +94,7 @@ class CurrentRankingsAndVote extends Component{
         console.log('rendering', 
             this.state.value, 
             this.props.movies, 
+            Object.keys(this.props.movies),
             Object.keys(this.props.movies)[this.state.value], 
             this.props.movies[Object.keys(this.props.movies)[this.state.value]],
             typeof this.state.displayedEventsMovies
@@ -112,7 +115,7 @@ class CurrentRankingsAndVote extends Component{
                         {this.props.events.length > 0 ? 
                         this.props.events.map(event => {
                             console.log('event clicked', event);
-                            return <Tab key={event.id} label={"Event "+event.id+": "+event.name+" "+event.location} />
+                            return <Tab key={event.id} label={"Event "+event.id+": "+unescape(event.name)+" "+unescape(event.location)} />
                         })
                         : undefined}
                         
@@ -120,7 +123,7 @@ class CurrentRankingsAndVote extends Component{
                 </AppBar>
                 : undefined}
 
-            {typeof this.state.displayedEventsMovies === 'number' || Object.keys(this.props.movies).length > 0
+            {(typeof this.state.displayedEventsMovies === 'number' || Object.keys(this.props.movies).length > 0) && this.props.movies[Object.keys(this.props.movies)[this.state.value]] !== undefined
                 ? this.props.movies[Object.keys(this.props.movies)[this.state.value]].map((item) => {
                     console.log('PROPS MOVIES', this.props.movies, this.state.value);
                     console.log('movie: ', item);
