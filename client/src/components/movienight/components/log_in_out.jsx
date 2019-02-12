@@ -75,15 +75,15 @@ class LogInOut extends React.Component{
 
     handleSignIn = (e, v) => {
         e.preventDefault();
-        console.log('signing in ', e.target)
-        console.log(this.props);
-        console.log(this.state);
+        // console.log('signing in ', e.target)
+        // console.log(this.props);
+        // console.log(this.state);
         this.props.handleLogin(this.state.username, this.state.password, this.state.remember);
     }
 
     handleChangePassword = (e, v) => {
         e.preventDefault()
-        console.log(this.state);
+        // console.log(this.state);
         this.props.handleChangePassword(this.state.password1, this.state.password2);
     }
 
@@ -92,8 +92,8 @@ class LogInOut extends React.Component{
         if(e.target.value === 'remember'){
             state[e.target.value] = e.target.checked;
         } else{
-            console.log(e.target.id);
-            console.log(e.target.value);
+            // console.log(e.target.id);
+            // console.log(e.target.value);
             state[e.target.id] = e.target.value;
         }
 

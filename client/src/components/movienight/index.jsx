@@ -48,7 +48,7 @@ class MovieNight extends Component{
         Axios.get('/movies/getmovies')
         .then((response) => {
             if(Array.isArray(response.data)){
-                console.log('MOVIES: ', response);
+                // console.log('MOVIES: ', response);
                 let data = {};
                 response.data.forEach(movie => {
                     if(!data[movie.event_id]){
@@ -101,7 +101,7 @@ class MovieNight extends Component{
                     let events = response.data.sort((a, b) => {
                         return (a.id > b.id ? 1 : -1)
                     })
-                    console.log('events received', events);
+                    // console.log('events received', events);
                     this.setState({
                         events: events,
                         events_by_id: events_by_id

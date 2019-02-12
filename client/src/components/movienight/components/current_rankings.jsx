@@ -53,18 +53,18 @@ class CurrentRankingsAndVote extends Component{
 
     componentDidMount(){
         if(Object.keys(this.props.movies).length > 0){
-            console.log('setting to zero')
+            // console.log('setting to zero')
             this.setState({value: 0, displayedEventsMovies: 0})
         }
     }
 
     shouldComponentUpdate(nextProps){
-        console.log('JUDGING');
+        // console.log('JUDGING');
         return true;
     }
 
     handleChange = panel => (event, expanded) => {
-        console.log('handle change')
+        // console.log('handle change')
         this.setState({
             expanded: expanded ? panel : false,
         });
@@ -83,7 +83,7 @@ class CurrentRankingsAndVote extends Component{
     }
 
     handleEventChange = (event, value) => {
-        console.log('event change')        
+        // console.log('event change')        
         this.setState({displayedEventsMovies: value, value: value})
     }
 
@@ -91,14 +91,14 @@ class CurrentRankingsAndVote extends Component{
         const {classes} = this.props;
         const {expanded} = this.state;
 
-        console.log('rendering', 
-            this.state.value, 
-            this.props.movies, 
-            Object.keys(this.props.movies),
-            Object.keys(this.props.movies)[this.state.value], 
-            this.props.movies[Object.keys(this.props.movies)[this.state.value]],
-            typeof this.state.displayedEventsMovies
-        );
+        // console.log('rendering', 
+        //     this.state.value, 
+        //     this.props.movies, 
+        //     Object.keys(this.props.movies),
+        //     Object.keys(this.props.movies)[this.state.value], 
+        //     this.props.movies[Object.keys(this.props.movies)[this.state.value]],
+        //     typeof this.state.displayedEventsMovies
+        // );
 
         return(
             <div className={classes.root}>
@@ -114,7 +114,7 @@ class CurrentRankingsAndVote extends Component{
                     >
                         {this.props.events.length > 0 ? 
                         this.props.events.map(event => {
-                            console.log('event clicked', event);
+                            // console.log('event clicked', event);
                             return <Tab key={event.id} label={"Event "+event.id+": "+unescape(event.name)+" "+unescape(event.location)} />
                         })
                         : undefined}
@@ -125,8 +125,8 @@ class CurrentRankingsAndVote extends Component{
 
             {(typeof this.state.displayedEventsMovies === 'number' || Object.keys(this.props.movies).length > 0) && this.props.movies[Object.keys(this.props.movies)[this.state.value]] !== undefined
                 ? this.props.movies[Object.keys(this.props.movies)[this.state.value]].map((item) => {
-                    console.log('PROPS MOVIES', this.props.movies, this.state.value);
-                    console.log('movie: ', item);
+                    // console.log('PROPS MOVIES', this.props.movies, this.state.value);
+                    // console.log('movie: ', item);
                     return (
                         <ExpansionPanel expanded={expanded === item.id} key={item.id} onChange={this.handleChange(item.id)}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

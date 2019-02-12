@@ -44,7 +44,7 @@ class Events extends Component{
 
     componentDidMount(){
         Axios.get('/movies/getevents').then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             this.setState({eventsList: response.data})
         });
     }
@@ -52,8 +52,8 @@ class Events extends Component{
     handleChange = (e) => {
         let state = {};
         
-        console.log(e.target.id);
-        console.log(e.target.value);
+        // console.log(e.target.id);
+        // console.log(e.target.value);
         state[e.target.id] = e.target.value;
 
         this.setState(prevState => {
@@ -71,11 +71,11 @@ class Events extends Component{
 
     submitEvent(e){
         // e.stopPropagation();
-        console.log('Submitting', this.state.date.format('YYYY-MM-DD'));
-        console.log(JSON.parse(JSON.stringify(this.state)));
+        // console.log('Submitting', this.state.date.format('YYYY-MM-DD'));
+        // console.log(JSON.parse(JSON.stringify(this.state)));
     
         if(this.props.loggedIn && this.state.eventname.length > 0 && this.state.locationname.length > 0 && this.state.date){
-            console.log('sending post');
+            // console.log('sending post');
             e.preventDefault();
 
             let params = {
@@ -87,12 +87,12 @@ class Events extends Component{
 
             Axios.post('/movies/createevent', params)
                 .then((response) => {
-                    console.log('event response: ', response);
+                    // console.log('event response: ', response);
                     this.props.getEvents();
                     if(response.data.success){
                         this.setState({date: null, showForm: false, showCalendar: false});
                         Axios.get('/movies/getevents').then(response => {
-                            console.log(response.data);
+                            // console.log(response.data);
                             this.setState({eventsList: response.data})
                         });
                     }

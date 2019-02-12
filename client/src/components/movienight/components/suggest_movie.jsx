@@ -106,11 +106,11 @@ class SuggestMovies extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({results: [], loading: true});
-        console.log('searching: ', this.state.title);
+        // console.log('searching: ', this.state.title);
 
         Axios.get('/movies/searchmovie/'+this.state.title+'/1')
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 const results = response.data;
 
                 if(!results.Error){
@@ -128,7 +128,7 @@ class SuggestMovies extends Component{
 
     getMovie = (title, imdbID) => {
         this.setState({loadingMovie: true, popupOpened: true, fetchedMovieTitle: title});
-        console.log('getting: ', imdbID)
+        // console.log('getting: ', imdbID)
         Axios.get('/movies/getmovie/'+imdbID)
             .then((response) => {
                 console.log(response);
@@ -187,7 +187,7 @@ class SuggestMovies extends Component{
     }
 
     handleSuggest = (e) => {
-        console.log(this.state);
+        // console.log(this.state);
 
         if(this.state.selectedEvent){
             const self = this;
@@ -198,7 +198,7 @@ class SuggestMovies extends Component{
             }
             Axios.post('/movies/suggestmovie', params)
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     self.props.getMovies();
                     self.props.getEvents();
                     self.handleCloseSuggest();
@@ -213,7 +213,7 @@ class SuggestMovies extends Component{
     }
 
     handleClickEvent = (e) => {
-        console.log('clicked event: ', e, e.target, e.target.id);
+        // console.log('clicked event: ', e, e.target, e.target.id);
         
         this.setState({selectedEvent: e.target.id})
     }
@@ -221,11 +221,11 @@ class SuggestMovies extends Component{
     nextPage = (e) => {
         e.preventDefault();
         this.setState({results: [], loading: true, page: this.state.page + 1});
-        console.log('next page');
+        // console.log('next page');
 
         Axios.get('/movies/searchmovie/'+this.state.title+'/'+this.state.page+1)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 const results = response.data;
 
                 if(!results.Error){
