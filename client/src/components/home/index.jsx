@@ -29,6 +29,7 @@ class ConnectedHome extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('will receive');
         if (nextProps.prop) {
             this.setState({
                 one: (nextProps.prop === 'one'),
@@ -120,6 +121,7 @@ class ConnectedHome extends Component {
     }
 
     goToPage(e, x, z) {
+        console.log('go to page');
         if(e) e.preventDefault();
 
         const title = x || e.target.title;
@@ -180,7 +182,7 @@ class ConnectedHome extends Component {
 
 
                 <div className='homeContainer' onMouseOver={this.removeTitleBox.bind(this)}>
-                    <div onClick={this.goToPage.bind(this)} title='one' id='projects' className={`homeBar homeBar1 ${this.state.shrink ? (this.state.one ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.state.one ? () => {return;} : this.goToPage.bind(this)} title='one' id='projects' className={`homeBar homeBar1 ${this.state.shrink ? (this.state.one ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                         {this.state.shrink && this.state.one ? <Main/> : <a href='#' title='one' id='projects' onClick={this.goToPage.bind(this)}>projects</a>}
                         </div>
@@ -190,12 +192,12 @@ class ConnectedHome extends Component {
                         {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='photography' onClick={this.goToPage.bind(this)}>photos</a>}
                         </div>
                     </div>
-                    <div onClick={this.goToPage.bind(this)} title='three' id='play' className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.state.three ? () => {return;} : this.goToPage.bind(this)} title='three' id='play' className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                         {this.state.shrink && this.state.three ? <Main/> : <a href='#' title='three' id='play' onClick={this.goToPage.bind(this)}>play</a>}
                         </div>
                     </div>
-                    <div onClick={this.goToPage.bind(this)} title='four' id='contact' className={`homeBar homeBar4 ${this.state.shrink ? (this.state.four ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                    <div onClick={this.state.four ? () => {return;} : this.goToPage.bind(this)} title='four' id='contact' className={`homeBar homeBar4 ${this.state.shrink ? (this.state.four ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
                         <div>
                             {this.state.shrink && this.state.four ? <Main/> : <a href='#' title='four' id='contact' onClick={this.goToPage.bind(this)}>contact</a>}
                         </div>

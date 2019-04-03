@@ -21,7 +21,8 @@ export default class Projects extends Component{
         console.log(this.state);
     }
 
-    handleClick(){
+    handleClick(e){
+        e.preventDefault();
         ReactDOM.findDOMNode(this).scrollTop = 0;
     }
 
