@@ -94,14 +94,14 @@ class ConnectedHome extends Component {
                 } else if(this.props.prop === 'three'){
                     this.goToPage(null, 'two', 'photography')
                 } else if(this.props.prop === 'four'){
-                    this.goToPage(null, 'three', 'play')
+                    this.goToPage(null, 'three', 'read')
                 }
             }
             if(e.keyCode === KEY.RIGHT){
                 if(this.props.prop === 'one'){
                     this.goToPage(null, 'two', 'photography')
                 } else if(this.props.prop === 'two'){
-                    this.goToPage(null, 'three', 'play')
+                    this.goToPage(null, 'three', 'read')
                 } else if(this.props.prop === 'three' || this.props.location.pathname === "/"){
                     this.goToPage(null, 'four', 'contact')
                 } else if(this.props.prop === 'four'){
@@ -153,7 +153,7 @@ class ConnectedHome extends Component {
                     {(this.props.prop) ? ('') : (<div className={((this.state.slideOutOverlay) ? ('intro-overlay slide-out-overlay') : ('intro-overlay'))}>
                         {(!this.state.slideOutOverlay) ? (<div className='inner-overlay-wrapper'>
                             <div className='inner-overlay'>
-                                Try using your &#8593; &#8592; &#8595; &#8594; keyboard keys.
+                                Try using your &#8593; &#8592; & &#8594; keyboard keys.
                             </div>
                         </div>) : ('')}
                     </div>)}
@@ -175,7 +175,7 @@ class ConnectedHome extends Component {
                             )
                         }
                     </ReactCSSTransitionGroup>
-                    <div className='footer'>&#169; Nick Vr. 2018</div>
+                    <div className='footer'> <Link to='/' >&#169; Nick Vr. 2019</Link></div>
                     <div className='footerImg1'><a target='blank' href='https://www.linkedin.com/in/nicholas-vrdoljak-52111453'><img src='/../../assets/linkedin-logo-2.png'></img></a></div>
                     <div className='footerImg2'><a target='blank' href='https://github.com/nicholasvrdoljak'><img src='/../../assets/GitHub-Mark-32px.png'></img></a></div>
                 </div>
@@ -183,22 +183,22 @@ class ConnectedHome extends Component {
 
                 <div className='homeContainer' onMouseOver={this.removeTitleBox.bind(this)}>
                     <div onClick={this.state.one ? () => {return;} : this.goToPage.bind(this)} title='one' id='projects' className={`homeBar homeBar1 ${this.state.shrink ? (this.state.one ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
-                        <div>
+                        <div className='containerObject'>
                         {this.state.shrink && this.state.one ? <Main/> : <a href='#' title='one' id='projects' onClick={this.goToPage.bind(this)}>projects</a>}
                         </div>
                     </div>
                     <div onClick={this.state.two ? () => {return;} : this.goToPage.bind(this)} title={this.state.two ? '' : 'two'} id={this.state.two ? '' : 'photography'} className={`homeBar homeBar2 ${this.state.shrink ? (this.state.two ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
-                        <div>
+                        <div className='containerObject'>
                         {this.state.shrink && this.state.two ? <Main/> : <a href='#' title='two' id='photography' onClick={this.goToPage.bind(this)}>photos</a>}
                         </div>
                     </div>
-                    <div onClick={this.state.three ? () => {return;} : this.goToPage.bind(this)} title='three' id='play' className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
-                        <div>
-                        {this.state.shrink && this.state.three ? <Main/> : <a href='#' title='three' id='play' onClick={this.goToPage.bind(this)}>play</a>}
+                    <div onClick={this.state.three ? () => {return;} : this.goToPage.bind(this)} title='three' id='read' className={`homeBar homeBar3 ${this.state.shrink ? (this.state.three ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
+                        <div className='containerObject'>
+                        {this.state.shrink && this.state.three ? <Main/> : <a href='#' title='three' id='read' onClick={this.goToPage.bind(this)}>read</a>}
                         </div>
                     </div>
                     <div onClick={this.state.four ? () => {return;} : this.goToPage.bind(this)} title='four' id='contact' className={`homeBar homeBar4 ${this.state.shrink ? (this.state.four ? 'homeBarGrown': 'homeBarShrunk') : ''}`}>
-                        <div>
+                        <div className='containerObject'>
                             {this.state.shrink && this.state.four ? <Main/> : <a href='#' title='four' id='contact' onClick={this.goToPage.bind(this)}>contact</a>}
                         </div>
                     </div>

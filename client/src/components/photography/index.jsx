@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Lightbox from 'react-images';
 import Gallery from 'react-photo-gallery';
-import { connect} from "react-redux";
+import { connect } from "react-redux";
 import { openLightbox, closeLightbox } from "../../actions/index"
 
 const PHOTO_SET = [

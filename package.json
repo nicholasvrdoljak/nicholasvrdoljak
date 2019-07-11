@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "npm run build | npm run startServer",
-    "start_prod" : "npm run build | npm run startServer",
+    "start_prod": "npm run build | npm run startServer",
     "startServer": "nodemon ./api/index.js",
     "build": "webpack"
   },

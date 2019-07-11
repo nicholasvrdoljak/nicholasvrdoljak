@@ -3,9 +3,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 100vh;
+    height: 99vh;
 }
-
 .homeBar {
     width: 25%;
     display: flex;
@@ -30,12 +29,15 @@
 
 .homeBarGrown {
     width: 100%;
+    height:99vh;
     transition: all 0.1s linear;
 }
 .homeBarGrown>div {
     top: 50%;
     width: 100%;
+    height: 99vh;
     text-align: center;
+    overflow-y:hidden;
 }
 .homeBarShrunk {
     width: 3%;   
@@ -49,34 +51,38 @@
     transition: all 0.1s linear;
 }
 
+
+/* COLORS */
 .homeBar1 {
-    background-color: #c9beaa;
+    background-color: #304750 ;
 }
 .homeBar1:hover {
-    background-color: #ecfcbf
+    background-color: #a6c4d1 ;
 }
+
 .homeBar2 {
-    background-color: #787987;
+    background-color: #76454F ;
 }
 .homeBar2:hover {
-    background-color: #8b8b8b;
+    background-color: rgb(206, 175, 182) ;
 }
+
 .homeBar3 {
-    background-color: #3c5a75;
+    background-color: #516F41 ;
 }
 .homeBar3:hover {
-    background-color: #627e99;
+    background-color: rgb(201, 228, 186) ;
 }
+
 .homeBar4 {
-    background-color: #fa6060;
+    background-color: #7F664A ;
 }
 .homeBar4:hover {
-    background-color: #ffb0b0;
+    background-color: rgb(221, 198, 172) ;
 }
 
 .contactTitle{
     height: auto;
-    overflow-y: scroll;
     margin-top: 10%;
     padding-bottom: 50px;
 
@@ -85,6 +91,5 @@
 }
 
 .contact{
-    height: 100vh;
-    overflow-y: scroll;
+    height: 99vh;
 }
