@@ -1,7 +1,7 @@
 function Home(props) {
 	return (
 		<div style={{display: 'flex', flexDirection: 'column'}}>
-			Nick
+			Nicholas Vrdoljak
 		</div>
 	);
 }

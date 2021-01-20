@@ -48,11 +48,7 @@ a {
   text-decoration: none;
 }
 
-/* @font-face {
-  font-family: 'Cherolina';
-  src: url('/fonts/Cherolina.ttf');
-} */
-
+/* 
 @media (orientation: landscape) {
   .portfolioItemContainer {
     flex-direction: row;
@@ -75,4 +71,4 @@ a {
   .portfolioTextContainer {
       width: 100%;
   }
-}
+} */
