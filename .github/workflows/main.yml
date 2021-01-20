@@ -16,6 +16,7 @@ jobs:
           npm run build
           npm run export
           touch ./out/.nojekyll
+          rm -rf ./out/CNAME
           cp ./CNAME ./out/CNAME
 
       - name: Deploy to GitHub Pages
