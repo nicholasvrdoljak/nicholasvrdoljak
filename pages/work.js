@@ -1,6 +1,6 @@
 import Header from "../components/header";
 
-function Test(props) {
+function Work(props) {
 	return (
 		<div style={{display: 'flex', flexDirection: 'column'}}>
 			<Header/>
@@ -8,4 +8,4 @@ function Test(props) {
 	);
 }
   
-export default Test
+export default Work
