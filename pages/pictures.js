@@ -1,10 +1,6 @@
 import React from "react";
-import {
-    Button,
-    TextField
-  } from "@material-ui/core";
 
-function Homepage(props) {
+function Pictures(props) {
 	return (
 		<div style={{display: 'flex', flexDirection: 'column'}}>
             <div
@@ -15,10 +11,10 @@ function Homepage(props) {
                 padding: 20
                 }}
             >
-                Welcome to my site
+                Pictures will be coming here.
             </div>
 		</div>
 	);
 }
 
-export default Homepage;
+export default Pictures;

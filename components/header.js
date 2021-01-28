@@ -4,8 +4,7 @@ import Link from 'next/link';
 
 const useStyles = makeStyles(() => ({
     header: {
-    backgroundColor: "#400CCC",
-        paddingRight: "79px",
+        backgroundColor: "#400CCC",
     },
     logo: {
         fontFamily: "Work Sans, sans-serif",
@@ -23,39 +22,36 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         justifyContent: "space-between",
     },
+    links: {
+        width: '100%',
+        textAlign: 'right'
+    }
 }));
 
 export default function Header() {
-    const { header,logo,menuButton,toolbar } = useStyles();
-    const [height, setHeight] = useState(0)
+    const { header, logo, menuButton, toolbar, links } = useStyles();
+    const [ height, setHeight ] = useState(0)
     const ref = useRef(0)
-
-    const mainLogo = (
-        <Typography variant="h6" component="h1" className={logo}>
-            Nicholas Vrdoljak
-        </Typography>
-    );
 
     const getMenuButtons = () => {
         return headersData.map(({ label, href }) => {
-        return (
-            <Link href={href} passHref key={label}>
-                <Button
-                    {...{
-                        color: "inherit",
-                        to: href,
-                        className: menuButton,
-                    }}
-                >
-                {label}
-                </Button>
-            </Link>
-        );
+            return (
+                <Link href={href} passHref key={label}>
+                    <Button
+                        {...{
+                            color: "inherit",
+                            to: href,
+                            className: menuButton,
+                        }}
+                    >
+                        {label}
+                    </Button>
+                </Link>
+            );
         });
     };
 
     useEffect(() => {
-        console.log('ref', ref.current.clientHeight)
         setHeight(ref.current.clientHeight)
     });
 
@@ -68,10 +64,12 @@ export default function Header() {
                             color: "inherit",
                             to: '/',
                         }}>
-                            {mainLogo}
+                            <Typography variant="h6" component="h1" className={logo}>
+                                Nicholas Vrdoljak
+                            </Typography>
                         </Button>
                     </Link>
-                    <div>
+                    <div className={links}>
                         {getMenuButtons()}
                     </div>
                 </Toolbar>
@@ -83,19 +81,19 @@ export default function Header() {
 
 const headersData = [
     {
-        label: "About",
-        href: "/about",
-    },
-    {
-        label: "Contact",
-        href: "/contact",
-    },
-    {
         label: "Read",
         href: "/read",
     },
     {
         label: "Work",
         href: "/work",
+    },
+    {
+        label: "Pictures",
+        href: "/pictures",
+    },
+    {
+        label: "Contact",
+        href: "/contact",
     },
 ];
