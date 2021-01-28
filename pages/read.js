@@ -11,7 +11,8 @@ const posts = [
 		title: "I can tolerate anything except the outgroup",
 		excerpt: "Classic SSC that was very influential to me.",
 		href: "https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
-		image: "/images/icantolerateanythingexcepttheoutgroup.png"
+		image: "/images/icantolerateanythingexcepttheoutgroup.png",
+		date: "January 27, 2021"
 	}
 ];
 
@@ -31,11 +32,16 @@ function Read(props)  {
 										image={post.image}
 										title="Contemplative Reptile"
 									/>
-										<CardContent>
-											<Typography gutterBottom variant="h5" component="h2">
-												{post.title}
-											</Typography>
-										<Typography component="p">{post.excerpt}</Typography>
+									<CardContent>
+										<Typography gutterBottom variant="h5" component="h2">
+											{post.title}
+										</Typography>
+										<Typography component="p">
+											{post.excerpt}
+										</Typography>
+										<Typography component="p" variant="caption">
+											<br/>Posted on {post.date}
+										</Typography>
 									</CardContent>
 								</CardActionArea>
 								{/* <CardActions>
