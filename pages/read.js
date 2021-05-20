@@ -9,7 +9,7 @@ import Link from "next/link";
 const posts = [
 	{
 		title: "I can tolerate anything except the outgroup",
-		excerpt: "Classic SSC that was very influential to me.",
+		excerpt: "",
 		href: "https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
 		image: "/images/icantolerateanythingexcepttheoutgroup.png",
 		date: "January 27, 2021"
