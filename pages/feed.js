@@ -1,16 +1,14 @@
 import { Grid, Paper, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Link from "next/link";
 
 const posts = [
 	{
 		title: "I can tolerate anything except the outgroup",
 		excerpt: "",
-		href: "https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
+		href: "https://web.archive.org/web/20210105161328/https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
 		image: "/images/outgroup.jpg",
 		date: "January 27, 2021"
 	}
