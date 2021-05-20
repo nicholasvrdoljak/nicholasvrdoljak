@@ -1,6 +1,7 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import theme from '../src/theme';
 
 export default class MyDocument extends Document {
 	render () {
@@ -9,6 +10,7 @@ export default class MyDocument extends Document {
 				<Head>
 					<meta charSet="UTF-8" />
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+					<meta name="theme-color" content={theme.palette.primary.main} />
 				</Head>
 				<body style={{margin:0}}>
 					<Main />

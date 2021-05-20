@@ -11,12 +11,12 @@ const posts = [
 		title: "I can tolerate anything except the outgroup",
 		excerpt: "",
 		href: "https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
-		image: "/images/icantolerateanythingexcepttheoutgroup.png",
+		image: "/images/outgroup.jpg",
 		date: "January 27, 2021"
 	}
 ];
 
-function Read(props)  {
+function Feed(props)  {
 	return (
 		<div style={{ marginTop: 20, padding: 30 }}>
 			<Grid container spacing={10} justify="center">
@@ -61,4 +61,4 @@ function Read(props)  {
 	);
 }
   
-export default Read
+export default Feed
