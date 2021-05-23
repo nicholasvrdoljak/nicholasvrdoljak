@@ -5,41 +5,59 @@ import {
     FormControl,
     InputLabel,
     Input,
-    Button
+    Button,
+    CircularProgress
   } from "@material-ui/core";
 
 function Contact(props) {
     let [ submitDisabled, changeSubmitDisabled ] = React.useState(true);
     let [ name, changeName ] = React.useState("");
     let [ email, changeEmail ] = React.useState("");
+    let [ loading, setLoading ] = React.useState(false);
     let [ message, changeMessage ] = React.useState("");
+    let [ recapValue, changeRecapValue ] = React.useState(null);
     const recapUrl = 'https://gospb44so8.execute-api.us-west-1.amazonaws.com/default/ContactMeForm';
+    const recaptchaRef = React.createRef();
     
     function onRecaptcha (value) {
-        console.log('value: ', value);
+        changeRecapValue(value);
         if (value) return changeSubmitDisabled(false);
         return changeSubmitDisabled(true);
     }
 
-    function onSubmit (x, y, z) {
-        console.log('submitting', x, y, z)
-        console.log('name: ', name, 'email: ', email, 'message: ', message);
+    function onSubmit (event) {
+        event.preventDefault();
+        setLoading(true);
+        changeSubmitDisabled(true);
+        if (!recapValue) return;
         const recapResponse = axios.post(recapUrl, {
-            response: value,
+            response: recapValue,
+            name, email, message
         }, {
-        }).then(function (x, y, z) {
-            console.log(x, y, z)
+        }).then(function (response) {
+            if (response.data === "success" && response.status === 200) {
+                // handle success
+                resetReCaptcha();
+            } else {
+                // handle error
+                resetReCaptcha();
+            }
         }).catch(function (err) {
             console.log('err: ', err);
+            resetReCaptcha();
         });
-
-        console.log(recapResponse);
     }
 
     function onChangeField (event) {
         const funcs = {name: changeName, email: changeEmail, message: changeMessage};
         if (funcs[this]) return funcs[this](event.target.value);
         return;
+    }
+
+    function resetReCaptcha () {
+        // console.log(recaptchaRef);
+        // const recap = recaptchaRef.current.getValue();
+        // recap.reset();
     }
 
 	return (
@@ -50,7 +68,7 @@ function Contact(props) {
                     justifyContent: "center",
                 }}
             >
-                <form style={{ width: "100%" }}>
+                <form style={{ width: "100%" }} onSubmit={onSubmit}>
                     <h1>Contact Form</h1>
 
                     <FormControl margin="normal" fullWidth onChange={onChangeField.bind('name')}>
@@ -68,18 +86,18 @@ function Contact(props) {
                         <Input id="message" multiline rows={10} />
                     </FormControl>
                     
-                    <br/>
-                    
                     <ReCAPTCHA
+                        ref={recaptchaRef}
                         sitekey="6LeGB-UaAAAAAEqKfAq9KNwXSQPcLDXuIZIPAWkY"
                         onChange={onRecaptcha}
+                        style={{padding: '20px'}}
                     />
 
                     <br/>
-
-                    <Button variant="contained" color="primary" size="medium" disabled={submitDisabled} onSubmit={onSubmit}>
-                        Send
-                    </Button>
+                    <div style={{position: 'relative'}}>
+                        <Button variant="contained" color="primary" size="medium" disabled={submitDisabled} type="submit" style={{position: 'absolute'}}>Send</Button>
+                        {loading && <CircularProgress size={24} style={{marginLeft: 24, marginTop: 8, position: 'absolute'}}/>}
+                    </div>
                 </form>
             </div>
 		</div>
