@@ -11,7 +11,7 @@ function Secret(props) {
                 padding: 20
                 }}
             >
-                Secret will be coming here.
+                You have found my secret.
             </div>
 		</div>
 	);
