@@ -6,8 +6,9 @@ import {
     InputLabel,
     Input,
     Button,
-    CircularProgress
+    CircularProgress,
   } from "@material-ui/core";
+import Modal from '@material-ui/core/Modal';
 
 function Contact(props) {
     let [ submitDisabled, changeSubmitDisabled ] = React.useState(true);
@@ -16,31 +17,59 @@ function Contact(props) {
     let [ loading, setLoading ] = React.useState(false);
     let [ message, changeMessage ] = React.useState("");
     let [ recapValue, changeRecapValue ] = React.useState(null);
+    let [ openModal, changeOpenModal ] = React.useState(false);
+    let [ openErrorModal, changeOpenErrorModal ] = React.useState(false);
+
     const recapUrl = 'https://gospb44so8.execute-api.us-west-1.amazonaws.com/default/ContactMeForm';
-    const recaptchaRef = React.createRef();
+    let recaptchaRef = React.createRef(null);
     
+    let nameref = React.createRef(null);
+    let emailref = React.createRef(null);
+    let messageref = React.createRef(null);
+
+    function handleCloseModal () {
+        changeOpenModal(false);
+    }
+    function handleCloseErrorModal () {
+        changeOpenErrorModal(false);
+    }
+
     function onRecaptcha (value) {
         changeRecapValue(value);
         if (value) return changeSubmitDisabled(false);
         return changeSubmitDisabled(true);
     }
 
+    function resetForm () {
+        recaptchaRef.reset();
+        setLoading(false);
+        changeName('');
+        changeEmail('');
+        changeMessage('');
+        nameref.valueOf().childNodes[0].value = '';
+        emailref.valueOf().childNodes[0].value = '';
+        messageref.valueOf().childNodes[0].value = '';
+    }
+
     function onSubmit (event) {
         event.preventDefault();
         setLoading(true);
         changeSubmitDisabled(true);
+
         if (!recapValue) return;
-        const recapResponse = axios.post(recapUrl, {
+
+        axios.post(recapUrl, {
             response: recapValue,
             name, email, message
         }, {
         }).then(function (response) {
             if (response.data === "success" && response.status === 200) {
                 // handle success
-                resetReCaptcha();
+                resetForm();
+                changeOpenModal(true);
             } else {
                 // handle error
-                resetReCaptcha();
+                resetForm();
             }
         }).catch(function (err) {
             console.log('err: ', err);
@@ -54,12 +83,6 @@ function Contact(props) {
         return;
     }
 
-    function resetReCaptcha () {
-        // console.log(recaptchaRef);
-        // const recap = recaptchaRef.current.getValue();
-        // recap.reset();
-    }
-
 	return (
 		<div style={{display: 'flex', flexDirection: 'column', width: '100%', padding: '10px'}}>
             <div
@@ -69,25 +92,25 @@ function Contact(props) {
                 }}
             >
                 <form style={{ width: "100%" }} onSubmit={onSubmit}>
-                    <h1>Contact Form</h1>
+                    <h1>Contact Me</h1>
 
-                    <FormControl margin="normal" fullWidth onChange={onChangeField.bind('name')}>
-                        <InputLabel htmlFor="name">Name</InputLabel>
-                        <Input id="name" type="text" />
+                    <FormControl required={true} margin="normal" fullWidth>
+                        <InputLabel htmlFor="name" >Name</InputLabel>
+                        <Input id="name" type="text" onChange={onChangeField.bind('name')} ref={el => el && (nameref = el)}/>
                     </FormControl>
 
-                    <FormControl margin="normal" fullWidth onChange={onChangeField.bind('email')}>
-                        <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input id="email" type="email" />
+                    <FormControl required={true} margin="normal" fullWidth>
+                        <InputLabel htmlFor="email" >Email</InputLabel>
+                        <Input id="email" type="email" onChange={onChangeField.bind('email')} ref={el => el && (emailref = el)}/>
                     </FormControl>
 
-                    <FormControl margin="normal" fullWidth onChange={onChangeField.bind('message')}>
-                        <InputLabel htmlFor="message">Message</InputLabel>
-                        <Input id="message" multiline rows={10} />
+                    <FormControl required={true} margin="normal" fullWidth>
+                        <InputLabel htmlFor="message" >Message</InputLabel>
+                        <Input id="message" multiline rows={10} onChange={onChangeField.bind('message')} ref={el => el && (messageref = el)}/>
                     </FormControl>
                     
                     <ReCAPTCHA
-                        ref={recaptchaRef}
+                        ref={el => el && (recaptchaRef = el)}
                         sitekey="6LeGB-UaAAAAAEqKfAq9KNwXSQPcLDXuIZIPAWkY"
                         onChange={onRecaptcha}
                         style={{padding: '20px'}}
@@ -100,6 +123,55 @@ function Contact(props) {
                     </div>
                 </form>
             </div>
+            <Modal
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <div style={{
+                    top: `20%`,
+                    left: `10%`,
+                    transform: `translate(30%, -10%)`,
+                    position: 'absolute', 
+                    width: '50%',
+                    height: '10%', 
+                    backgroundColor: 'white',
+                    boxShadow: '10px 5px 5px black',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent:'center'
+                }}>
+                    <div>
+                        You have successfully sent me a message.
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                open={openErrorModal}
+                onClose={handleCloseErrorModal}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <div style={{
+                    top: `20%`,
+                    left: `10%`,
+                    transform: `translate(30%, -10%)`,
+                    position: 'absolute', 
+                    width: '50%',
+                    height: '10%', 
+                    backgroundColor: 'white',
+                    boxShadow: '10px 5px 5px black',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent:'center',
+                    color: 'red'
+                }}>
+                    <div>
+                        There was an error.
+                    </div>
+                </div>
+            </Modal>
 		</div>
 	);
 }
