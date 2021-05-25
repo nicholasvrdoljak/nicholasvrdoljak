@@ -33,7 +33,6 @@ function Homepage(props) {
 	return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: "center", width:'100%', marginTop: '20px'}}>
             <div className={classes.section}>
-                {/* Section */}
                 <div className={classes.homeImages}><Image src="/images/smile.JPG" alt="Picture" layout='fill' objectFit='contain' /></div>
                 <div className={classes.homeDescription}> I'm a developer in the Pacific Northwest. Welcome to my site. </div>
             </div>
