@@ -25,6 +25,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "next": "^10.2.2",
+    "next-compose-plugins": "^2.2.1",
+    "next-optimized-images": "^2.6.2",
     "nuka-carousel": "^4.7.8",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
