@@ -30,10 +30,13 @@ function Homepage(props) {
     const theme = useTheme();
 	const classes = useStyles(theme);
 
+    const imgLoader = ({src, width, quality}) => {
+        return `/${src}`
+    }
 	return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: "center", width:'100%', marginTop: '20px'}}>
             <div className={classes.section}>
-                <div className={classes.homeImages}><Image src="/images/smile.JPG" alt="Picture" layout='fill' objectFit='contain' /></div>
+                <div className={classes.homeImages}><Image loader={imgLoader} src="/images/smile.JPG" alt="Picture" layout='fill' objectFit='contain' /></div>
                 <div className={classes.homeDescription}> I'm a developer in the Pacific Northwest. Welcome to my site. </div>
             </div>
             <br/>
@@ -41,14 +44,14 @@ function Homepage(props) {
                 <div style={{width: '100%', textAlign: 'center'}}>I can work with a lot of different technologies:</div>
                 <br/>
                 <div style={{width: '100%', flexDirection: 'row', padding: '5px', textAlign: 'center'}}>
-                    <div className={classes.logoImages}><Image src="/images/react.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/nextjs.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/sql.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/htmlcss.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/wordpress.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/mongo.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/aws.png" alt="Picture" layout='fill' objectFit='contain'/></div>
-                    <div className={classes.logoImages}><Image src="/images/git.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/react.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/nextjs.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/sql.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/htmlcss.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/wordpress.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/mongo.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/aws.png" alt="Picture" layout='fill' objectFit='contain'/></div>
+                    <div className={classes.logoImages}><Image loader={imgLoader} src="/images/git.png" alt="Picture" layout='fill' objectFit='contain'/></div>
                 </div>
             </div>
         </div>
