@@ -117,7 +117,7 @@ function Feed (props)  {
 		<div style={{ marginTop: 20, padding: 30 }}>
 			<Grid container spacing={ 10 } justify="center">
 				{ posts.map( post => (
-					<Grid item key={ post.title } className={classes.cardArea}>
+					<Grid item key={ post.title } className={classes.cardArea} xs={12} sm={6} md={4}>
 						<Card>
 							{post.href && 
 								<a href={ post.href } target="_blank">

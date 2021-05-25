@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 		position: 'absolute',
 		right: 0,
 		[theme.breakpoints.up('sm')]: {
-		display: 'none',
+			display: 'none',
 		},
 	},
 	toolbar: theme.mixins.toolbar,
@@ -82,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 		[theme.breakpoints.up('sm')]: {
 			width: `calc(100% - ${drawerWidth}px)`,
-			marginRight: drawerWidth,
+			marginLeft: `-${drawerWidth}px`,
 		},
-	},
+	}
 }));
 
 function Header(props) {
@@ -120,6 +120,7 @@ function Header(props) {
 	const drawer = (
 		<div>
 			<div className={classes.toolbar} />
+			<ListItem button onClick={handleDrawerToggle}><Link href="/" passHref><ListItemText>Home</ListItemText></Link></ListItem>
 			<Divider />
 			<List>
 				{headersData.map((item, index) => (
