@@ -31,7 +31,7 @@ function Homepage(props) {
 	const classes = useStyles(theme);
 
     const imgLoader = ({src, width, quality}) => {
-        return `/${src}`
+        return `${src}`
     }
 	return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: "center", width:'100%', marginTop: '20px'}}>
