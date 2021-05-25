@@ -1,2 +1,2 @@
 ## Personal Website
-[NickVrdoljak.com](https://nickvrdoljak.com)
+[nickvrdoljak.com](https://nickvrdoljak.com)
