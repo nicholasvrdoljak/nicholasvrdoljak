@@ -21,7 +21,7 @@ function Homepage(props) {
 	return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: "center", width:'100%', marginTop: '20px'}}>
             <div className={classes.section}>
-                <div className={classes.homeImages}><img src={require("../public/images/smile.JPG")} alt="Picture" layout='fill' className={classes.logoImage} /></div>
+                <div className={classes.homeImages}><img src={require("../public/images/smile.JPG")} alt="me" layout='fill' className={classes.logoImage} /></div>
                 <div className={classes.homeDescription}> I'm a developer in the Pacific Northwest. Welcome to my site. </div>
             </div>
             <br/>
@@ -29,14 +29,14 @@ function Homepage(props) {
                 <div style={{width: '100%', textAlign: 'center'}}>I can work with a lot of different technologies:</div>
                 <br/>
                 <div style={{width: '100%', flexDirection: 'row', padding: '5px', textAlign: 'center'}}>
-                    <div className={classes.logoImages}><img src={require("../public/images/react.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/nextjs.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/sql.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/htmlcss.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/wordpress.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/mongo.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/aws.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={require("../public/images/git.png")} alt="Picture" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/react.png")} alt="react" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/nextjs.png")} alt="nextjs" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/sql.png")} alt="sql" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/htmlcss.png")} alt="html/css" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/wordpress.png")} alt="wordpress" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/mongo.png")} alt="mongo" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/aws.png")} alt="aws" layout='fill' className={classes.logoImage}/></div>
+                    <div className={classes.logoImages}><img src={require("../public/images/git.png")} alt="git" layout='fill' className={classes.logoImage}/></div>
                 </div>
             </div>
         </div>

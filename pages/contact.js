@@ -84,7 +84,7 @@ function Contact(props) {
     }
 
 	return (
-		<div style={{display: 'flex', flexDirection: 'column', width: '100%', padding: '10px'}}>
+		<div style={{display: 'flex', flexDirection: 'column', width: '90%', paddingTop: '10px', marginBottom: '200px', paddingLeft: '10px'}}>
             <div
                 style={{
                     display: "flex",
@@ -113,7 +113,7 @@ function Contact(props) {
                         ref={el => el && (recaptchaRef = el)}
                         sitekey="6LeGB-UaAAAAAEqKfAq9KNwXSQPcLDXuIZIPAWkY"
                         onChange={onRecaptcha}
-                        style={{padding: '20px'}}
+                        style={{paddingTop: '20px'}}
                     />
 
                     <br/>
@@ -140,10 +140,11 @@ function Contact(props) {
                     boxShadow: '10px 5px 5px black',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent:'center'
+                    justifyContent:'center',
+                    borderRadius: '1em'
                 }}>
                     <div>
-                        You have successfully sent me a message.
+                        Message sent!
                     </div>
                 </div>
             </Modal>
@@ -165,10 +166,10 @@ function Contact(props) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent:'center',
-                    color: 'red'
+                    color: 'red',
                 }}>
                     <div>
-                        There was an error.
+                        There was an error, please try again.
                     </div>
                 </div>
             </Modal>
