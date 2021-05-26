@@ -8,7 +8,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 const posts = [
 	{
 		type: 'youtube', 
-		title: 'Pokemon Cards,
+		title: 'Pokemon Cards',
 		link: 'wuBABzFi3r4', 
 		date: 'May 25, 2021'
 	},
