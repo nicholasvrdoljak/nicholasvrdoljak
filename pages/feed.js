@@ -7,6 +7,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const posts = [
 	{
+		type: 'youtube', 
+		title: 'Pokemon Cards,
+		link: 'wuBABzFi3r4', 
+		date: 'May 25, 2021'
+	},
+	{
 		type: 'youtube',
 		title: "Suburbs that don't Suck",
 		link: 'MWsGBRdK2N0',
