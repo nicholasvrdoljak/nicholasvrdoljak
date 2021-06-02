@@ -6,12 +6,26 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const posts = [
-	{
-		type: 'youtube',
-		title: "Suburbs that don't Suck",
-		link: 'MWsGBRdK2N0',
-		date: 'May 24, 2021'
-	},
+	// {
+	// 	type: 'quote', 
+	// 	title: "Captain Corelli's Mandolin",
+	// 	excerpt: 'Love is a temporary madness, it erupts like volcanoes and then subsides. And when it subsides, you have to make a decision. You have to work out whether your roots have so entwined together that it is inconceivable that you should ever part. Because this is what love is. Love is not breathlessness, it is not excitement, it is not the promulgation of promises of eternal passion, it is not the desire to mate every second minute of the day, it is not lying awake at night imagining that he is kissing every cranny of your body. No, don\'t blush, I am telling you some truths. That is just being "in love", which any fool can do. Love itself is what is left over when being in love has burned away, and this is both an art and a fortunate accident.',
+	// 	date: "May 28, 2021", 
+	// 	image: ""
+	// },
+	// {
+	// 	type: 'quote', 
+	// 	title: 'Thomas Jefferson', 
+	// 	excerpt: "Rightful liberty is unobstructed action according to our will within limits drawn around us by the equal rights of others. I do not add ‘within the limits of the law’ because law is often but the tyrant’s will, and always so when it violates the rights of the individual.",
+	// 	date: "May 28, 2021", 
+	// 	image: ""
+	// },
+	// {
+	// 	type: 'youtube',
+	// 	title: "Suburbs that don't Suck",
+	// 	link: 'MWsGBRdK2N0',
+	// 	date: 'May 24, 2021'
+	// },
 	{
 		type: 'youtube',
 		title: 'The Insane Logistics of Shutting Down the Cruise Industry',
@@ -21,7 +35,7 @@ const posts = [
 	{
 		type: 'quote',
 		title: 'C.S. Lewis', 
-		excerpt: "Of all tyrannies, a tyranny sincerely exercised for the good of its victims may be the most oppressive. It would be better to live under robber barons than under omnipotent moral busybodies. The robber baron's cruelty may sometimes sleep, his cupidity may at some point be satiated; but those who torment us for our own good will torment us without end for they do so with the approval of their own conscience",
+		excerpt: "Of all tyrannies, a tyranny sincerely exercised for the good of its victims may be the most oppressive. It would be better to live under robber barons than under omnipotent moral busybodies. The robber baron's cruelty may sometimes sleep, his cupidity may at some point be satiated; but those who torment us for our own good will torment us without end for they do so with the approval of their own conscience. They may be more likely to go to Heaven yet at the same time likelier to make a Hell of earth. This very kindness stings with intolerable insult. To be 'cured' against one's will and cured of states which we may not regard as disease is to be put on a level of those who have not yet reached the age of reason or those who never will; to be classed with infants, imbeciles, and domestic animals",
 		image: "",
 		date: "May 22, 2021"
 	},

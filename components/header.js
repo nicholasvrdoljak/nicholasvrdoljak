@@ -26,10 +26,10 @@ const headersData = [
 	// 	label: "Pictures",
 	// 	href: "/pictures",
 	// },
-	{
-		label: "Contact",
-		href: "/contact",
-	},
+	// {
+	// 	label: "Contact",
+	// 	href: "/contact",
+	// },
 ];
 const drawerWidth = 240;
 

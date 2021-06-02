@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Contact from '../pages/contact.js';
 
 const useStyles = makeStyles((theme) => ({
     section: {display: 'flex', flexDirection: 'row', alignItems: 'center', width: '80%', marginLeft: '10%', marginRight: '10%', height: '50vh'},
@@ -38,6 +39,7 @@ function Homepage(props) {
                     <div className={classes.logoImages}><img src={require("../public/images/aws.png")} alt="aws" layout='fill' className={classes.logoImage}/></div>
                     <div className={classes.logoImages}><img src={require("../public/images/git.png")} alt="git" layout='fill' className={classes.logoImage}/></div>
                 </div>
+                <Contact/>
             </div>
         </div>
 	);
