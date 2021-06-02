@@ -15,7 +15,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Link from 'next/link';
 const headersData = [
 	{
-		label: "Feed",
+		label: "Things I Like",
 		href: "/feed",
 	},
 	// {

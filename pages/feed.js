@@ -20,12 +20,18 @@ const posts = [
 	// 	date: "May 28, 2021", 
 	// 	image: ""
 	// },
-	// {
-	// 	type: 'youtube',
-	// 	title: "Suburbs that don't Suck",
-	// 	link: 'MWsGBRdK2N0',
-	// 	date: 'May 24, 2021'
-	// },
+	{
+		type: 'youtube', 
+		title: 'Pokemon Cards',
+		link: 'wuBABzFi3r4', 
+		date: 'May 25, 2021'
+	},
+	{
+		type: 'youtube',
+		title: "Suburbs that don't Suck",
+		link: 'MWsGBRdK2N0',
+		date: 'May 24, 2021'
+	},
 	{
 		type: 'youtube',
 		title: 'The Insane Logistics of Shutting Down the Cruise Industry',
