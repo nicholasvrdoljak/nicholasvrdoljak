@@ -7,6 +7,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const posts = [
 	{
+		type: 'youtube',
+		title: 'Chevy Commercial',
+		link: 'c4-oyBnknHk',
+		date: 'December 25, 2021'
+	},
+	{
 		type: 'quote', 
 		title: "Captain Corelli's Mandolin",
 		excerpt: 'Love is a temporary madness, it erupts like volcanoes and then subsides. And when it subsides, you have to make a decision. You have to work out whether your roots have so entwined together that it is inconceivable that you should ever part. Because this is what love is. Love is not breathlessness, it is not excitement, it is not the promulgation of promises of eternal passion, it is not the desire to mate every second minute of the day, it is not lying awake at night imagining that he is kissing every cranny of your body. No, don\'t blush, I am telling you some truths. That is just being "in love", which any fool can do. Love itself is what is left over when being in love has burned away, and this is both an art and a fortunate accident.',
@@ -52,12 +58,6 @@ const posts = [
 		href: "https://web.archive.org/web/20210105161328/https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
 		image: "/images/outgroup.jpg",
 		date: "January 27, 2021"
-	}, 
-	{
-		type: 'youtube',
-		title: 'Chevy Commercial',
-		link: 'c4-oyBnknHk',
-		date: 'December 25, 2021'
 	}
 ];
 
