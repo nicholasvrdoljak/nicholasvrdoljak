@@ -8,6 +8,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 const posts = [
 	{
 		type: 'youtube',
+		title: 'Snowboarding vs. Skiing',
+		link: 'XPZDEWBzneY',
+		date: 'March 23, 2022'
+	},
+	{
+		type: 'youtube',
 		title: 'Chevy Commercial',
 		link: 'c4-oyBnknHk',
 		date: "December 25, 2021"
