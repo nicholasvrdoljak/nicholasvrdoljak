@@ -1,12 +1,14 @@
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import { useTheme } from '@mui/material/styles';
+// import makeStyles from '@mui/styles/makeStyles';
+import React from "react";
 
-const useStyles = makeStyles((theme) => ({
+// const useStyles = makeStyles(() => ({
 
-}));
+// }));
 
-function Work (props)  {
-	const theme = useTheme();
-	const classes = useStyles(theme);
+function Work ()  {
+	// const theme = useTheme();
+	// const classes = useStyles(theme);
 
 	return (
 		<div style={{ marginTop: 20, padding: 30 }}>
@@ -14,5 +16,5 @@ function Work (props)  {
 		</div>
 	);
 }
-  
+
 export default Work

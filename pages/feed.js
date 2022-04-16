@@ -1,9 +1,13 @@
-import { Grid, Typography } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from "react";
+import { Grid, Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import { useTheme } from '@mui/material/styles';
+import Link from 'next/link';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const posts = [
 	{
@@ -67,7 +71,7 @@ const posts = [
 	}
 ];
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	videoResponsive: {
 		overflow: "hidden",
 		paddingBottom: "56.25%",
@@ -86,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function Feed (props)  {
+function Feed ()  {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 
@@ -146,15 +150,15 @@ function Feed (props)  {
 	}
 
 	return (
-		<div style={{ marginTop: 20, padding: 30 }}>
-			<Grid container spacing={ 10 } justify="center">
+        <div style={{ marginTop: 20, padding: 30 }}>
+			<Grid container spacing={ 10 } justifyContent="center">
 				{ posts.map( post => (
 					<Grid item key={ post.title } className={classes.cardArea} xs={12} sm={6} md={4}>
 						<Card>
 							{post.href && 
-								<a href={ post.href } target="_blank">
+								<Link href={ post.href } target="_blank" rel="noreferrer" passHref>
 									{getCard(post)}
-								</a>
+								</Link>
 							}
 							{!post.href && 
 								<div>
@@ -166,7 +170,7 @@ function Feed (props)  {
 				))}
 			</Grid>
 		</div>
-	);
+    );
 }
-  
+
 export default Feed

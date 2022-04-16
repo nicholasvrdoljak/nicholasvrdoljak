@@ -20,20 +20,24 @@
   },
   "homepage": "https://github.com/nicholasvrdoljak/nicholasvrdoljak#readme",
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
-    "next": "^10.2.2",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.1",
+    "@mui/material": "^5.6.1",
+    "@mui/styles": "^5.6.1",
+    "axios": "^0.21.4",
+    "date-fns": "^2.28.0",
+    "moment": "^2.29.2",
+    "next": "^12.1.5",
     "next-compose-plugins": "^2.2.1",
-    "next-optimized-images": "^2.6.2",
-    "nuka-carousel": "^4.7.8",
     "react": "^17.0.2",
-    "react-bootstrap": "^1.6.0",
     "react-dom": "^17.0.2",
-    "react-google-recaptcha": "^2.1.0",
-    "react-reveal": "^1.2.2",
-    "react-spring-lightbox": "^1.5.0",
-    "styled-components": "^5.3.0"
+    "react-google-recaptcha": "^2.1.0"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^12.1.5",
+    "eslint": "^8.13.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0"
   }
 }
