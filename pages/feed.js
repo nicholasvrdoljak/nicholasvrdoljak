@@ -65,7 +65,7 @@ const posts = [
 		type: 'article',
 		title: "I can tolerate anything except the outgroup",
 		excerpt: "Slate Star Codex",
-		href: "https://web.archive.org/web/20210105161328/https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
+		href: "https://web.archive.org/web/20210105161328/https:/slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/",
 		image: "/images/outgroup.jpg",
 		date: "January 27, 2021"
 	}

@@ -14,7 +14,14 @@ function getElapsedTime(pastDate) {
 function SugarPickle() {
     let [timeObj, setTimestring] = React.useState({});
     let [isMobile, setIsMobile] = React.useState(false);
+    const interval = setInterval(updateTimestring, 1000);
 
+    React.useEffect(() => {
+        return () => {
+            console.log('clearing interveral')
+            clearInterval(interval);
+        }
+    }, []);
     let date = new Date(2021,12,4);
     let _window = typeof window == 'undefined' ? {} : window;
     
@@ -22,7 +29,6 @@ function SugarPickle() {
         setIsMobile(_window.innerWidth <= 768);
         setTimestring(getElapsedTime(date));
     }
-    setInterval(updateTimestring, 1000);
     
     function getTimestringElements() {
         let [years, months, days, hours, minutes, seconds] = ["", "", "", "", "", ""];
@@ -38,6 +44,7 @@ function SugarPickle() {
                 <div>{string}</div>
             );
         }
+
         return (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-evenly'}}>
                 <div>{years}</div>
