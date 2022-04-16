@@ -8,37 +8,60 @@ function getElapsedTime(pastDate) {
         end: new Date(),
     });
 
-    let [years, months, days, hours, minutes, seconds] = ["", "", "", "", "", ""];
-    years = duration.years === 0 ? "0 years" : (duration.years === 1 ? "1 year" : `${duration.years} years`);
-    months = duration.months === 1 ? "1 month" : `${duration.months+1} months`;
-    days = duration.days === 1 ? "1 day" : `${duration.days} days`;
-    hours = duration.hours === 1 ? "1 hour" : `${duration.hours} hours`;
-    minutes = duration.minutes === 1 ? "1 hour" : `${duration.minutes} minutes`;
-    seconds = duration.seconds === 1 ? "1 hour" : `${duration.seconds} seconds`;
-
-    let response = [years+", ", months+", ", days+", ", hours+", ", minutes+", and ", seconds].filter(Boolean);
-    return response.join(" ");
+    return duration;
 }
 
 function SugarPickle() {
-    let [timestring, setTimestring] = React.useState();
-    setInterval(updateTimestring, 1000);
+    let [timeObj, setTimestring] = React.useState({});
+    let [isMobile, setIsMobile] = React.useState(false);
+
     let date = new Date(2021,12,4);
+    let _window = typeof window == 'undefined' ? {} : window;
+    
     function updateTimestring () {
+        setIsMobile(_window.innerWidth <= 768);
         setTimestring(getElapsedTime(date));
+    }
+    setInterval(updateTimestring, 1000);
+    
+    function getTimestringElements() {
+        let [years, months, days, hours, minutes, seconds] = ["", "", "", "", "", ""];
+        years = timeObj.years === 0 ? "0 years" : (timeObj.years === 1 ? "1 year" : `${timeObj.years} years`);
+        months = timeObj.months === 1 ? "1 month" : `${timeObj.months+1} months`;
+        days = timeObj.days === 1 ? "1 day" : `${timeObj.days} days`;
+        hours = timeObj.hours === 1 ? "1 hour" : `${timeObj.hours} hours`;
+        minutes = timeObj.minutes === 1 ? "1 hour" : `${timeObj.minutes} minutes`;
+        seconds = timeObj.seconds === 1 ? "1 hour" : `${timeObj.seconds} seconds`;
+        if (!isMobile) {
+            let string = [years, months, days, hours, minutes, seconds].join(', ')
+            return (
+                <div>{string}</div>
+            );
+        }
+        return (
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-evenly'}}>
+                <div>{years}</div>
+                <div>{months}</div>
+                <div>{days}</div>
+                <div>{hours}</div>
+                <div>{minutes}</div>
+                <div>{seconds}</div>
+            </div>
+        );
     }
 
 	return (
-		<div style={{display: 'flex', flexDirection: 'column'}}>
+		<div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
             <div
                 style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: 20,
-                padding: 20
+                    display: "flex",
+                    justifyContent: "center",
+                    margin: 20,
+                    padding: 20,
+                    height: '100%'
                 }}
             >
-                {timestring && timestring}
+                {timeObj.days > 0 && getTimestringElements()}
 
 
             </div>
