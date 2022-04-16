@@ -23,7 +23,7 @@ function getElapsedTime(pastDate) {
 function SugarPickle() {
     let [timestring, setTimestring] = React.useState();
     setInterval(updateTimestring, 1000);
-    let date = new Date(2021,12,4,6,30);
+    let date = new Date(2021,12,4,18,30);
     function updateTimestring () {
         setTimestring(getElapsedTime(date));
     }
