@@ -36,8 +36,8 @@ function SugarPickle() {
         months = timeObj.months === 1 ? "1 month" : `${timeObj.months+1} months`;
         days = timeObj.days === 1 ? "1 day" : `${timeObj.days} days`;
         hours = timeObj.hours === 1 ? "1 hour" : `${timeObj.hours} hours`;
-        minutes = timeObj.minutes === 1 ? "1 hour" : `${timeObj.minutes} minutes`;
-        seconds = timeObj.seconds === 1 ? "1 hour" : `${timeObj.seconds} seconds`;
+        minutes = timeObj.minutes === 1 ? "1 minute" : `${timeObj.minutes} minutes`;
+        seconds = timeObj.seconds === 1 ? "1 second" : `${timeObj.seconds} seconds`;
         if (!isMobile) {
             let string = [years, months, days, hours, minutes, seconds].join(', ')
             return (
