@@ -22,7 +22,7 @@ function X() {
             clearInterval(interval);
         }
     }, []);
-    let date = new Date(2022,7,31);
+    let date = new Date(2022,6,31);
     let _window = typeof window == 'undefined' ? {} : window;
     
     function updateTimestring () {
