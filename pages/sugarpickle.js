@@ -22,7 +22,7 @@ function SugarPickle() {
             clearInterval(interval);
         }
     }, []);
-    let date = new Date(2021,12,4);
+    let date = new Date(2021,11,4);
     let _window = typeof window == 'undefined' ? {} : window;
     
     function updateTimestring () {
