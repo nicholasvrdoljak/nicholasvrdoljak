@@ -33,7 +33,7 @@ function X() {
     function getTimestringElements() {
         let [years, months, days, hours, minutes, seconds] = ["", "", "", "", "", ""];
         years = timeObj.years === 0 ? "0 years" : (timeObj.years === 1 ? "1 year" : `${timeObj.years} years`);
-        months = timeObj.months === 1 ? "1 month" : `${timeObj.months+1} months`;
+        months = timeObj.months === 1 ? "1 month" : `${timeObj.months} months`;
         days = timeObj.days === 1 ? "1 day" : `${timeObj.days} days`;
         hours = timeObj.hours === 1 ? "1 hour" : `${timeObj.hours} hours`;
         minutes = timeObj.minutes === 1 ? "1 minute" : `${timeObj.minutes} minutes`;
