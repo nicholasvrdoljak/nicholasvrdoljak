@@ -17,12 +17,9 @@ function X() {
     const interval = setInterval(updateTimestring, 1000);
 
     React.useEffect(() => {
-        return () => {
-            console.log('clearing interveral')
-            clearInterval(interval);
-        }
+        return () => clearInterval(interval);
     }, []);
-    let date = new Date(2022,6,31);
+    let date = new Date(2022,7,22);
     let _window = typeof window == 'undefined' ? {} : window;
     
     function updateTimestring () {
