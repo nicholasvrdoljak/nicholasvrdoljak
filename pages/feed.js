@@ -12,6 +12,12 @@ import makeStyles from '@mui/styles/makeStyles';
 const posts = [
 	{
 		type: 'youtube',
+		title: 'Something',
+		link: 'pwmxpRIOjYY',
+		date: 'September 6, 2022'
+	},
+	{
+		type: 'youtube',
 		title: 'Snowboarding vs. Skiing',
 		link: 'XPZDEWBzneY',
 		date: 'March 23, 2022'
