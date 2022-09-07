@@ -10,12 +10,12 @@ import Link from 'next/link';
 import makeStyles from '@mui/styles/makeStyles';
 
 const posts = [
-	{
-		type: 'youtube',
-		title: 'Something',
-		link: 'pwmxpRIOjYY',
-		date: 'September 6, 2022'
-	},
+// 	{
+// 		type: 'youtube',
+// 		title: 'Something',
+// 		link: 'pwmxpRIOjYY',
+// 		date: 'September 6, 2022'
+// 	},
 	{
 		type: 'youtube',
 		title: 'Snowboarding vs. Skiing',
