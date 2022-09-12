@@ -19,7 +19,7 @@ function X() {
     React.useEffect(() => {
         return () => clearInterval(interval);
     }, []);
-    let date = new Date(2022,7,22);
+    let date = new Date(2022,8,10);
     let _window = typeof window == 'undefined' ? {} : window;
     
     function updateTimestring () {
