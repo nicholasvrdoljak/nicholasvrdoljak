@@ -13,19 +13,19 @@ const posts = [
 	{
 		type: 'quote',
 		title: 'Percy Shelley, "Ozymandias"',
-		excerpt: `I met a traveller from an antique land$\n
-		Who said: Two vast and trunkless legs of stone\n\n
-		Stand in the desert. Near them, on the sand,\n\n
-		Half sunk, a shattered visage lies, whose frown,\n\n
-		And wrinkled lip, and sneer of cold command,\n\n
-		Tell that its sculptor well those passions read\n\n
-		Which yet survive, stamped on these lifeless things,\n\n
-		The hand that mocked them and the heart that fed:\n\n
-		And on the pedestal these words appear:\n\n
-		"My name is Ozymandias, king of kings:\n\n
-		Look on my works, ye Mighty, and despair!"\n\n
-		Nothing beside remains. Round the decay\n\n
-		Of that colossal wreck, boundless and bare\n\n
+		excerpt: `I met a traveller from an antique land\n
+		Who said: Two vast and trunkless legs of stone\n
+		Stand in the desert. Near them, on the sand,\n
+		Half sunk, a shattered visage lies, whose frown,\n
+		And wrinkled lip, and sneer of cold command,\n
+		Tell that its sculptor well those passions read\n
+		Which yet survive, stamped on these lifeless things,\n
+		The hand that mocked them and the heart that fed:\n
+		And on the pedestal these words appear:\n
+		"My name is Ozymandias, king of kings:\n
+		Look on my works, ye Mighty, and despair!"\n
+		Nothing beside remains. Round the decay\n
+		Of that colossal wreck, boundless and bare\n
 		The lone and level sands stretch far away.`,
 		date: 'October 3, 2022',
 		image: '',
@@ -161,9 +161,13 @@ function Feed ()  {
 						</Typography>
 					}
 					{post.excerpt && 
-						<Typography component="p">
-							{ post.excerpt }
-						</Typography>
+						<>
+						{ post.excerpt.split('\n').map(section => (
+							<Typography component="div">
+								{ section }
+							</Typography>
+						))}
+					 	</>
 					}
 					{post.date && 
 						<Typography component="p" variant="caption">
