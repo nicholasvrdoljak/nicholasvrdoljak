@@ -21,6 +21,11 @@ const useStyles = makeStyles(() => ({
             height: '55px'
         }
     },
+    avatarOptionSelected: {
+        width: '55px',
+        height: '55px',
+        borderBottom: '3px solid cyan'
+    },
     tweetWrap: {
         maxWidth: '490px',
         background: '#fff',
@@ -76,30 +81,30 @@ function SlackGenerator() {
                 <img onClick={() => {
                     setActiveImage('aubrey.jpeg');
                     setActiveName('Aubrey Stento')
-                }} className={classes.avatarOption} src={'/images/aubrey.jpeg'} />
+                }} className={`${classes.avatarOption} ${activeImage == 'aubrey.jpeg' ? classes.avatarOptionSelected : ''}`} src={'/images/aubrey.jpeg'} />
                 <img onClick={() => {
                     setActiveImage('alastair.png');
                     setActiveName('Alastair Cleve')
-                }} className={classes.avatarOption} src={'/images/alastair.png'} />
+                }} className={`${classes.avatarOption} ${activeImage == 'alastair.png' ? classes.avatarOptionSelected : ''}`} src={'/images/alastair.png'} />
                 <img onClick={() => {
                     setActiveImage('ben.jpeg');
                     setActiveName('Ben Bengoetxea')
-                }} className={classes.avatarOption} src={'/images/ben.jpeg'} />
+                }} className={`${classes.avatarOption} ${activeImage == 'ben.jpeg' ? classes.avatarOptionSelected : ''}`} src={'/images/ben.jpeg'} />
                 <img onClick={() => {
                     setActiveImage('evan.png');
                     setActiveName('Evan Hsu')
-                }} className={classes.avatarOption} src={'/images/evan.png'} />
+                }} className={`${classes.avatarOption} ${activeImage == 'evan.png' ? classes.avatarOptionSelected : ''}`} src={'/images/evan.png'} />
                 <img onClick={() => {
                     setActiveImage('max.jpeg');
                     setActiveName('Max Runia')
-                }} className={classes.avatarOption} src={'/images/max.jpeg'} />
+                }} className={`${classes.avatarOption} ${activeImage == 'max.jpeg' ? classes.avatarOptionSelected : ''}`} src={'/images/max.jpeg'} />
                 <img onClick={() => {
                     setActiveImage('nick.png');
                     setActiveName('Nick Vrdoljak')
-                }} className={classes.avatarOption} src={'/images/nick.png'} />
+                }} className={`${classes.avatarOption} ${activeImage == 'nick.png' ? classes.avatarOptionSelected : ''}`} src={'/images/nick.png'} />
             </div>
             <div className={classes.optionWrap}>
-                <input style={{width: '75%'}} onChange={(evt) => {console.log(evt); setActiveCaption(evt.target.value)}}></input>
+                <input style={{width: '75%'}} onChange={(evt) => setActiveCaption(evt.target.value)}></input>
             </div>
 
             <div className={classes.tweetWrap}>

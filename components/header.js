@@ -17,7 +17,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Link from 'next/link';
 const headersData = [
 	{
-		label: "Things I Like",
+		label: "Stuff",
 		href: "/feed",
 	},
 	{
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex'
 	},
-	logo: { 
+	logo: {
 		cursor: 'pointer',
 	},
 	drawer: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 			display: 'inline',
 		},
 	},
-	menuLinksContainer:{
+	menuLinksContainer: {
 		position: 'absolute',
 		right: 0
 	},
@@ -115,7 +115,7 @@ function Header(props) {
 			<ListItem button onClick={handleDrawerToggle}><Link href="/" passHref><ListItemText>Home</ListItemText></Link></ListItem>
 			<Divider />
 			<List>
-				{headersData.map((item, index) => (
+				{headersData.map((item) => (
 					<ListItem button onClick={handleDrawerToggle} key={item.label}>
 						<Link href={item.href} passHref>
 							<ListItemText>{item.label}</ListItemText>
@@ -128,7 +128,7 @@ function Header(props) {
 
 	const container = window !== undefined ? () => window().document.body : undefined;
 	return (
-        <div className={classes.root}>
+		<div className={classes.root}>
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
 					<Link href='/' passHref>
@@ -137,49 +137,50 @@ function Header(props) {
 						</Typography>
 					</Link>
 					<IconButton
-	          color="inherit"
-	          aria-label="open drawer"
-	          edge="start"
-	          onClick={handleDrawerToggle}
-	          className={classes.menuButton}
-	          size="large">
-					<MenuIcon />
-				</IconButton>
-				<div className={classes.menuLinksContainer}>
-					{getMenuButtons()}
-				</div>
+						color="inherit"
+						aria-label="open drawer"
+						edge="start"
+						onClick={handleDrawerToggle}
+						className={classes.menuButton}
+						size="large">
+						<MenuIcon />
+					</IconButton>
+					<div className={classes.menuLinksContainer}>
+						{getMenuButtons()}
+					</div>
 				</Toolbar>
 
 			</AppBar>
 			<nav className={classes.drawer} aria-label="mailbox folders">
 				<Hidden smUp implementation="css">
-				<Drawer
-					container={container}
-					variant="temporary"
-					anchor={'right'}
-					open={mobileOpen}
-					onClose={handleDrawerToggle}
-					classes={{
-					paper: classes.drawerPaper,
-					}}
-					ModalProps={{
-					keepMounted: true, // Better open performance on mobile.
-					}}
-				>
-					{drawer}
-				</Drawer>
+					<Drawer
+						container={container}
+						variant="temporary"
+						anchor={'right'}
+						open={mobileOpen}
+						onClose={handleDrawerToggle}
+						classes={{
+							paper: classes.drawerPaper,
+						}}
+						ModalProps={{
+							keepMounted: true, // Better open performance on mobile.
+						}}
+					>
+						{drawer}
+					</Drawer>
 				</Hidden>
 			</nav>
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
-				<Component {...pageProps}/>
+				<Component {...pageProps} />
 			</main>
 		</div>
-    );
+	);
 }
 
 export default Header;
 Header.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.object,
+	Component: PropTypes.elementType.isRequired,
+	pageProps: PropTypes.object,
+	window: PropTypes.object
 };

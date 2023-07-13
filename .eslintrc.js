@@ -7,7 +7,6 @@ module.exports = {
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:@next/next/recommended",
     ],
     "parserOptions": {
         "ecmaFeatures": {
