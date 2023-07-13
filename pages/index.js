@@ -1,6 +1,7 @@
 import Homepage from "../components/homepage";
+import React from "react";
 
-function Home(props) {
+function Home() {
 	return (
 		<div style={{display: 'flex', flexDirection: 'column'}}>
 			<Homepage/>

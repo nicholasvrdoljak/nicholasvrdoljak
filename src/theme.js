@@ -1,8 +1,8 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
+import { createTheme } from '@mui/material/styles';
+import { green } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: green[300]

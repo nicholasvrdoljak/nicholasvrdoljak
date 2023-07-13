@@ -7,10 +7,10 @@ import {
     Input,
     Button,
     CircularProgress,
-  } from "@material-ui/core";
-import Modal from '@material-ui/core/Modal';
+  } from "@mui/material";
+import Modal from '@mui/material/Modal';
 
-function Contact(props) {
+function Contact() {
     let [ submitDisabled, changeSubmitDisabled ] = React.useState(true);
     let [ name, changeName ] = React.useState("");
     let [ email, changeEmail ] = React.useState("");
@@ -38,6 +38,10 @@ function Contact(props) {
         changeRecapValue(value);
         if (value) return changeSubmitDisabled(false);
         return changeSubmitDisabled(true);
+    }
+
+    function resetReCaptcha () {
+        recaptchaRef.reset();
     }
 
     function resetForm () {

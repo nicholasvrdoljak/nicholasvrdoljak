@@ -1,17 +1,19 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import Hidden from '@mui/material/Hidden';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import Link from 'next/link';
 const headersData = [
 	{
@@ -89,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
 	const { Component, pageProps } = props;
-
 	const { window } = props;
 	const theme = useTheme();
 	const classes = useStyles(theme);
@@ -116,7 +117,6 @@ function Header(props) {
 			);
 		});
 	};
-
 	const drawer = (
 		<div>
 			<div className={classes.toolbar} />
@@ -135,23 +135,22 @@ function Header(props) {
 	);
 
 	const container = window !== undefined ? () => window().document.body : undefined;
-
 	return (
-		<div className={classes.root}>
+        <div className={classes.root}>
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
-					<Link href='/' >
+					<Link href='/' passHref>
 						<Typography variant="h6" noWrap className={classes.logo}>
-							Hi, I'm Nick
+							Hi, I&apos;m Nick
 						</Typography>
 					</Link>
 					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
-						onClick={handleDrawerToggle}
-						className={classes.menuButton}
-					>
+	          color="inherit"
+	          aria-label="open drawer"
+	          edge="start"
+	          onClick={handleDrawerToggle}
+	          className={classes.menuButton}
+	          size="large">
 					<MenuIcon />
 				</IconButton>
 				<div className={classes.menuLinksContainer}>
@@ -181,11 +180,14 @@ function Header(props) {
 			</nav>
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
-				{/* CONTENT */}
 				<Component {...pageProps}/>
 			</main>
 		</div>
-	);
+    );
 }
 
 export default Header;
+Header.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object,
+};
