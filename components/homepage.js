@@ -64,7 +64,7 @@ function Homepage() {
 	return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: "center", width:'100%', marginTop: '20px'}}>
             <div className={classes.section}>
-                <div className={classes.homeDescription}> I&apos;m a developer in the Pacific Northwest. Welcome to my site. </div>
+                <div className={classes.homeDescription}>Welcome to my site. </div>
             </div>
             <br/>
             <div className={classes.logoSection}>

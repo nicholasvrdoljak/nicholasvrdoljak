@@ -20,18 +20,10 @@ const headersData = [
 		label: "Things I Like",
 		href: "/feed",
 	},
-	// {
-	// 	label: "Work",
-	// 	href: "/work",
-	// },
-	// {
-	// 	label: "Pictures",
-	// 	href: "/pictures",
-	// },
-	// {
-	// 	label: "Contact",
-	// 	href: "/contact",
-	// },
+	{
+		label: "Slack Generator",
+		href: "/slack_generator",
+	},
 ];
 const drawerWidth = 240;
 
