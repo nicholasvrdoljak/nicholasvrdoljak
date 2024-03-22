@@ -16,10 +16,10 @@ import { useTheme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import Link from 'next/link';
 const headersData = [
-	{
-		label: "Stuff",
-		href: "/feed",
-	},
+	// {
+	// 	label: "Stuff",
+	// 	href: "/feed",
+	// },
 	{
 		label: "Slack Generator",
 		href: "/slack_generator",

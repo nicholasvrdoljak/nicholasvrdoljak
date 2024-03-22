@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         marginLeft: '10%',
         marginRight: '10%',
-        height: '50vh'
+        // height: '50vh'
     },
     logoSection: {
         display: 'flex', 
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     homeDescription: {
         padding: '5px', 
         width: '50%', 
-        height: '100%', 
+        // height: '100%', 
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center', 
@@ -64,22 +64,9 @@ function Homepage() {
 	return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: "center", width:'100%', marginTop: '20px'}}>
             <div className={classes.section}>
-                <div className={classes.homeDescription}>Welcome to my site. </div>
+                <div className={classes.homeDescription}>Drop a line...</div>
             </div>
-            <br/>
             <div className={classes.logoSection}>
-                <div style={{width: '100%', textAlign: 'center'}}>I can work with a lot of different technologies:</div>
-                <br/>
-                <div style={{width: '100%', flexDirection: 'row', padding: '5px', textAlign: 'center'}}>
-                    <div className={classes.logoImages}><img src={"/images/react.png"} alt="react" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/nextjs.png"} alt="nextjs" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/sql.png"} alt="sql" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/htmlcss.png"} alt="html/css" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/wordpress.png"} alt="wordpress" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/mongo.png"} alt="mongo" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/aws.png"} alt="aws" className={classes.logoImage}/></div>
-                    <div className={classes.logoImages}><img src={"/images/git.png"} alt="git" className={classes.logoImage}/></div>
-                </div>
                 <Contact/>
             </div>
         </div>

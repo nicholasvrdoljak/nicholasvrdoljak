@@ -106,6 +106,10 @@ function SlackGenerator() {
                     setActiveImage('reagan.jpeg');
                     setActiveName('Reagan Keeler')
                 }} className={`${classes.avatarOption} ${activeImage == 'reagan.jpeg' ? classes.avatarOptionSelected : ''}`} src={'/images/reagan.jpeg'} />
+                <img onClick={() => {
+                    setActiveImage('jordan.jpeg');
+                    setActiveName('Jordan Reedie')
+                }} className={`${classes.avatarOption} ${activeImage == 'jordan.jpeg' ? classes.avatarOptionSelected : ''}`} src={'/images/jordan.jpeg'} />
             </div>
             <div className={classes.optionWrap}>
                 <input style={{width: '75%'}} onChange={(evt) => setActiveCaption(evt.target.value)}></input>
